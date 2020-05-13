@@ -1,0 +1,122 @@
+<template>
+<div>
+  <h3>Edit Product</h3>
+  <form class="col s12">
+    <div class="row">
+      <div class="input-field col s12">
+        <p for="first_name">Name</p>
+        <input v-model="editProduct.name" id="editProductName" type="text" class="validate">
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <p for="editProductCategory">Category</p>
+        <select id="editProductCategory" v-model="editProduct.category">
+          <option value="" disabled selected>Choose category</option>
+          <option value="Gaming Notebook">Gaming Notebook</option>
+          <option value="Gaming PC">Gaming PC</option>
+          <option value="Notebook">Notebook</option>
+          <option value="PC">PC</option>
+          <option value="Smartphone">Smartphone</option>
+          <option value="Tablet">Tablet</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <p for="editProductDescription">Description</p>
+        <textarea v-model="editProduct.description" id="editProductDescription" class="materialize-textarea"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <p for="editProductPrice">Price</p>
+        <input v-model="editProduct.price" id="editProductPrice" type="number" class="validate">
+        <span class="helper-text" data-error="" data-success="">Price can not be negative</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <p for="password">Stock</p>
+        <input v-model="editProduct.stock" id="editProductStock" type="number" class="validate">
+        <span class="helper-text" data-error="" data-success="">Stock can not be negative</span>
+      </div>
+    </div>
+    <button class="btn">Edit Product</button>
+  </form>
+</div>
+</template>
+
+<script>
+import M from 'materialize-css/dist/js/materialize.min.js'
+import server from '../api/index'
+
+export default {
+  name: 'EditProduct',
+  data () {
+    return {
+      editProduct: {
+        name: '',
+        category: '',
+        description: '',
+        price: '',
+        stock: ''
+      }
+    }
+  },
+  methods: {
+    getProductById () {
+      server({
+        method: 'get',
+        url: `/product/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(response => {
+          this.editProduct.name = response.data.data.name
+          this.editProduct.category = response.data.data.category
+          this.editProduct.description = response.data.data.description
+          this.editProduct.price = response.data.data.price
+          this.editProduct.stock = response.data.data.stock
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    editProductById () {
+      // server({
+      //   method: 'put',
+      //   url: `/product/${this.$route.params.id}`,
+      //   headers: {
+      //     token: localStorage.token
+      //   },
+      //   data: {
+      //     name: this.editProduct.name,
+      //     category: this.editProduct.category,
+      //     description: this.editProduct.description,
+      //     price: this.editProduct.price,
+      //     stock: this.editProduct.stock
+      //   }
+      // })
+      //   .then(response => {
+      //     this.product = response.data.data
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
+    }
+  },
+  created () {
+    this.getProductById()
+  },
+  mounted () {
+    const selectForm = document.querySelectorAll('#editProductCategory')
+    M.FormSelect.init(selectForm)
+  }
+}
+</script>
+
+<style>
+
+</style>

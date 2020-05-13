@@ -4,9 +4,11 @@
     <NotifSection></NotifSection>
     <ErrorSection></ErrorSection>
     <div class="center">
-      <a>Products</a> |
-      <a>Product Categories</a>
+      <router-link to="/product"><a>Products</a></router-link> |
+      <router-link to="/product"><a>Orders</a></router-link> |
+      <router-link to="/product"><a>Customers</a></router-link>
     </div>
+    <router-view/>
   </div>
 </template>
 

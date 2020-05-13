@@ -8,7 +8,6 @@
               <router-link to="/">E-Commerce</router-link>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down">
-                <li><router-link to="/">Home</router-link></li>
                 <li><router-link to="/dashboard">Dashboard</router-link></li>
                 <li><a @click.prevent="logoutUser">Logout</a></li>
               </ul>
