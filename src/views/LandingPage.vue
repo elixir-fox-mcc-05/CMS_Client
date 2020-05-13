@@ -32,6 +32,9 @@ export default {
     }
   },
   methods: {
+    changeLoginStatus () {
+      this.$store.commit('changeLoginStatus')
+    },
     loginUser () {
       server({
         method: 'post',
@@ -46,6 +49,7 @@ export default {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('currentUserId', response.data.data.id)
           localStorage.setItem('currentUserName', response.data.data.name)
+          this.changeLoginStatus()
           this.$router.push({ name: 'Dashboard' })
           this.user.email = ''
           this.user.password = ''

@@ -22,6 +22,9 @@ export default {
   computed: {
     productsList () {
       return this.$store.state.productsList
+    },
+    isLogin () {
+      return this.$store.state.isLogin
     }
   },
   created () {

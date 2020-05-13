@@ -10,6 +10,7 @@
               <ul class="right hide-on-med-and-down">
                 <li><router-link to="/">Home</router-link></li>
                 <li><router-link to="/dashboard">Dashboard</router-link></li>
+                <li><a @click.prevent="logoutUser">Logout</a></li>
               </ul>
             </div>
           </div>
@@ -29,6 +30,21 @@ import M from 'materialize-css/dist/js/materialize.min.js'
 
 export default {
   name: 'App',
+  methods: {
+    changeLoginStatus () {
+      this.$store.commit('changeLoginStatus')
+    },
+    logoutUser () {
+      localStorage.clear()
+      this.changeLoginStatus()
+      this.$router.push({ name: 'LandingPage' })
+    }
+  },
+  computed: {
+    isLogin () {
+      return this.$store.state.isLogin
+    }
+  },
   mounted () {
     // sidebar
     const sidenav = document.querySelectorAll('.sidenav')
