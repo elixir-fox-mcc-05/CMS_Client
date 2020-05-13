@@ -1,23 +1,17 @@
 <template>
- <div class="card" style="width: 18rem;">
-  <img class="card-img-top" :src="product.image_url" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">{{product.name}}</h5>
-    <div class="desc">
-     <p class="card-text">{{product.description}}</p>
-    </div>
-    <div class="stock">
-     <h6>Stock : {{product.stock}}</h6>
-    </div>
-     <h5>IDR {{product.price}}</h5>
-    <div class="btn-detail">
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
+<div class="ProductCard">
+  <img class="img-card" :src="product.image_url" alt="Card image cap">
+  <div class="title">
+  <div class="des">
+  <h1>{{product.name}}</h1>
+  <h4>{{product.description}}</h4>
+  </div>
   </div>
 </div>
 </template>
 
 <script>
+
 export default {
   name: 'ProductCard',
   props: ['product']
@@ -25,20 +19,24 @@ export default {
 </script>
 
 <style scoped>
-.card{
- width: 300px;
- margin: 5px;
+
+.img-card{
+  width: 100%;
+  height:100%;
 }
 
-.card-img-top{
- height: 300px;
+.title{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -130px;
+  margin-left: 10px;
+  z-index: 2;
+  position: absolute;
+  color: wheat;
+}
+.des{
+  text-align: left;
 }
 
-.desc{
- height: 60px;
-}
-
-.btn-detail{
- margin-top: 10px;
-}
 </style>

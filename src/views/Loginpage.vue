@@ -1,24 +1,18 @@
 <template>
-  <div class="home">
-    <Navbar />
-    <Login v-if="!log && !reg" />
-    <Register v-if="log && reg" />
-    <Content/>
-  </div>
+<div class="Loginpage">
+  <Login v-if="!reg" />
+  <Register v-if="log && reg" />
+</div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Content from '@/components/Content.vue'
-import Navbar from '@/components/Navbar.vue'
 import Login from '@/components/Login.vue'
 import Register from '@/components/Register.vue'
 
 export default {
-  name: 'Home',
+  name: 'Loginpage',
   components: {
-    Content,
-    Navbar,
     Login,
     Register
   },
@@ -29,11 +23,23 @@ export default {
     reg () {
       return this.$store.state.showRegister
     }
+  },
+  created () {
+    if (localStorage.access_token) {
+      this.$router.push('/')
+    }
   }
 }
 </script>
+
 <style scoped>
-.home{
+.Loginpage {
+  margin-top: 100px;
+  text-align: center;
   width: 100%;
+}
+
+.space {
+  height: 75px;
 }
 </style>
