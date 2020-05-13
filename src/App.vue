@@ -1,32 +1,42 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <div class="navbar-fixed">
+        <nav class="blue darken-3">
+          <div class="container">
+            <div class="nav-wrapper">
+              <router-link to="/">E-Commerce</router-link>
+              <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                <li><router-link to="/">Home</router-link></li>
+                <li><router-link to="/dashboard">Dashboard</router-link></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <ul class="sidenav" id="mobile-demo">
+          <router-link to="/">Home</router-link>
+          <router-link to="/dashboard">Dashboard</router-link>
+        </ul>
+      </div>
     </div>
     <router-view/>
   </div>
 </template>
 
+<script>
+import M from 'materialize-css/dist/js/materialize.min.js'
+
+export default {
+  name: 'App',
+  mounted () {
+    // sidebar
+    const sidenav = document.querySelectorAll('.sidenav')
+    M.Sidenav.init(sidenav)
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
