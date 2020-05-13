@@ -16,9 +16,9 @@
           <p v-if="product.stock == 0">Empty</p>
           <p v-else>{{ product.stock }}</p>
         <div>
-          <a href="">Back</a> |
-          <router-link :to="`/product/${product.id}/edit`"><a>Edit</a></router-link> |
-          <a href="">Delete</a>
+          <a href=""><i class="material-icons">arrow_back</i></a> |
+          <router-link :to="`/product/${product.id}/edit`"><i class="material-icons">edit</i></router-link> |
+          <a href=""><i class="material-icons">delete</i></a>
         </div>
       </div>
     </div>

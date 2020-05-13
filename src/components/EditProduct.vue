@@ -42,7 +42,14 @@
         <span class="helper-text" data-error="" data-success="">Stock can not be negative</span>
       </div>
     </div>
-    <button class="btn">Edit Product</button>
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="material-icons prefix">camera_alt</i>
+        <input v-model="editProduct.image_url" id="newProductImgUrl" type="url" class="validate">
+        <p for="newProductImgUrl">Image URL</p>
+      </div>
+    </div>
+    <button class="btn" @click.prevent="editProductById">Edit Product</button>
   </form>
 </div>
 </template>
@@ -60,7 +67,8 @@ export default {
         category: '',
         description: '',
         price: '',
-        stock: ''
+        stock: '',
+        image_url: ''
       }
     }
   },
@@ -79,32 +87,33 @@ export default {
           this.editProduct.description = response.data.data.description
           this.editProduct.price = response.data.data.price
           this.editProduct.stock = response.data.data.stock
+          this.editProduct.image_url = response.data.data.image_url
         })
         .catch(err => {
           console.log(err)
         })
     },
     editProductById () {
-      // server({
-      //   method: 'put',
-      //   url: `/product/${this.$route.params.id}`,
-      //   headers: {
-      //     token: localStorage.token
-      //   },
-      //   data: {
-      //     name: this.editProduct.name,
-      //     category: this.editProduct.category,
-      //     description: this.editProduct.description,
-      //     price: this.editProduct.price,
-      //     stock: this.editProduct.stock
-      //   }
-      // })
-      //   .then(response => {
-      //     this.product = response.data.data
-      //   })
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
+      server({
+        method: 'put',
+        url: `/product/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.token
+        },
+        data: {
+          name: this.editProduct.name,
+          category: this.editProduct.category,
+          description: this.editProduct.description,
+          price: this.editProduct.price,
+          stock: this.editProduct.stock
+        }
+      })
+        .then(response => {
+          console.log(response.data.notif)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   created () {

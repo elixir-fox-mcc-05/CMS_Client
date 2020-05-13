@@ -26,8 +26,8 @@
             <td>{{ product.stock }}</td>
             <td>{{ product.price }}</td>
             <td>
-              <router-link :to="`/product/${product.id}/edit`"><a>Edit</a></router-link> |
-              <a href="">Delete</a>
+              <router-link :to="`/product/${product.id}/edit`"><i class="material-icons">edit</i></router-link>  |
+              <a href=""><i class="material-icons">delete</i></a>
             </td>
           </tr>
         </tbody>
