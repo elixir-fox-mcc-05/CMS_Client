@@ -47,11 +47,16 @@ export default {
           localStorage.setItem('token', token)
           this.$store.commit(this.SET_LOGIN, true)
           // this.$store.state.loggedIn = true
-          this.$router.push({ name: 'Menu' })
+          // this.$router.push({ name: 'Menu' })
         })
         .catch(err => {
           console.log(err.response.data)
         })
+    }
+  },
+  created () {
+    if (localStorage.token) {
+      this.$router.push('/menu')
     }
   }
 }

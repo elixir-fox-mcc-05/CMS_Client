@@ -11,8 +11,12 @@
                         <b-menu-list label="Menu"  v-if="loggedIn">
                             <b-menu-item icon="information-outline" class="has-text-left" label="List" @click="$router.push('/menu')"></b-menu-item>
                             <b-menu-item active expanded icon="settings"  class="has-text-left " label="Administrator">
-                                <b-menu-item icon="account" label="List"></b-menu-item>
-                                <b-menu-item icon="cellphone-link" label="Devices"></b-menu-item>
+                                <b-menu-item icon="account" label="Add" @click.prevent="showAddProduct"></b-menu-item>
+                                <b-menu-item icon="cellphone-link" label="Info" @click.prevent="showAccInfo"></b-menu-item>
+                            </b-menu-item>
+                            <b-menu-item active expanded icon="settings"  class="has-text-left " label="Categories">
+                              <b-menu-item icon="cellphone-link" label="Info" @click.prevent="showCategoryList"></b-menu-item>
+                                <b-menu-item icon="account" label="Add" @click.prevent="showAddCategories"></b-menu-item>
                             </b-menu-item>
                         </b-menu-list>
                         <b-menu-list label="Menu" v-if="!loggedIn">
@@ -48,23 +52,25 @@ export default {
       this.$store.state.loggedIn = false
       this.$router.push('/')
     },
-    edit (id) {
-      this.$store.dispatch('login')
-        .then(({ data }) => {
-          console.log('masuk')
-          const token = data.token
-          localStorage.setItem('token', token)
-          this.$router.push({ name: 'Menu' })
-        })
+    showAccInfo () {
+      this.$router.push()
     },
-    delete (id) {
-      this.$store.dispatch('login')
-        .then(({ data }) => {
-          console.log('masuk')
-          const token = data.token
-          localStorage.setItem('token', token)
-          this.$router.push({ name: 'Menu' })
-        })
+    showAddProduct () {
+      this.$router.push('/addproduct')
+    },
+    showCategoryList(){
+      this.$router.push('/addcategory')
+    },
+    showAddCategories(){
+      this.$router.push('/category')
+    }
+  },
+  created () {
+    if (localStorage.token) {
+      this.$store.state.loggedIn = true
+      this.$store.dispatch('fetchproducts')
+    } else {
+      this.$router.push('/')
     }
   }
 }

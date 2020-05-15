@@ -59,6 +59,11 @@ export default {
           console.log(err.response.data)
         })
     }
+  },
+  created () {
+    if (localStorage.token) {
+      this.$router.push('/menu')
+    }
   }
 }
 </script>

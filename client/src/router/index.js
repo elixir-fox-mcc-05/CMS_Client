@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import ProductList from '../views/ProductList'
 import Register from '../views/Register'
+import AddProduct from '../views/AddProduct'
+import CategoryList from '../views/CategoryList'
+import AddCategory from '../views/AddCategory'
 
 Vue.use(VueRouter)
 
@@ -28,6 +31,18 @@ const routes = [
   {
     path: '/register',
     component: Register
+  },
+  {
+    path: '/addproduct',
+    component: AddProduct
+  },
+  {
+    path: '/category',
+    component: CategoryList
+  },
+  {
+    path: '/addcategory',
+    component: AddCategory
   }
 ]
 

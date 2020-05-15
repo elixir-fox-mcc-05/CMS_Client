@@ -64,17 +64,8 @@
 
 export default {
   name: 'ProductList',
-  components: {
-
-  },
   data () {
-    const data = [
-      { id: 1, first_name: 'Jesse', last_name: 'Simmons', stock: 6, price: 10000, gender: 'Male' },
-      { id: 2, first_name: 'John', last_name: 'Jacobs', stock: 6, price: 10000, gender: 'Male' },
-      { id: 3, first_name: 'Tina', last_name: 'Gilbert', stock: 6, price: 10000, gender: 'Female' },
-      { id: 4, first_name: 'Clarence', last_name: 'Flores', stock: 6, price: 10000, gender: 'Male' },
-      { id: 5, first_name: 'Anne', last_name: 'Lee', stock: 6, price: 10000, gender: 'Female' }
-    ]
+    const data = this.$store.state.products
     return {
       data,
       isEmpty: false,
@@ -103,6 +94,9 @@ export default {
           this.$router.push({ name: 'Menu' })
         })
     }
+  },
+  created () {
+
   }
 }
 

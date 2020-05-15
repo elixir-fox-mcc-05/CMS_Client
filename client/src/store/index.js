@@ -8,9 +8,11 @@ const store = new Vuex.Store({
   state: {
     select: 'login',
     products: [],
+    categories: [],
     loggedIn: false,
     updateData: {},
-    deletedData: {}
+    deletedData: {},
+    addData: {}
   },
   mutations: {
     SET_LOGIN (state, payload) {
@@ -24,6 +26,12 @@ const store = new Vuex.Store({
     },
     SET_DELETE (state, payload) {
       state.deletedData = payload
+    },
+    SET_ADD (state, payload) {
+      state.addData = payload
+    },
+    SET_CATEGORIES (state, payload) {
+      state.categories = payload
     }
   },
   actions: {
@@ -49,6 +57,12 @@ const store = new Vuex.Store({
         email: payload.email,
         password: payload.password
       })
+    },
+    fetchCategory ({ commit, state }) {
+      return server.get('/categories')
+        .then(({ data }) => {
+          commit(this.SET_CATEGORIES, data)
+        })
     }
   },
   getters: {
