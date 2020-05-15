@@ -5,14 +5,34 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 </head>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <section class="section">
+     <div class="container">
+      <div class="columns">
+        <div class="column is-4">
+            <Menu />
+        </div>
+        <div class="column">
+            <router-view/>
+        </div>
+      </div>
     </div>
-    <router-view/>
+    </section>
+    </div>
+
   </div>
 </template>
 
-<style>
+<script>
+import Menu from './components/layout/Menu'
+export default {
+  name: 'App',
+  components: {
+    Menu
+  }
+}
+</script>
+
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
