@@ -1,15 +1,30 @@
 <template>
   <div class="product-container">
     <h1>Product List</h1>
+    <div class="form-row search-filter">
+      <div class="form-group col-md-4 input-group">
+        <input type="text" class="form-control" id="product-search" v-model="productSearch" placeholder="Search Product">
+        <div class="input-group-append">
+          <span class="input-group-text clear-field"><i class="fas fa-times-circle" @click="clearField"></i></span>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <select id="product-category" class="form-control">
+          <option selected>Choose Category</option>
+          <option>...</option>
+        </select>
+      </div>
+    </div>
     <div class="product-table">
       <Vuetable
         ref="vuetable"
-        api-url="http://localhost:4000/products/"
+        :api-url="apiAddress"
         :fields="fields"
         :sort-order="sortOrder"
         data-path="mydata"
         :per-page="10"
         :transform="transformData"
+        :append-params="{ search: productSearch }"
         pagination-path="pagination"
         @vuetable:pagination-data="onPaginationData"
         :http-options="httpHeaders"
@@ -47,7 +62,10 @@
 <script>
 import Vuetable from 'vuetable-2/src/components/Vuetable'
 import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
+import VuetableFieldSequence from 'vuetable-2/src/components/VuetableFieldSequence.vue'
 import Swal from 'sweetalert2'
+import accounting from 'accounting-js'
+import _ from 'lodash'
 
 export default {
   name: 'ProductList',
@@ -65,11 +83,18 @@ export default {
   },
   data () {
     return {
+      apiAddress: 'http://localhost:4000/products',
+      productSearch: '',
       fields: [
+        {
+          name: VuetableFieldSequence,
+          title: 'No.',
+          width: '3%'
+        },
         {
           name: 'name',
           title: 'Product Name',
-          width: '35%',
+          width: '30%',
           sortField: 'name'
         },
         {
@@ -80,9 +105,13 @@ export default {
         },
         {
           name: 'price',
-          title: 'Price (Rp)',
+          title: 'Price',
           width: '20%',
-          sortField: 'price'
+          sortField: 'price',
+          formatter: (value) => {
+            const price = +value
+            return accounting.formatMoney(price, { symbol: 'Rp ', precision: 2, thousand: '.', decimal: ',' })
+          }
         },
         {
           name: 'image',
@@ -220,17 +249,36 @@ export default {
     },
     onChangePage (page) {
       this.$refs.vuetable.changePage(page)
-    }
+    },
+    clearField () {
+      this.productSearch = ''
+    },
+    debounceSearch: _.debounce(function () {
+      this.$refs.vuetable.refresh()
+    }, 500)
   },
   computed: {
     httpHeaders () {
       return { headers: { access_token: localStorage.access_token } }
+    }
+  },
+  watch: {
+    productSearch (search) {
+      this.debounceSearch()
     }
   }
 }
 </script>
 
 <style>
+  .search-filter {
+    width: 100%;
+    margin: 5px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
   .table-style {
     border-collapse: collapse;
   }
@@ -282,5 +330,13 @@ export default {
 
   .btn-reddish:hover {
     background-color: rgb(243, 22, 52);
+  }
+
+  .fa-times-circle {
+    color: rgb(243, 81, 6);
+  }
+
+  .fa-times-circle:hover {
+    cursor: pointer;
   }
 </style>
