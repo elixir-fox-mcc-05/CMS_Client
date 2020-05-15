@@ -8,7 +8,7 @@
         :fields="fields"
         :sort-order="sortOrder"
         data-path="mydata"
-        :per-page="5"
+        :per-page="10"
         :transform="transformData"
         pagination-path="pagination"
         @vuetable:pagination-data="onPaginationData"
@@ -191,7 +191,7 @@ export default {
 
       transformed.pagination = {
         total: data.products.length,
-        per_page: 5,
+        per_page: 10,
         current_page: 1,
         // last_page: Math.ceil(this.total / this.per_page),
         next_page_url: 'http://localhost:4000/products?page=2',
