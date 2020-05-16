@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import FormLandingPage from '@/components/FormLandingPage.vue'
+import FormLandingPage from '@/components/forms/FormLandingPage.vue'
 
 export default {
   name: 'LandingPage',
