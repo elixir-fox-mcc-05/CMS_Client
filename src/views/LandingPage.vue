@@ -1,7 +1,7 @@
 <template>
   <div>
     <img src="../assets/logoSneaker.png" style="width: 70%;">
-    <Signin />
+    <Signin/>
   </div>
 </template>
 
@@ -13,6 +13,11 @@ export default {
   name: 'LandingPage',
   components: {
     Signin
+  },
+  created () {
+    if (localStorage.getItem('token')) {
+      this.$router.push({ name: 'MainPage' })
+    }
   }
 }
 </script>
