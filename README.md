@@ -1,5 +1,7 @@
 # CMS_Client
 
+## URL FOR ADMIN = /adminP4C5D9de2sr
+
 ## Project setup
 ```
 npm install
