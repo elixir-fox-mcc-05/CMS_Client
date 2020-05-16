@@ -33,8 +33,8 @@ export default {
   },
   created () {
     if (localStorage.access_token) {
-      this.$router.push({ name: 'dashboard' })
       this.$store.commit('set_login_status', true)
+      this.$store.dispatch('getAllCategory')
     } else {
       this.$router.push({ name: 'Home' })
       this.$store.commit('set_login_status', false)

@@ -15,6 +15,9 @@
             </select>
       </div>
     </div>
+    <div class="small">
+      <h6>*Click image to enlarge!</h6>
+    </div>
     <div class="product-table">
       <Vuetable
         ref="vuetable"
@@ -43,14 +46,12 @@
               class="btn btn-warning btn-sm"
               @click="showEditForm(props.rowData)">
               <span class="fas fa-edit"></span>
-              Edit
             </button>
           </router-link>
           <button
             class="btn btn-danger btn-sm"
             @click="deleteProduct(props.rowData.id, props.rowData.name, props.rowData)">
             <span class="fas fa-trash-alt"></span>
-             Delete
           </button>
         </template>
       </Vuetable>
@@ -83,7 +84,7 @@ export default {
   },
   data () {
     return {
-      apiAddress: 'http://localhost:4000/products',
+      apiAddress: 'https://secret-tundra-12625.herokuapp.com/products',
       productSearch: '',
       productCategory: '',
       fields: [
@@ -121,7 +122,7 @@ export default {
         },
         {
           name: 'image',
-          title: 'Product Image',
+          title: 'Product Image*',
           width: '15%'
         },
         {
@@ -357,5 +358,14 @@ export default {
 
   .fa-times-circle:hover {
     cursor: pointer;
+  }
+
+  .small {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    padding-right: 50px;
   }
 </style>

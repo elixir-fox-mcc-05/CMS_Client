@@ -3,7 +3,7 @@
     <div class="category-table">
       <Vuetable
         ref="vuetable"
-        api-url="http://localhost:4000/categories/"
+        api-url="https://secret-tundra-12625.herokuapp.com/categories/"
         :fields="fields"
         :sort-order="sortOrder"
         data-path="categories"

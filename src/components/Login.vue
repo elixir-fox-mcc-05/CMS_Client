@@ -22,6 +22,9 @@
                     v-if="errorDetected"
                     :alertMessage="alertMessage"
                 ></Error>
+                <div class="credit">
+                    <h6>Photo by Lucas Andrade from Pexels</h6>
+                </div>
             </div>
         </div>
     </div>
@@ -162,4 +165,10 @@ export default {
         color: wheat;
     }
 
+    .credit {
+        color: whitesmoke;
+        text-align: center;
+        position: relative;
+        margin-top: 5px;
+    }
 </style>
