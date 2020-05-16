@@ -1,17 +1,20 @@
 <template>
-  <v-app class='Login'>
+  <v-app class='Login' style="display:flex; flex-direction:column; justify-content:center; text-align:center;">
     <div class = "form-style" style="height: inherit;">
       <div v-if="!isLoading">
         <h2>Login Form</h2>
       </div>
       <div v-if="message" style="font-size : 15px !important; color: red;">
-        {{message}}
+        <div>
+          {{message}}
+        </div>
+        <img v-if="notAdmin" src="https://lh3.googleusercontent.com/proxy/pmvq2tmb7pzjz05UdMzNwpZU6tb6G0QEcbNHTfqh0PaROu3cWLxEPye_EGWlEOL27byCo1NEE1SFmtNt_OWqkg0">
       </div>
       <div v-if="isLoading">
         <Loading></Loading>
       </div>
       <div style="padding-top:10px" v-if="!isLoading">
-        <form id="loginForm" method="post">
+        <form id="loginForm" method="post" @submit.prevent="login">
           <b-input-group size="lg">
             <b-input-group-prepend is-text>
               <b-icon :icon="fillingEmail"></b-icon>
@@ -19,7 +22,8 @@
             <b-form-input v-model="emailLogin"
                           v-if="emailLogin !== '' ? fillingEmail = 'envelope-fill' : fillingEmail = 'envelope'"
                           type="email"
-                          placeholder="me@example.com">
+                          placeholder="me@example.com"
+                          @focus="message = ''">
             </b-form-input>
           </b-input-group>
           <b-input-group size="lg">
@@ -32,7 +36,7 @@
             </b-form-input>
           </b-input-group>
           <div style="display:flex; justify-content:space-around; align-items:center; padding-top:10px;" v-if="emailLogin !== '' && passwordLogin !== ''">
-            <button @click.prevent ="login" class="btn btn-primary" style="width:100%">Login</button>
+            <button type="submit" class="btn btn-primary" style="width:100%">Login</button>
           </div>
         </form>
       </div>
@@ -43,7 +47,7 @@
 <script>
 import Loading from './loading'
 export default {
-  name: 'Login',
+  name: 'adminLogin',
   components: {
     Loading
   },
@@ -55,6 +59,8 @@ export default {
       fillingEmail: 'envelope',
       type: 'password',
       disableLogin: true,
+      message: '',
+      notAdmin: true,
       isLoading: false
     }
   },
@@ -65,23 +71,37 @@ export default {
     },
     login () {
       this.isLoading = true
+      this.message = ''
       const payload = {
         email: this.emailLogin.toLowerCase(),
         password: this.passwordLogin
       }
       this.$store.dispatch('login', payload)
         .then(({ data }) => {
-          localStorage.setItem('token', data.acces_token)
-          this.$store.commit('SET_TOKEN', data.acces_token)
-          this.$store.commit('SET_LOGIN', true)
+          if (data.Role.name === 'admin') {
+            localStorage.setItem('token', data.acces_token)
+            this.$store.commit('SET_TOKEN', data.acces_token)
+            this.$store.commit('SET_LOGIN', true)
+            this.$router.push('/sdaslj332432')
+            this.email = ''
+            this.password = ''
+            this.notAdmin = false
+          } else {
+            this.message = 'You are not allowed to acces this site'
+            this.notAdmin = true
+          }
         })
         .catch(err => {
-          console.log(err.response.data.msg)
+          this.notAdmin = false
+          this.message = err.response.data.msg
         })
         .finally(() => {
           this.isLoading = false
         })
     }
+  },
+  created () {
+
   }
 }
 </script>
