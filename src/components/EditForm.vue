@@ -89,7 +89,7 @@ export default {
           Swal.fire({
             icon: 'error',
             title: 'Something Went Wrong',
-            text: `${err.response}`
+            text: `${err.response.data.error}`
           })
         })
     }

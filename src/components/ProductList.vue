@@ -24,7 +24,7 @@
         data-path="mydata"
         :per-page="10"
         :transform="transformData"
-        :append-params="{ search: productSearch }"
+        :append-params="{ search: productSearch, categoryId: productCategory }"
         pagination-path="pagination"
         @vuetable:pagination-data="onPaginationData"
         :http-options="httpHeaders"
@@ -34,20 +34,20 @@
           <img
             :src="props.rowData.image_url"
             :alt="props.rowData.name"
-            width="50"
+            width="80"
             @click="enlargingImage(props.rowData.image_url, props.rowData.name)">
         </template>
         <template slot="action" scope="props">
           <router-link :to="`/editForm/${props.rowData.id}`">
             <button
-              class="btn btn-warning"
+              class="btn btn-warning btn-sm"
               @click="showEditForm(props.rowData)">
               <span class="fas fa-edit"></span>
               Edit
             </button>
           </router-link>
           <button
-            class="btn btn-danger"
+            class="btn btn-danger btn-sm"
             @click="deleteProduct(props.rowData.id, props.rowData.name, props.rowData)">
             <span class="fas fa-trash-alt"></span>
              Delete
@@ -101,18 +101,23 @@ export default {
         {
           name: 'stock',
           title: 'Stock',
-          width: '10%',
+          width: '8%',
           sortField: 'stock'
         },
         {
           name: 'price',
           title: 'Price',
-          width: '20%',
+          width: '15%',
           sortField: 'price',
           formatter: (value) => {
             const price = +value
             return accounting.formatMoney(price, { symbol: 'Rp ', precision: 2, thousand: '.', decimal: ',' })
           }
+        },
+        {
+          name: 'category',
+          title: 'Category',
+          width: '15%'
         },
         {
           name: 'image',
@@ -122,7 +127,7 @@ export default {
         {
           name: 'action',
           title: 'Action',
-          width: '20%'
+          width: '25%'
         }
       ],
       sortOrder: [
@@ -194,7 +199,7 @@ export default {
                 Swal.fire({
                   icon: 'error',
                   title: 'There\'s an error occured',
-                  text: `${err.response}`
+                  text: `${err.response.data.error}`
                 })
               })
           } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -220,28 +225,36 @@ export default {
       var transformed = {}
 
       transformed.pagination = {
-        total: data.products.length,
-        per_page: 10,
-        current_page: 1,
-        // last_page: Math.ceil(this.total / this.per_page),
-        next_page_url: 'http://localhost:4000/products?page=2',
-        prev_page_url: null,
-        from: 1
-        // to: (this.current_page * this.per_page) + this.per_page
+        total: data.products.total,
+        per_page: data.products.per_page,
+        current_page: data.products.current_page,
+        last_page: data.products.last_page,
+        from: data.products.from,
+        to: data.products.to
       }
-      transformed.pagination.last_page = Math.ceil(transformed.pagination.total / transformed.pagination.per_page)
-      transformed.pagination.total = (transformed.pagination.current_page * transformed.pagination.per_page) + transformed.pagination.per_page
+      if (transformed.pagination.current_page === transformed.pagination.last_page) {
+        transformed.pagination.next_page_url = null
+      } else {
+        transformed.pagination.next_page_url = `${this.apiAddress}?page=${transformed.pagination.current_page + 1}`
+      }
+
+      if (transformed.pagination.current_page === 1) {
+        transformed.pagination.prev_page_url = null
+      } else {
+        transformed.pagination.prev_page_url = `${this.apiAddress}?page=${transformed.pagination.current_page - 1}`
+      }
 
       transformed.mydata = []
 
-      for (var i = 0; i < data.products.length; i++) {
+      for (var i = 0; i < data.products.data.length; i++) {
         transformed.mydata.push({
-          id: data.products[i].id,
-          name: data.products[i].name,
-          image_url: data.products[i].image_url,
-          price: data.products[i].price,
-          stock: data.products[i].stock,
-          categoryId: data.products[i].Category.id
+          id: data.products.data[i].id,
+          name: data.products.data[i].name,
+          image_url: data.products.data[i].image_url,
+          price: data.products.data[i].price,
+          stock: data.products.data[i].stock,
+          categoryId: data.products.data[i].Category.id,
+          category: data.products.data[i].Category.name
         })
       }
       return transformed
@@ -266,6 +279,9 @@ export default {
   },
   watch: {
     productSearch (search) {
+      this.debounceSearch()
+    },
+    productCategory (category) {
       this.debounceSearch()
     }
   }
