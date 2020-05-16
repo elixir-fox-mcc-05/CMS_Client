@@ -71,6 +71,7 @@ export default {
     }
   },
   created () {
+    this.$store.commit('changeLoginStatus')
     if (localStorage.token) {
       this.$router.push({ name: 'Dashboard' })
       this.$store.dispatch('fetchProductsList')

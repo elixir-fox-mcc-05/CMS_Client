@@ -5,16 +5,16 @@
         <nav class="blue darken-3">
           <div class="container">
             <div class="nav-wrapper">
-              <router-link to="/">E-Commerce</router-link>
+              <router-link to="/">Digi-Store</router-link>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-              <ul class="right hide-on-med-and-down">
+              <ul class="right hide-on-med-and-down" v-if="isLogin">
                 <li><router-link to="/dashboard">Dashboard</router-link></li>
                 <li><a @click.prevent="logoutUser">Logout</a></li>
               </ul>
             </div>
           </div>
         </nav>
-        <ul class="sidenav" id="mobile-demo">
+        <ul class="sidenav" id="mobile-demo" v-if="isLogin">
           <router-link to="/">Home</router-link>
           <router-link to="/dashboard">Dashboard</router-link>
         </ul>
@@ -29,6 +29,11 @@ import M from 'materialize-css/dist/js/materialize.min.js'
 
 export default {
   name: 'App',
+  data () {
+    return {
+      currentUserName: localStorage.currentUserName
+    }
+  },
   methods: {
     changeLoginStatus () {
       this.$store.commit('changeLoginStatus')
@@ -45,6 +50,7 @@ export default {
     }
   },
   mounted () {
+    this.changeLoginStatus()
     // sidebar
     const sidenav = document.querySelectorAll('.sidenav')
     M.Sidenav.init(sidenav)
