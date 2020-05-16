@@ -35,7 +35,7 @@
         </b-form>
       </b-container>
       <b-container>
-        <category></category>
+        <category :categories="categories"></category>
       </b-container>
     </b-col>
   </v-app>
@@ -58,8 +58,7 @@ export default {
     isLogin () {
       return this.$store.state.isLogin
     },
-    Categories () {
-      console.log(this.$store.state.categories)
+    categories () {
       return this.$store.state.categories
     }
   },

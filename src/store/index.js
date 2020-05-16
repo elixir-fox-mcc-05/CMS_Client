@@ -24,6 +24,12 @@ export default new Vuex.Store({
     },
     SET_TOKEN (state, payload) {
       state.token = payload
+    },
+    ADD_CATEGORIES (state, payload) {
+      state.categories.push(payload)
+    },
+    ADD_PRODUCT (state, payload) {
+      state.categories.push(payload)
     }
   },
   actions: {
@@ -49,7 +55,6 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.commit('SET_CATEGORIES', data.Category)
-          console.log(data.Category)
         })
     },
     login (context, payload) {
@@ -57,6 +62,64 @@ export default new Vuex.Store({
         method: 'post',
         url: baseUrl + 'user/login',
         data: payload
+      })
+    },
+    editCategories (context, payload) {
+      return axios({
+        method: 'put',
+        url: baseUrl + `category/${payload.id}`,
+        headers: {
+          token: payload.token
+        },
+        data: payload.data
+      })
+    },
+    deleteCategories (context, payload) {
+      return axios({
+        method: 'delete',
+        url: baseUrl + `category/${payload.id}`,
+        headers: {
+          token: payload.token
+        }
+      })
+    },
+    editProduct (context, payload) {
+      return axios({
+        method: 'put',
+        url: baseUrl + `product/${payload.id}`,
+        headers: {
+          token: payload.token
+        },
+        data: payload.data
+      })
+    },
+    deleteProduct (context, payload) {
+      return axios({
+        method: 'delete',
+        url: baseUrl + `category/${payload.id}`,
+        headers: {
+          token: payload.token
+        }
+      })
+    },
+    addCategories (context, payload) {
+      return axios({
+        method: 'POST',
+        url: baseUrl + 'category',
+        headers: {
+          token: payload.token
+        },
+        data: payload.data
+      })
+    },
+    addProduct (context, payload) {
+      return axios({
+        method: 'POST',
+        url: baseUrl + 'category',
+        headers: {
+          token: payload.token
+        },
+        data: payload.data
       })
     }
   },
