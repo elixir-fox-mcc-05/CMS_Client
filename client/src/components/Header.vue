@@ -1,12 +1,14 @@
 <template>
-  <el-button type="danger" @click="signOut" plain>Sign Out</el-button>
+    <el-page-header @back="logout" :content="content">
+    </el-page-header>
 </template>
 
 <script>
 export default {
-  name: 'NavDashboard',
+  name: 'Headers',
+  props: ['content'],
   methods: {
-    signOut () {
+    logout () {
       localStorage.removeItem('access_token')
       this.$store.commit('SET_IS_LOGIN', false)
       this.$store.commit('SET_IS_ADMIN', false)

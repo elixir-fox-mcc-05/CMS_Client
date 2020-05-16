@@ -40,18 +40,32 @@ export default {
           this.email = ''
           this.password = ''
 
+          this.success()
+
           this.$store.commit('SET_IS_ADMIN', data.isAdmin)
           this.$router.push({ path: '/' })
         })
         .catch(_ => {
           this.$store.commit('SET_ERROR_MSG', 'Not Found')
-          this.$store.commit('SET_ERROR_STATUS', true)
-          setTimeout(() => {
-            this.$store.commit('SET_ERROR_STATUS', false)
-          }, 2000)
+          this.warning()
         })
     },
+    success () {
+      this.$message({
+        message: 'Yup, you\'re logged in',
+        type: 'success'
+      })
+    },
+    warning () {
+      this.$message({
+        message: 'Hmmm, email or password wrong',
+        type: 'warning'
+      })
+    },
     cancel () { this.$router.push({ path: '/' }) }
+  },
+  created () {
+    if (localStorage.access_token) { this.$router.push({ path: '/' }) }
   }
 }
 </script>

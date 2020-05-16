@@ -1,11 +1,10 @@
 <template>
   <div class="home">
     <div v-if="this.admin">
-      <AdminDashboard></AdminDashboard>
+      <AdDashboard></AdDashboard>
     </div>
     <div v-else>
-    <NavDashboard v-if="setIsLogin()"></NavDashboard>
-    <Nav v-else-if="!setIsLogin()"></Nav>
+    <Nav v-if="!setIsLogin()"></Nav>
     <Carousel></Carousel>
     <Form></Form>
     <Cards></Cards>
@@ -19,8 +18,8 @@ import axios from 'axios'
 import Carousel from '@/components/Carousel.vue'
 import Cards from '@/components/Cards.vue'
 import Nav from '@/components/Navigation.vue'
-import NavDashboard from '@/components/NavDashboard.vue'
-import AdminDashboard from '@/components/AdminDashboard.vue'
+// import AdminDashboard from '@/components/AdminDashboard.vue'
+import AdDashboard from '@/components/AdDashboard.vue'
 
 export default {
   name: 'Home',
@@ -28,8 +27,8 @@ export default {
     Carousel,
     Cards,
     Nav,
-    NavDashboard,
-    AdminDashboard
+    // AdminDashboard,
+    AdDashboard
   },
   computed: {
     admin () {
@@ -62,3 +61,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.el-menu-demo {
+  margin: 0;
+}
+</style>

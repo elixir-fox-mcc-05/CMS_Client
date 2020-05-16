@@ -30,7 +30,7 @@ export default {
       price: '',
       stock: '',
       category: '',
-      categories: ['shoes', 'upper', 'belt', 'shock', 'sandals']
+      categories: ['shoes', 'upper', 'belt', 'socks', 'sandals']
     }
   },
   methods: {
@@ -51,14 +51,28 @@ export default {
       })
         .then(newProduct => {
           this.success()
-          // this.$router.push({ path: '/' })
+          this.$router.push({ path: '/' })
+
+          this.name = ''
+          this.image_url = ''
+          this.price = ''
+          this.stock = ''
+          this.category = ''
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          this.warning(err.message)
+        })
     },
     success () {
       this.$message({
         message: 'Yup, your product added',
         type: 'success'
+      })
+    },
+    warning (err) {
+      this.$message({
+        message: `Oops, ${err}`,
+        type: 'warning'
       })
     },
     cancel () { this.$router.push({ path: '/' }) }

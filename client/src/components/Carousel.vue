@@ -1,9 +1,12 @@
 <template>
+<div>
     <el-carousel indicator-position="outside">
     <el-carousel-item v-for="(item, o) in dashboard" :key="o">
       <img :src="item.img" alt="">
     </el-carousel-item>
-    </el-carousel>
+    </el-carousel><br>
+    <iframe width="930" height="480" src="https://www.youtube.com/embed/4l_nl1-oVu0?autoplay=1" frameborder="0" allow="autoplay;" allowfullscreen></iframe>
+</div>
 </template>
 
 <script>
@@ -12,9 +15,9 @@ export default {
   data () {
     return {
       dashboard: [
-        { img: 'https://dsw.scene7.com/is/image/DSWShoes/417337_125_ss_01?$colpg$' },
-        { img: 'https://www.static-src.com/siva/asset//09_2018/nike-legend-odyssey-react-microsite.jpg' },
-        { img: 'https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fwp-content%2Fblogs.dir%2F6%2Ffiles%2F2020%2F02%2Fnike-air-zoom-superrep-womens-hiit-class-sneakers-lime-green-purple-white-release-01.jpg?q=75&w=800&cbr=1&fit=max' }
+        { img: 'https://static.zara.net/photos//mkt/spots/ss20-north-tennis-collection-kids/subhome-xmedia-new-in//landscape_0.jpg?ts=1589529721098&imwidth=1362' },
+        { img: 'https://static.zara.net/photos//mkt/spots/ss20-north-shoes-bags-woman/subhome-xmedia-20//landscape_0.jpg?ts=1589566559772&imwidth=1362' },
+        { img: 'https://static.zara.net/photos//mkt/spots/ss20-north-collection-woman/subhome-xmedia-20-01//landscape_0.jpg?ts=1589566463249&imwidth=1362' }
       ]
     }
   }
@@ -26,7 +29,7 @@ export default {
   color: #475669;
   font-size: 18px;
   opacity: 0.75;
-  line-height: 300px;
+  line-height: 500px;
   margin: 0;
 }
 
