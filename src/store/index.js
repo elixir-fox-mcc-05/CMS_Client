@@ -43,7 +43,7 @@ export default new Vuex.Store({
     fetchAllProducts (context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/products',
+        url: 'https://peaceful-peak-29407.herokuapp.com/products',
         headers: {
           access_token: localStorage.access_token
         }

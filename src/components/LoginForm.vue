@@ -23,7 +23,7 @@ export default {
       }
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/login',
+        url: 'https://peaceful-peak-29407.herokuapp.com/login',
         data: signingUser
       })
         .then(result => {

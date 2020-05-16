@@ -34,7 +34,7 @@ export default {
     deleteProduct (id) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3000/products/${id}`,
+        url: `https://peaceful-peak-29407.herokuapp.com/products/${id}`,
         headers: {
           access_token: localStorage.access_token
         }

@@ -40,7 +40,7 @@ export default {
     editProductData (selectedId) {
       axios({
         method: 'PUT',
-        url: `http://localhost:3000/products/${selectedId}`,
+        url: `https://peaceful-peak-29407.herokuapp.com/products/${selectedId}`,
         headers: {
           access_token: localStorage.access_token
         },
@@ -66,7 +66,7 @@ export default {
       const selectedId = this.$route.params.id// Bisa kita dapatkan dengan this.$route.params.id
       axios({
         method: 'GET',
-        url: `http://localhost:3000/products/${selectedId}`,
+        url: `https://peaceful-peak-29407.herokuapp.com/products/${selectedId}`,
         headers: {
           access_token: localStorage.access_token
         }

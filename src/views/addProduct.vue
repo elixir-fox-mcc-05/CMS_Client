@@ -53,7 +53,7 @@ export default {
     addNewProduct () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/products',
+        url: 'https://peaceful-peak-29407.herokuapp.com/products',
         headers: {
           access_token: localStorage.access_token
         },
