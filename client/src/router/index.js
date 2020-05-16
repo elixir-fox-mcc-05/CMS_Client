@@ -6,6 +6,7 @@ import Register from '../views/Register'
 import AddProduct from '../views/AddProduct'
 import CategoryList from '../views/CategoryList'
 import AddCategory from '../views/AddCategory'
+import UserInfo from '../views/UserInfo'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,10 @@ const routes = [
   {
     path: '/addcategory',
     component: AddCategory
+  },
+  {
+    path: '/info',
+    component: UserInfo
   }
 ]
 

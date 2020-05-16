@@ -21,24 +21,34 @@ const store = new Vuex.Store({
     SET_PRODUCTS (state, payload) {
       state.products = payload
     },
-    SET_UPDATE (state, payload) {
+    SET_UPDATEPRODUCT (state, payload) {
       state.updateData = payload
     },
-    SET_DELETE (state, payload) {
+    SET_DELETEPRODUCT (state, payload) {
       state.deletedData = payload
     },
-    SET_ADD (state, payload) {
+    SET_ADDPRODUCT (state, payload) {
       state.addData = payload
     },
     SET_CATEGORIES (state, payload) {
+      // console.log(payload)
       state.categories = payload
+      // console.log('aso', state.categories)
     }
   },
   actions: {
     fetchProducts ({ commit }) {
-      return server.get('/products')
+      return server.get('/products/list', {
+        headers: {
+          token: localStorage.token
+        }
+      })
         .then(({ data }) => {
-          commit(this.SET_PRODUCTS, data)
+          console.log('buset', data.data)
+          commit('SET_PRODUCTS', data.data)
+        })
+        .catch(err => {
+          console.log(err.response)
         })
     },
     login ({ commit, state }, payload) {
@@ -59,9 +69,17 @@ const store = new Vuex.Store({
       })
     },
     fetchCategory ({ commit, state }) {
-      return server.get('/categories')
+      return server.get('/category', {
+        headers: {
+          token: localStorage.token
+        }
+      })
         .then(({ data }) => {
-          commit(this.SET_CATEGORIES, data)
+          console.log('category',data)
+          commit('SET_CATEGORIES', data.data)
+        })
+        .catch(err => {
+          console.log(err.response)
         })
     }
   },

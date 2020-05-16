@@ -9,14 +9,14 @@
                 <div class="p-1">
                     <b-menu class="is-custom-mobile">
                         <b-menu-list label="Menu"  v-if="loggedIn">
-                            <b-menu-item icon="information-outline" class="has-text-left" label="List" @click="$router.push('/menu')"></b-menu-item>
-                            <b-menu-item active expanded icon="settings"  class="has-text-left " label="Administrator">
-                                <b-menu-item icon="account" label="Add" @click.prevent="showAddProduct"></b-menu-item>
-                                <b-menu-item icon="cellphone-link" label="Info" @click.prevent="showAccInfo"></b-menu-item>
+                            <b-menu-item icon="information-outline" class="has-text-left" label="Account Info" @click="showAccInfo"></b-menu-item>
+                            <b-menu-item active icon="settings"  class="has-text-left " label="Product Menu">
+                                <b-menu-item icon="cellphone-link" label="Product List" @click.prevent="$router.push('/menu')"></b-menu-item>
+                                <b-menu-item icon="account" label="Add New Product" @click.prevent="showAddProduct"></b-menu-item>
                             </b-menu-item>
-                            <b-menu-item active expanded icon="settings"  class="has-text-left " label="Categories">
-                              <b-menu-item icon="cellphone-link" label="Info" @click.prevent="showCategoryList"></b-menu-item>
-                                <b-menu-item icon="account" label="Add" @click.prevent="showAddCategories"></b-menu-item>
+                            <b-menu-item active icon="settings"  class="has-text-left " label="Category Menu">
+                              <b-menu-item icon="cellphone-link" label="Categories List" @click.prevent="showAddCategories"></b-menu-item>
+                                <b-menu-item icon="account" label="Add Categories" @click.prevent="showCategoryList"></b-menu-item>
                             </b-menu-item>
                         </b-menu-list>
                         <b-menu-list label="Menu" v-if="!loggedIn">
@@ -50,25 +50,26 @@ export default {
     logout () {
       localStorage.clear()
       this.$store.state.loggedIn = false
+      this.$store.commit('SET_LOGIN', false)
       this.$router.push('/')
     },
     showAccInfo () {
-      this.$router.push()
+      this.$router.push('/info')
     },
     showAddProduct () {
       this.$router.push('/addproduct')
     },
-    showCategoryList(){
+    showCategoryList () {
       this.$router.push('/addcategory')
     },
-    showAddCategories(){
+    showAddCategories () {
       this.$router.push('/category')
     }
   },
   created () {
     if (localStorage.token) {
       this.$store.state.loggedIn = true
-      this.$store.dispatch('fetchproducts')
+      this.$store.dispatch('fetchProducts')
     } else {
       this.$router.push('/')
     }

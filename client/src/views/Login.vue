@@ -41,11 +41,19 @@ export default {
 
       this.$store.dispatch('login', data)
         .then(({ data }) => {
-          console.log('masuk')
-          this.$router.push('/menu')
-          const token = data.token
-          localStorage.setItem('token', token)
-          this.$store.commit(this.SET_LOGIN, true)
+          console.log(data)
+          if(data.roles == 'admin'){
+             console.log('masuk')
+              this.$router.push('/menu')
+              const token = data.token
+              const accountname = `${data.first_name} ${data.last_name}`
+              localStorage.setItem('token', token)
+              localStorage.setItem('AccountName', Accountname)
+              this.$store.commit(this.SET_LOGIN, true)
+          }else{
+            console.log('login must with admin account only')
+          }
+         
           // this.$store.state.loggedIn = true
           // this.$router.push({ name: 'Menu' })
         })
