@@ -24,6 +24,12 @@
             </b-input>
         </b-field>
 
+        <b-field label="Secret Password">
+            <b-input v-model="secretpassword" type="password"
+                password-reveal>
+            </b-input>
+        </b-field>
+
         <button @click.prevent="register" class="button is-dark">
             <b-icon icon="check"></b-icon>
             <span>Finish</span>
@@ -44,7 +50,9 @@ export default {
   },
   methods: {
     register () {
-      const newUser = {
+
+      if(this.secretpassword == 'bolulu'){
+        const newUser = {
         first_name: this.first_name,
         last_name: this.last_name,
         email: this.email,
@@ -58,6 +66,10 @@ export default {
         .catch(err => {
           console.log(err.response.data)
         })
+      }else{
+        console.log('gak bisa register admin yah??')
+      }
+      
     }
   },
   created () {

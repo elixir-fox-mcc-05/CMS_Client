@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex' 
+
 export default {
   name: 'Menu',
   data () {
@@ -41,10 +43,19 @@ export default {
       reduce: false
     }
   },
-  computed: {
-    loggedIn () {
+  watch: {
+    test(){
+      console.log(test)
       return this.$store.state.loggedIn
     }
+  },
+  computed: {
+    ...mapGetters({
+      loggedIn: 'getloggedIn'
+    })
+    // loggedIn () {
+    //   return this.$store.state.loggedIn
+    // }
   },
   methods: {
     logout () {
