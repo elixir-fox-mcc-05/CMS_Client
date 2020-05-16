@@ -3,3 +3,5 @@ demo
 exclusive-templates
 License.pdf
 tests
+.firebase
+dist
