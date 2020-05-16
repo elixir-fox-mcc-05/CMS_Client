@@ -18,9 +18,9 @@
           </div>
           <div class="form-group col-md-6">
             <label for="product-category">Category</label>
-            <select id="product-category" class="form-control">
-              <option selected>Choose...</option>
-              <option>...</option>
+            <select id="product-category" class="form-control" v-model="productCategory">
+              <option selected value="">Choose Category</option>
+              <option v-for="category in $store.state.categories" :key="category.id" :value="category.id">{{ category.name }}</option>
             </select>
           </div>
           <div class="form-group col-md-3">
@@ -44,7 +44,8 @@ export default {
       productName: '',
       productUrl: '',
       productPrice: '',
-      productStock: ''
+      productStock: '',
+      productCategory: ''
     }
   },
   methods: {
@@ -53,7 +54,8 @@ export default {
         name: this.productName,
         imageUrl: this.productUrl,
         price: this.productPrice,
-        stock: this.productStock
+        stock: this.productStock,
+        categoryId: this.productCategory
       }
 
       console.log(newProduct)
@@ -78,7 +80,13 @@ export default {
             text: `${err.response}`
           })
         })
+    },
+    getCategory () {
+      this.$store.dispatch('getAllCategory')
     }
+  },
+  created () {
+    this.getCategory()
   }
 }
 </script>

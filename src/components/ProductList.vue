@@ -9,10 +9,10 @@
         </div>
       </div>
       <div class="form-group col-md-4">
-        <select id="product-category" class="form-control">
-          <option selected>Choose Category</option>
-          <option>...</option>
-        </select>
+        <select id="product-category" class="form-control" v-model="productCategory">
+              <option selected value="">Choose Category</option>
+              <option v-for="category in $store.state.categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+            </select>
       </div>
     </div>
     <div class="product-table">
@@ -85,6 +85,7 @@ export default {
     return {
       apiAddress: 'http://localhost:4000/products',
       productSearch: '',
+      productCategory: '',
       fields: [
         {
           name: VuetableFieldSequence,
@@ -239,7 +240,8 @@ export default {
           name: data.products[i].name,
           image_url: data.products[i].image_url,
           price: data.products[i].price,
-          stock: data.products[i].stock
+          stock: data.products[i].stock,
+          categoryId: data.products[i].Category.id
         })
       }
       return transformed

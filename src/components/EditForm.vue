@@ -2,7 +2,7 @@
   <div class="form-container">
     <div class="form-box">
       <form @submit.prevent="editProduct">
-        <h1>Add New Product</h1>
+        <h1>Edit Product</h1>
         <div class="form-group">
             <label for="product-name">Product Name</label>
             <input type="text" class="form-control" id="product-name" v-model="productName" placeholder="Product Name">
@@ -18,9 +18,9 @@
           </div>
           <div class="form-group col-md-6">
             <label for="product-category">Category</label>
-            <select id="product-category" class="form-control">
-              <option selected>Choose...</option>
-              <option>...</option>
+            <select id="product-category" class="form-control" v-model="productCategory">
+              <option selected value="">Choose Category</option>
+              <option v-for="category in $store.state.categories" :key="category.id" :value="category.id">{{ category.name }}</option>
             </select>
           </div>
           <div class="form-group col-md-3">
@@ -45,7 +45,8 @@ export default {
       productName: '',
       productUrl: '',
       productPrice: '',
-      productStock: ''
+      productStock: '',
+      productCategory: ''
     }
   },
   methods: {
@@ -56,6 +57,7 @@ export default {
       this.productUrl = product.image_url
       this.productPrice = product.price
       this.productStock = product.stock
+      this.productCategory = product.categoryId
     },
     editProduct () {
       const product = {
@@ -63,7 +65,8 @@ export default {
         name: this.productName,
         imageUrl: this.productUrl,
         price: this.productPrice,
-        stock: this.productStock
+        stock: this.productStock,
+        categoryId: this.productCategory
       }
       this.$store.commit('set_product', product)
       this.$store.dispatch('editProduct')
@@ -78,6 +81,7 @@ export default {
           this.productUrl = ''
           this.productPrice = ''
           this.productStock = ''
+          this.productCategory = ''
           this.$router.push({ name: 'product' })
         })
         .catch(err => {

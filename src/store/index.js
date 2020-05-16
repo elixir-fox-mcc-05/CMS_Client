@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import server from '../api'
+import Swal from 'sweetalert2'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,9 @@ export default new Vuex.Store({
     collapsed: false,
     processedId: '',
     newProduct: {},
-    product: {}
+    product: {},
+    categories: [],
+    category: ''
   },
   mutations: {
     set_email (state, payload) {
@@ -35,6 +38,12 @@ export default new Vuex.Store({
     },
     set_product (state, payload) {
       state.product = payload
+    },
+    set_category (state, payload) {
+      state.category = payload
+    },
+    set_category_list (state, payload) {
+      state.categories = payload
     }
   },
   actions: {
@@ -54,12 +63,13 @@ export default new Vuex.Store({
     },
     addNewProduct ({ commit }) {
       const token = localStorage.access_token
-      const { name, imageUrl, price, stock } = this.state.newProduct
+      const { name, imageUrl, price, stock, categoryId } = this.state.newProduct
       return server.post('/products', {
         name,
         image_url: imageUrl,
         price,
-        stock
+        stock,
+        categoryId
       }, {
         headers: {
           access_token: token
@@ -68,13 +78,68 @@ export default new Vuex.Store({
     },
     editProduct ({ commit }) {
       const token = localStorage.access_token
-      const { id, name, imageUrl, price, stock } = this.state.product
+      const { id, name, imageUrl, price, stock, categoryId } = this.state.product
       return server.put(`/products/${id}`, {
         name,
         image_url: imageUrl,
         price,
-        stock
+        stock,
+        categoryId
       }, {
+        headers: {
+          access_token: token
+        }
+      })
+    },
+    getAllCategory ({ commit }) {
+      const token = localStorage.access_token
+      return server.get('/categories?sort=name|asc', {
+        headers: {
+          access_token: token
+        }
+      })
+        .then(({ data }) => {
+          this.commit('set_category_list', [])
+          const categories = []
+          data.categories.forEach(category => {
+            categories.push(category)
+          })
+          this.commit('set_category_list', categories)
+        })
+        .catch(err => {
+          console.log(err.response)
+          Swal.fire({
+            icon: 'error',
+            title: 'Something Went Wrong',
+            text: `${err.response.data.error}`
+          })
+        })
+    },
+    addCategory ({ commit }) {
+      const token = localStorage.access_token
+      const name = this.state.category
+      return server.post('/categories', {
+        name
+      }, {
+        headers: {
+          access_token: token
+        }
+      })
+    },
+    editCategory ({ commit }) {
+      const token = localStorage.access_token
+      const name = this.state.category
+      return server.put(`categories/${this.state.processedId}`, {
+        name
+      }, {
+        headers: {
+          access_token: token
+        }
+      })
+    },
+    deleteCategory ({ commit }) {
+      const token = localStorage.access_token
+      return server.delete(`/categories/${this.state.processedId}`, {
         headers: {
           access_token: token
         }

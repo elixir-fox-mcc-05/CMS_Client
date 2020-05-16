@@ -5,6 +5,7 @@ import Dashboard from '../views/Dashboard.vue'
 import Product from '../views/Product.vue'
 import AddProduct from '../views/AddProduct.vue'
 import EditProduct from '../views/EditProduct.vue'
+import Category from '../views/Category.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/editForm/:id',
     name: 'editForm',
     component: EditProduct
+  },
+  {
+    path: '/category',
+    name: 'category',
+    component: Category
   }
 ]
 
