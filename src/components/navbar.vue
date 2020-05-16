@@ -134,7 +134,7 @@ export default {
       console.log(this.userEmail)
       axios({
         method : 'post',
-        url : 'http://localhost:3000/users/login',
+        url : 'https://afternoon-beyond-11115.herokuapp.com/users/login',
         data : {
           email : this.userEmail,
           password : this.userPassword

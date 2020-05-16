@@ -176,7 +176,7 @@ export default {
     editCategory () {
       this.animatedClass = ``
       this.editHasError = false
-      Axios.put('http://localhost:3000/categories/edit', {
+      Axios.put('https://afternoon-beyond-11115.herokuapp.com/categories/edit', {
         id : this.editId,
         name : this.editName
       } , {
@@ -204,7 +204,7 @@ export default {
       }
       this.animatedClass = ``
       this.addHasError = false
-      Axios.post('http://localhost:3000/categories/add', {
+      Axios.post('https://afternoon-beyond-11115.herokuapp.com/categories/add', {
         name : this.addName
       } , {
         headers : {
@@ -236,7 +236,7 @@ export default {
       this.deleteIndex = index
     },
     deleteCategory () {
-      Axios.delete('http://localhost:3000/categories/delete', 
+      Axios.delete('https://afternoon-beyond-11115.herokuapp.com/categories/delete', 
       {
         data : { id : this.deleteId },
         headers : {
@@ -255,7 +255,7 @@ export default {
     if(this.$store.state.userInfo.role!=='admin') {
       this.$router.push('/')
     }
-    Axios.get('http://localhost:3000/categories')
+    Axios.get('https://afternoon-beyond-11115.herokuapp.com/categories')
           .then( ({ data }) => {
             console.log(data)
             this.categories = data.Category

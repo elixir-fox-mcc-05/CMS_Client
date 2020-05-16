@@ -258,7 +258,7 @@ export default {
             this.uploadDisabled = false
                 console.log(response)
                 this.uploadLabel = 'Choose a file'
-                Axios.post('http://localhost:3000/pictures/add', {
+                Axios.post('https://afternoon-beyond-11115.herokuapp.com/pictures/add', {
                     filename : response.secure_url,
                     ProductId : ProductId
                 })
@@ -285,7 +285,7 @@ export default {
     editProduct () {
       this.animatedClass = ``
       this.editHasError = false
-      Axios.put('http://localhost:3000/products/edit', {
+      Axios.put('https://afternoon-beyond-11115.herokuapp.com/products/edit', {
         id : this.editId,
         name : this.editName,
         price: this.editPrice,
@@ -320,7 +320,7 @@ export default {
       this.animatedClass = ``
       this.addHasError = false
     //   this.selectedCategoryName = CategoryName
-      Axios.post('http://localhost:3000/products/add', {
+      Axios.post('https://afternoon-beyond-11115.herokuapp.com/products/add', {
         name : this.addName,
         price : this.addPrice,
         stock : this.addStock,
@@ -359,7 +359,7 @@ export default {
       this.deleteIndex = index
     },
     deleteProduct () {
-      Axios.delete('http://localhost:3000/products/delete', 
+      Axios.delete('https://afternoon-beyond-11115.herokuapp.com/products/delete', 
       {
         data : { id : this.deleteId },
         headers : {

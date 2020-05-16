@@ -201,7 +201,7 @@ export default {
             this.merchantRegisterHasError = true;
             this.merchantRegisterError = `Check your password`
       } else {
-        axios.post('http://localhost:3000/users/register', 
+        axios.post('https://afternoon-beyond-11115.herokuapp.com/users/register', 
           {
             name : this.merchantName,
             email : this.merchantEmail,
@@ -239,7 +239,7 @@ export default {
             this.userRegisterHasError = true;
             this.userRegisterError = `Check your password`
       } else {
-        axios.post('http://localhost:3000/users/register', 
+        axios.post('https://afternoon-beyond-11115.herokuapp.com/users/register', 
           {
             name : this.userName,
             email : this.userEmail,
