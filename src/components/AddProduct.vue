@@ -98,6 +98,7 @@ export default {
         .then(response => {
           this.$store.commit('changeCurrentErr', '')
           this.$store.commit('changeCurrentNotif', response.data.notif)
+          this.$store.dispatch('fetchProductsList')
           this.$router.push({ name: 'ProductsTable' })
         })
         .catch(err => {

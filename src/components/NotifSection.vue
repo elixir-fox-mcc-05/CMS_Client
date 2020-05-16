@@ -11,6 +11,16 @@ export default {
     currentNotif () {
       return this.$store.state.currentNotif
     }
+  },
+  created () {
+    setTimeout(() => {
+      this.$store.commit('changeCurrentNotif', '')
+    }, 5000)
+  },
+  updated () {
+    setTimeout(() => {
+      this.$store.commit('changeCurrentNotif', '')
+    }, 5000)
   }
 }
 </script>

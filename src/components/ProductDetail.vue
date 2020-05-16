@@ -25,8 +25,17 @@
             <router-link :to="`/product/${product.id}/edit`"><button class="btn"><i class="material-icons left">edit</i>Edit Product</button></router-link>
           </div>
           <div class="col m4">
-            <button class="btn" @click.prevent="deleteProduct"><i class="material-icons left">delete</i>Delete Product</button>
+            <button class="btn modal-trigger" :href="`#modalDeleteFromDetail${product.id}`"><i class="material-icons left">delete</i>Delete Product</button>
           </div>
+        </div>
+      </div>
+      <div class="modal" :id="`modalDeleteFromDetail${product.id}`">
+        <div class="modal-content">
+          <p>Are you sure you want to delete this product?</p>
+        </div>
+        <div class="modal-footer">
+          <a @click.prevent="deleteProduct" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+          <a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
         </div>
       </div>
     </div>
@@ -36,6 +45,8 @@
 
 <script>
 import server from '../api/index'
+import M from 'materialize-css/dist/js/materialize.min.js'
+
 export default {
   name: 'ProductDetail',
   data () {
@@ -70,6 +81,7 @@ export default {
         .then(response => {
           this.$store.commit('changeCurrentErr', '')
           this.$store.commit('changeCurrentNotif', response.data.notif)
+          this.$store.dispatch('fetchProductsList')
           this.$router.push({ name: 'ProductsTable' })
         })
         .catch(err => {
@@ -80,6 +92,10 @@ export default {
   },
   created () {
     this.getProductById()
+  },
+  mounted () {
+    const modal = document.querySelectorAll('.modal')
+    M.Modal.init(modal)
   }
 }
 </script>

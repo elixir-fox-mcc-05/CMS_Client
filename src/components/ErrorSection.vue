@@ -16,6 +16,16 @@ export default {
     currentErr () {
       return this.$store.state.currentErr
     }
+  },
+  created () {
+    setTimeout(() => {
+      this.$store.commit('changeCurrentErr', '')
+    }, 5000)
+  },
+  updated () {
+    setTimeout(() => {
+      this.$store.commit('changeCurrentErr', '')
+    }, 5000)
   }
 }
 </script>
