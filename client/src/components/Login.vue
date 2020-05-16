@@ -76,7 +76,7 @@ export default {
             .then(result=>{
                 localStorage.setItem('token',result.data.token)
                 this.errRes = ''
-                this.$router.push('/dashboard')
+                this.$router.push('/products')
             })
             .catch(err=>{
                 this.errRes = err.response.data.msg
