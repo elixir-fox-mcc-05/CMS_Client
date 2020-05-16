@@ -58,7 +58,6 @@ export default {
         categoryId: this.productCategory
       }
 
-      console.log(newProduct)
       this.$store.commit('set_new_product', newProduct)
       this.$store.dispatch('addNewProduct')
         .then(({ data }) => {
@@ -77,7 +76,7 @@ export default {
           Swal.fire({
             icon: 'error',
             title: 'Something Went Wrong',
-            text: `${err.response}`
+            text: `${err.response.data.error}`
           })
         })
     },

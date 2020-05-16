@@ -85,7 +85,6 @@ export default {
           this.$router.push({ name: 'product' })
         })
         .catch(err => {
-          console.log(err.response)
           Swal.fire({
             icon: 'error',
             title: 'Something Went Wrong',

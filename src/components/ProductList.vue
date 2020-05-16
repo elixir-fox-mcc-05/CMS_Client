@@ -232,6 +232,7 @@ export default {
         from: data.products.from,
         to: data.products.to
       }
+
       if (transformed.pagination.current_page === transformed.pagination.last_page) {
         transformed.pagination.next_page_url = null
       } else {

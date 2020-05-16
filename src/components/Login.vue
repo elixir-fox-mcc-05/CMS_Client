@@ -18,18 +18,29 @@
                     </div>
                     <button type="submit" class="btn-login">SUBMIT</button>
                 </form>
+                <Error
+                    v-if="errorDetected"
+                    :alertMessage="alertMessage"
+                ></Error>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Error from '@/components/Error.vue'
+
 export default {
   name: 'Login',
+  components: {
+    Error
+  },
   data () {
     return {
       loginEmail: '',
-      loginPassword: ''
+      loginPassword: '',
+      alertMessage: '',
+      errorDetected: false
     }
   },
   methods: {
@@ -42,10 +53,13 @@ export default {
           this.$router.push({ name: 'dashboard' })
           this.loginEmail = ''
           this.loginPassword = ''
+          this.errorDetected = false
+          this.alertMessage = ''
           this.$store.commit('set_login_status', true)
         })
         .catch(err => {
-          console.log(err.response)
+          this.alertMessage = err.response.data.error
+          this.errorDetected = true
         })
     }
   }

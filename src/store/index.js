@@ -107,7 +107,6 @@ export default new Vuex.Store({
           this.commit('set_category_list', categories)
         })
         .catch(err => {
-          console.log(err.response)
           Swal.fire({
             icon: 'error',
             title: 'Something Went Wrong',
