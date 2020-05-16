@@ -18,7 +18,14 @@
         <b-button variant="primary" href="#products"
           >your product list</b-button
         > |
-        <b-button variant="success">add new product</b-button>
+        <b-button variant="success" v-b-modal.modal-create>Add New Product</b-button>
+
+        <b-modal id="modal-create" ref="modal-create" title="Create a new product">
+          <FormCreateProduct @closeModal="closeModal" />
+          <template v-slot:modal-footer>
+            <div class="w-100 h-auto"></div>
+          </template>
+        </b-modal>
       </b-jumbotron>
     </div>
     <div>
@@ -38,9 +45,18 @@
 </template>
 
 <script>
+import FormCreateProduct from '@/components/forms/FormCreateProduct'
+
 export default {
   name: 'DashboardHeader',
-  methods: {},
+  components: {
+    FormCreateProduct
+  },
+  methods: {
+    closeModal () {
+      this.$refs['modal-create'].hide()
+    }
+  },
   computed: {
     version () {
       return this.$store.state.version

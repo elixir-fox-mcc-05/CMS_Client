@@ -34,6 +34,25 @@ export default new Vuex.Store({
           access_token: localStorage.getItem('access_token')
         }
       })
+    },
+    createProduct (context, payload) {
+      return axiosShot({
+        methos: 'POST',
+        url: '/products',
+        data: payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+    deleteProduct (context, payload) {
+      return axiosShot({
+        method: 'DELETE',
+        url: '/products/' + payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
     }
   },
   modules: {}

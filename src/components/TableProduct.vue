@@ -12,6 +12,15 @@
         :per-page="perPage"
         :current-page="currentPage"
       >
+        <template v-slot:cell(id)="data">
+          <b-button variant="outline-warning" @click="updateProduct(data.value)"
+            >Edit</b-button
+          >
+          -
+          <b-button variant="outline-danger" @click="deleteProduct(data.value)"
+            >Delete</b-button
+          >
+        </template>
       </b-table>
     </div>
     <div class="d-flex justify-content-center">
@@ -22,6 +31,14 @@
         aria-controls="my-table"
       ></b-pagination>
     </div>
+    <!-- // ========================== // Modal // ========================== -->
+    <div>
+      <b-modal id="modal-edit" ref="modal-edit" title="Edit Product">
+        <template v-slot:modal-footer>
+          <div class="w-100 h-auto"></div>
+        </template>
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -30,7 +47,9 @@ export default {
   name: 'TableProduct',
   data () {
     return {
-      perPage: 7,
+      idProduct: '',
+      show: false,
+      perPage: 5,
       currentPage: 1,
       sortBy: 'id',
       sortDesc: false,
@@ -53,6 +72,23 @@ export default {
         .catch(({ err }) => {
           console.log(err)
         })
+    },
+    deleteProduct (id) {
+      this.$store
+        .dispatch('deleteProduct', id)
+        .then(({ data }) => {
+          this.fetchProducts()
+        })
+        .catch(({ err }) => {
+          console.log(err)
+        })
+    },
+    updateProduct (id) {
+      this.idProduct = id
+      this.$refs['modal-edit'].show()
+    },
+    closeModal () {
+      this.$refs['modal-edit'].hide()
     }
   },
   computed: {

@@ -6,7 +6,8 @@
           E-commerce<br />
           Administrator
         </h2>
-        <p>Sign In to access admin dashboard.</p>
+        <p>Sign In to access admin dashboard.</p><hr />
+        <p>DEMO <br />email: admin@admin.admin <br />password: admin</p>
       </div>
     </div>
     <div class="main">
