@@ -18,7 +18,7 @@
         <div>
           <a href=""><i class="material-icons">arrow_back</i></a> |
           <router-link :to="`/product/${product.id}/edit`"><i class="material-icons">edit</i></router-link> |
-          <a href=""><i class="material-icons">delete</i></a>
+          <a @click.prevent="deleteProduct"><i class="material-icons">delete</i></a>
         </div>
       </div>
     </div>
@@ -47,6 +47,21 @@ export default {
       })
         .then(response => {
           this.product = response.data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteProduct () {
+      server({
+        method: 'delete',
+        url: `/product/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(response => {
+          console.log(response.data.notif)
         })
         .catch(err => {
           console.log(err)

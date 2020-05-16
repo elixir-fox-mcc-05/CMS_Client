@@ -27,7 +27,7 @@
             <td>{{ product.price }}</td>
             <td>
               <router-link :to="`/product/${product.id}/edit`"><i class="material-icons">edit</i></router-link>  |
-              <a href=""><i class="material-icons">delete</i></a>
+              <a @click.prevent="deleteProduct(product.id)"><i class="material-icons">delete</i></a>
             </td>
           </tr>
         </tbody>
@@ -37,11 +37,30 @@
 </template>
 
 <script>
+import server from '../api/index'
+
 export default {
   name: 'ProductsTable',
   computed: {
     productsList () {
       return this.$store.state.productsList
+    }
+  },
+  methods: {
+    deleteProduct (id) {
+      server({
+        method: 'delete',
+        url: `/product/${id}`,
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(response => {
+          console.log(response.data.notif)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   created () {

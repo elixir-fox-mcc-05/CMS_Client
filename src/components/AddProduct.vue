@@ -5,7 +5,7 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">format_size</i>
-          <input v-model="newProduct.name" id="newProductName" type="text" class="validate">
+          <input v-model="newProduct.name" id="newProductName" type="text">
           <label for="first_name">Name</label>
         </div>
       </div>
@@ -54,13 +54,14 @@
           <label for="newProductImgUrl">Image URL</label>
         </div>
       </div>
-      <button class="btn"><i class="material-icons left">add_box</i>Add Product</button>
+      <button class="btn" @click.prevent="addNewProduct"><i class="material-icons left">add_box</i>Add Product</button>
     </form>
   </div>
 </template>
 
 <script>
 import M from 'materialize-css/dist/js/materialize.min.js'
+import server from '../api/index'
 
 export default {
   name: 'AddProduct',
@@ -74,6 +75,31 @@ export default {
         stock: '',
         image_url: ''
       }
+    }
+  },
+  methods: {
+    addNewProduct () {
+      server({
+        method: 'post',
+        url: '/product',
+        headers: {
+          token: localStorage.token
+        },
+        data: {
+          name: this.newProduct.name,
+          category: this.newProduct.category,
+          description: this.newProduct.description,
+          price: this.newProduct.price,
+          stock: this.newProduct.stock,
+          image_url: this.newProduct.image_url
+        }
+      })
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   mounted () {

@@ -5,8 +5,8 @@
     <ErrorSection></ErrorSection>
     <div class="center">
       <router-link to="/product"><a>Products</a></router-link> |
-      <router-link to="/product"><a>Orders</a></router-link> |
-      <router-link to="/product"><a>Customers</a></router-link>
+      <router-link to="/dashboard"><a>Orders</a></router-link> |
+      <router-link to="/dashboard"><a>Customers</a></router-link>
     </div>
     <router-view/>
   </div>
