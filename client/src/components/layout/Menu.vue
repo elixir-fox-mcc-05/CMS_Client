@@ -46,13 +46,13 @@ export default {
   watch: {
     test(){
       console.log(test)
-      return this.$store.state.loggedIn
+      this.loggedin = this.$store.state.loggedIn
     }
   },
   computed: {
-    ...mapGetters({
-      loggedIn: 'getloggedIn'
-    })
+    loggedIn(){
+      return this.$store.getters.loggedIn
+    }
     // loggedIn () {
     //   return this.$store.state.loggedIn
     // }

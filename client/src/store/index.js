@@ -84,9 +84,7 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    getloggedIn(state){
-      return state.loggedIn
-    }
+    loggedIn: state => state.loggedIn
   },
   modules: {
   }

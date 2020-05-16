@@ -48,8 +48,10 @@ export default {
               const token = data.token
               const accountname = `${data.first_name} ${data.last_name}`
               localStorage.setItem('token', token)
-              localStorage.setItem('AccountName', Accountname)
-              this.$store.commit(this.SET_LOGIN, true)
+              localStorage.setItem('AccountName', accountname)
+              // this.$store.state.loggedIn
+              this.$store.commit('SET_LOGIN', true)
+              console.log('asdasd loggedIn',this.$store.state.loggedIn)
           }else{
             console.log('login must with admin account only')
           }
