@@ -6,12 +6,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    products: []
+    products: [],
+    productnames: [],
+    productstock: []
   },
   // plugins: [createPersistedState()],
   mutations: {
     SET_PRODUCT (state, dataBaru) {
       state.products = dataBaru
+    },
+    SET_PRODUCT_NAMES (state, newdata) {
+      state.productnames = newdata
+    },
+    SET_PRODUCT_STOCK (state, newdata) {
+      state.productstock = newdata
     }
   },
   actions: {
@@ -24,9 +32,18 @@ export default new Vuex.Store({
         }
       })
         .then(result => {
-          console.log('actions fetch >>')
           const newproducts = result.data.data
-          console.log('fetsch run', newproducts)
+          const newproductnames = []
+          const newproductstock = []
+          console.log('fetch run', newproducts)
+          for (const i in newproducts) {
+            console.log(i, newproducts[i])
+            newproductnames.push(newproducts[i].name)
+            newproductstock.push([newproducts[i].stock])
+          }
+          console.log(newproductnames, newproductstock)
+          context.commit('SET_PRODUCT_NAMES', newproductnames)
+          context.commit('SET_PRODUCT_STOCK', newproductstock)
           context.commit('SET_PRODUCT', newproducts)
         })
         .catch(err => {

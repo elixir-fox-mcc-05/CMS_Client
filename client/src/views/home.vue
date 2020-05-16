@@ -3,10 +3,6 @@
       <div class="sidenav">
         <router-link to="/home/category/tablecategory">Dashboard</router-link>
         <router-link to="/home/stock/tabelstock">Stock</router-link>
-         <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
         <button @click.prevent="logout">Log Out</button>
       </div>
       <dir class="main">

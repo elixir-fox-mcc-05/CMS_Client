@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container1">
         <div class="top"></div>
         <div class="bottom"></div>
         <div class="center">
@@ -34,7 +34,7 @@ export default {
         .then(result => {
           localStorage.setItem('token', result.data.token)
           localStorage.setItem('email', this.email)
-          this.$router.push('home')
+          this.$router.push('home/category/tablecategory')
         })
         .catch(err => {
           if (err) {
@@ -47,7 +47,7 @@ export default {
   },
   created () {
     if (localStorage.token) {
-      this.$router.push('home')
+      this.$router.push('home/category/tablecategory')
     }
   }
 }
@@ -63,18 +63,18 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
-.container {
+.container1 {
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-.container:hover .top:before, .container:hover .top:after, .container:hover .bottom:before, .container:hover .bottom:after, .container:active .top:before, .container:active .top:after, .container:active .bottom:before, .container:active .bottom:after {
+.container1:hover .top:before, .container1:hover .top:after, .container1:hover .bottom:before, .container1:hover .bottom:after, .container1:active .top:before, .container1:active .top:after, .container1:active .bottom:before, .container1:active .bottom:after {
   margin-left: 200px;
   transform-origin: -200px 50%;
   transition-delay: 0s;
 }
-.container:hover .center, .container:active .center {
+.container1:hover .center, .container1:active .center {
   opacity: 1;
   transition-delay: 0.2s;
 }

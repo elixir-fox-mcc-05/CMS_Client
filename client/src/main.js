@@ -12,6 +12,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { Vuetable, VuetablePagination, VuetablePaginationInfo } from 'vuetable-2'
 import Datatable from 'vue2-datatable-component'
 import * as firebase from 'firebase'
+import VueGraph from 'vue-graph'
+
 var firebaseConfig = {
   apiKey: 'AIzaSyDr-YMLJpW779p8L1s9sgJQsEbSCxVCkp8',
   authDomain: 'g-ecommers.firebaseapp.com',
@@ -34,6 +36,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(Vuesax)
 Vue.config.productionTip = false
+Vue.use(VueGraph)
 Vue.use(Toasted)
 new Vue({
   router,

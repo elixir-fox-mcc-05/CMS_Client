@@ -1,5 +1,15 @@
 <template>
-  <datatable v-bind="$data" />
+  <graph-bar
+            :width="600"
+            :height="400"
+            :axis-min="0"
+            :axis-max="1500"
+            :labels="[ 'Stock' ]"
+            :values="prodstock">
+        <note :text="'Bar Chart'"></note>
+        <tooltip :names="prodname" :position="'left'"></tooltip>
+        <legends :names="prodname" :filter="true"></legends>
+    </graph-bar>
 </template>
 
 <script>
@@ -7,42 +17,25 @@
 export default {
   name: 'categoryTable',
   data: () => ({
-    columns: [
-      { title: 'User ID', field: 'id', sortable: true },
-      { title: 'Username', field: 'name' },
-      { title: 'Age', field: 'age', sortable: true },
-      { title: 'Email', field: 'email' },
-      { title: 'Country', field: 'country' }
-    ],
-    data: [{ id: 1, name: 'aku', age: 20, email: 'aku', couny: 'indoneis' }],
-    total: 0,
-    query: {}
+    // names: prodname,
+    // values: prodstock
   }),
   computed: {
     prod () {
       return this.$store.state.products
+    },
+    prodname () {
+      return this.$store.state.productnames
+    },
+    prodstock () {
+      return this.$store.state.productstock
     }
   },
   created () {
-    console.log('created')
     this.$store.dispatch('fetchProduct')
-    // this.prod = this.$store.state.products
-    console.log('category start', this.$store.state.products)
-    // this.dataitems = this.$store.state.products
-    // this.$refs.vuetable.refresh()
-    // console.log('created', this.dataitems, this.$store.state.products.data)
+    console.log(this.prod)
   }
-  // watch: {
-  //   query: {
-  //     handler (query) {
-  //       mockData(query).then(({ rows, total }) => {
-  //         this.data = rows
-  //         this.total = total
-  //       })
-  //     },
-  //     deep: true
-  //   }
-  // }
+
 }
 </script>
 

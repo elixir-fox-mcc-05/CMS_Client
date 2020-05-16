@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <vs-button color="primary" type="filled" to="/home/category/addcategory">add category</vs-button>
+            <h1>Dashboard Stock Items</h1>
         </div>
             <router-view></router-view>
     </div>
