@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <button @click.prevent="showAddForm" class="btn btn-primary mb-3" type="button">Add</button>
-    <table class="table table-sm table-hover table-striped">
+    <div class="add-btn bg-primary text-white" @click.prevent="showAddForm">
+      <i class="fas fa-plus"></i>
+    </div>
+    <table class="table table-sm table-hover table-striped mt-4">
       <thead>
         <tr>
           <th>Image</th>
@@ -19,9 +21,13 @@
           <td>{{ priceInRupiah(product.price) }}</td>
           <td>{{ product.stock }}</td>
           <td>{{ product.category }}</td>
-          <td class="btn-action">
-            <button @click.prevent="$store.commit('changeIndexProduct', i)" class="btn btn-primary" type="button">Edit</button>
-            <button @click.prevent="$store.commit('changeIndexProduct2', i)" class="btn btn-primary" type="button">Delete</button>
+          <td>
+            <a @click.prevent="$store.commit('changeIndexProduct', i)" class="btn btn-warning text-white" type="button">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a @click.prevent="$store.commit('changeIndexProduct2', i)" class="btn btn-danger text-white ml-4" type="button">
+              <i class="fas fa-trash-alt"></i>
+            </a>
           </td>
         </tr>
       </tbody>
@@ -123,12 +129,38 @@ export default {
 </script>
 
 <style>
-    img {
-        width: 150px;
-        height: 200px;
-    }
-    btn-action {
-        display: flex;
-        flex-direction: column !important;
-    }
+  @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap');
+  img {
+      width: 100px;
+      height: 100px;
+  }
+  .table {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  }
+  thead tr th {
+    font-family: 'Balsamiq Sans';
+    font-size: 20px;
+  }
+  .add-btn {
+    position: fixed;
+    bottom: 80px;
+    right: 15px;
+    background-color: #05d595;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    border-radius: 20%;
+    justify-content: center;
+    align-items: center;
+    transition: .5s;
+    cursor: pointer;
+  }
+  .add-btn i {
+    font-size: 30px;
+    color: white;
+  }
+  .add-btn:hover {
+    transform: scale(1.2);
+    font-weight: bold;
+  }
 </style>

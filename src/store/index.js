@@ -25,11 +25,9 @@ export default new Vuex.Store({
     },
     changeIndexProduct (state, payload) {
       this.state.indexProduct = payload
-      console.log(this.state.indexProduct)
     },
     changeIndexProduct2 (state, payload) {
       this.state.indexProduct2 = payload
-      console.log(this.state.indexProduct2)
     }
   },
   actions: {
@@ -42,7 +40,6 @@ export default new Vuex.Store({
         .then(response => {
           let { data } = response
           data = data.Products
-          console.log(data)
           commit('getProductsData', data)
         })
         .catch(err => {

@@ -27,10 +27,14 @@
             <div class="form-group">
                 <label for="image_url">Image URL</label>
                 <input type="text" image_url="image_url" placeholder="Product image_url" class="form-control" v-model="image_url">
-                <div v-html="feedback"></div>
+                <div v-for="(feedback,i) in feedbacks" :key="i">
+                  <div v-html="feedback"></div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button @click.prevent ="showProductList" class="btn btn-primary ml-2">Cancel</button>
+            <div class="btn-form">
+              <button type="submit" class="btn btn-success">Submit</button>
+              <button @click.prevent ="showProductList" class="btn btn-danger ml-2">Cancel</button>
+            </div>
         </form>
     </div>
 </template>
@@ -48,7 +52,7 @@ export default {
       price: '',
       category: '',
       image_url: '',
-      feedback: ''
+      feedbacks: []
     }
   },
   computed: {
@@ -83,7 +87,7 @@ export default {
           this.category = ''
           this.stock = ''
           this.image_url = ''
-          this.feedback = ''
+          this.feedbacks = ''
           Swal.fire(
             'Good job!',
             'Succsessfully Edit Item!',
@@ -94,8 +98,18 @@ export default {
           err = err.response
           const { data } = err
           const error = data.message
-          for (let i = 0; i < error.length; i++) {
-            console.log(error[i].message)
+          if (error.length > 0) {
+            this.feedbacks = []
+            for (let i = 0; i < error.length; i++) {
+              const temp = `<p>${error[i].message}</p>`
+              this.feedbacks.push(temp)
+            }
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error.message
+            })
           }
         })
     }
@@ -111,4 +125,8 @@ export default {
 </script>
 
 <style>
+  .btn-form {
+    display: flex;
+    justify-content: center;
+  }
 </style>
