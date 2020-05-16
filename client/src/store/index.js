@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     baseUrl: 'http://localhost:3000',
-    product: []
+    product: [],
+    category: [],
   },
   mutations: {
     GET_PRODUCT() {
@@ -20,7 +21,20 @@ export default new Vuex.Store({
         })
         .catch(err=>{
         })
-    }
+    },
+    GET_CATEGORY() {
+      Axios({
+          method: 'get',
+          url: this.state.baseUrl+'/category'
+      })
+      .then(result=>{
+        this.state.category = result.data
+        console.log(result)
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+  }
   },
   actions: {
   },

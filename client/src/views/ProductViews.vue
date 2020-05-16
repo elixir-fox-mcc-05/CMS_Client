@@ -42,21 +42,75 @@
                                 <input type="text" class="form-control" placeholder="Product Image Url/Link" v-model="productForm.imgUrl">
                             </div>
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">Select Product Category</label>
-                                <select class="form-control" id="exampleFormControlSelect1" v-model="productForm.category_id">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                </select>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" aria-label="Text input with dropdown button" :placeholder="selCatName" disabled>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        v-if="category.length > 0"
+                                        >Select Category</button>
+                                        <div class="dropdown-menu">
+                                            <a
+                                            class="dropdown-item"
+                                            @click.prevent="selectCatAddProd(0,'Uncategory')"
+                                            > Uncategory </a>
+                                            <a class="dropdown-item" 
+                                            v-for="(cat,i) in category" :key="i"
+                                            @click.prevent="selectCatAddProd(cat.id,cat.name)"
+                                            >
+                                                {{ cat.name }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>                
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button> 
                             <button type="button" class="btn btn-danger" @click.prevent="cancelBtn">Cancel</button>
                         </form>
                     </div>
+
+                    <!-- end nav -->
                     
-                    <div class="table-responsive" v-if="!addBtn">
+                    <div class="input-group row" v-if="!addBtn">
+                        <div class="input-group-prepend col-9">
+                            <button class="btn btn-outline-secondary dropdown-toggle btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            v-if="category.length > 0"
+                            >Filter by Category</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                @click.prevent="showAllProduct"
+                                >
+                                    All
+                                </a>
+                                <a class="dropdown-item"
+                                @click.prevent="sortByCategory(0)"
+                                >
+                                    Uncategory
+                                </a>
+                                <a class="dropdown-item" 
+                                v-for="(cat,i) in category" :key="i"
+                                @click.prevent="sortByCategory(cat.id)"
+                                >
+                                    {{ cat.name }}
+                                </a>
+                            </div>
+                        </div>
+                        <form @submit.prevent="addCat">
+                            <div class="form-row align-items-center">
+                                <div class="col-auto">
+                                    <label class="sr-only" for="inlineFormInput">Name</label>
+                                    <input type="text" class="form-control" v-model="categoryForm.name" placeholder="Add New Category">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-outline-secondary">Add</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div> <br>
+                    
+                    <!-- show by category -->
+                    <div class="table-responsive"
+                    v-if="!addBtn && seletedCategory || seletedCategory === 0"
+                    >
                         <table class="table table-striped table-sm">
                             <thead>
                                 <tr>
@@ -65,6 +119,40 @@
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Category</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(product,i) in sortByCat" :key="i">
+                                    <td>
+                                        <img :src="product.imgUrl" :alt="product.title" width="100px" height="100px">
+                                    </td>
+                                    <td>{{ product.stock }}</td>
+                                    <td>{{ product.name }}</td>
+                                    <td>Rp.{{ convertToRp(product.price) }}</td>
+                                    <td>{{ product.category_id }}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm btn-block">Edit</button>
+                                        <button class="btn btn-danger btn-sm btn-block">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- show all -->
+                    <div class="table-responsive" 
+                    v-else
+                    >
+                        <table class="table table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Stock</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Category</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,10 +164,15 @@
                                     <td>{{ product.name }}</td>
                                     <td>Rp.{{ convertToRp(product.price) }}</td>
                                     <td>{{ product.category_id }}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm btn-block">Edit</button>
+                                        <button class="btn btn-danger btn-sm btn-block">Delete</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                    
                 </main>
             </div>
         </div>
@@ -97,14 +190,21 @@ export default {
         return {
             baseUrl : '',
             products: [],
+            category: [],
             addBtn: false,
-            productForm : {
+            seletedCategory: '',
+            selCatName: '',
+            sortByCat: [],
+            productForm: {
                 name : '',
                 description : '',
                 price : '',
                 stock : '',
                 imgUrl : '',
                 category_id : '',
+            },
+            categoryForm: {
+                name: ''
             },
             addSuc: '',
             addErr: '',
@@ -129,28 +229,44 @@ export default {
         },
         addProductSubmit() {
             let { name,description,price,stock,imgUrl,category_id } = this.productForm
+            console.log(this.productForm)
+            // Axios({
+            //     method: 'post',
+            //     url: this.baseUrl+'/product',
+            //     data: {
+            //         name,description,price,stock,imgUrl,category_id
+            //     }
+            // })
+            // .then(result=>{
+            //     this.addSuc = ''
+            //     this.addErr = ''
+            //     this.productForm.name = '',
+            //     this.productForm.description = '',
+            //     this.productForm.price = '',
+            //     this.productForm.stock = '',
+            //     this.productForm.imgUrl = '',
+            //     this.productForm.category_id = ''
+            //     this.addSuc = 'Succesfully adding product'
+            // })
+            // .catch(err=>{
+            //     this.addSuc = ''
+            //     this.addErr = ''
+            //     this.addErr = err.response.data.msg
+            // })
+        },
+        addCat() {
             Axios({
                 method: 'post',
-                url: this.baseUrl+'/product',
+                url: this.baseUrl+'/category',
                 data: {
-                    name,description,price,stock,imgUrl,category_id
+                    name: this.categoryForm.name
                 }
             })
             .then(result=>{
-                this.addSuc = ''
-                this.addErr = ''
-                this.productForm.name = '',
-                this.productForm.description = '',
-                this.productForm.price = '',
-                this.productForm.stock = '',
-                this.productForm.imgUrl = '',
-                this.productForm.category_id = ''
-                this.addSuc = 'Succesfully adding product'
+                console.log(result)
             })
             .catch(err=>{
-                this.addSuc = ''
-                this.addErr = ''
-                this.addErr = err.response.data.msg
+                console.log(err)
             })
         },
         cancelBtn(){
@@ -162,12 +278,32 @@ export default {
             stock = '',
             imgUrl = '',
             category_id = ''
+        },
+        sortByCategory(id) {
+            this.seletedCategory = id
+            let newCat = []
+            this.$store.state.product.forEach(elem => {
+                if (elem.category_id === id) {
+                    newCat.push(elem)
+                }
+            });
+            this.sortByCat = newCat
+            console.log(this.sortByCat,this.seletedCategory)
+        },
+        showAllProduct() {
+            this.seletedCategory = ''
+        },
+        selectCatAddProd(id,name) {
+            this.productForm.category_id = id
+            this.selCatName = name
         }
     },
     created(){
         this.baseUrl = this.$store.state.baseUrl
         this.products = this.$store.state.product
+        this.category = this.$store.state.category
         this.$store.commit('GET_PRODUCT')
+        this.$store.commit('GET_CATEGORY')
     }
 }
 </script>
@@ -175,6 +311,15 @@ export default {
 <style>
 #addProduct button {
     margin-right:15px ;
+}
+
+tbody tr {
+    box-shadow: none;
+    animation: 1s;
+}
+
+tbody tr:hover {
+    box-shadow: -1px 0px 14px -9px rgba(0,0,0,0.75);
 }
 
 </style>
