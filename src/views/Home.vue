@@ -1,27 +1,34 @@
 <template>
-  <div class="container homepage">
-    <img src="../assets/ecommerce.png" alt="">
-    <div @submit.prevent="submitLogin" class="form-container">
-      <h2 class="text-center mt-1">Login</h2>
-      <form action="" class="mt-4">
-          <div class="form-group">
-              <label for="email">Email</label>
-              <input type="text" name="email" placeholder="Your Email" class="form-control" v-model="email">
-          </div>
-          <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" name="password" placeholder="Your Password" class="form-control" v-model="password">
-              <div v-html="feedback"></div>
-          </div>
-          <div class="btn-login">
-            <button type="submit" class="btn btn-success">Submit</button>
-          </div>
-      </form>
+  <div>
+    <div v-show="loginForm === true" class="container homepage">
+      <img src="../assets/ecommerce.png" alt="">
+      <div @submit.prevent="submitLogin" class="form-container">
+        <h2 class="text-center mt-1">Login</h2>
+        <form action="" class="mt-4">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" placeholder="Your Email" class="form-control" v-model="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Your Password" class="form-control" v-model="password">
+                <div v-html="feedback"></div>
+            </div>
+            <div class="btn-login">
+              <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+    <div v-show="loginForm === false" class="container si-banner">
+      <Banner></Banner>
     </div>
   </div>
+
 </template>
 
 <script>
+import Banner from '../components/Banner'
 import axios from 'axios'
 export default {
   name: 'Home',
@@ -30,6 +37,14 @@ export default {
       email: '',
       password: '',
       feedback: ''
+    }
+  },
+  components: {
+    Banner
+  },
+  computed: {
+    loginForm () {
+      return this.$store.state.loginForm
     }
   },
   methods: {
@@ -69,6 +84,7 @@ export default {
   .homepage {
     display: flex;
     margin-top: 100px;
+    margin-bottom: 70px;
   }
   h2 {
     font-family: 'Oswald';
@@ -79,5 +95,8 @@ export default {
   }
   .btn-login .btn {
     width: 200px;
+  }
+  .si-banner {
+    margin-top: 120px;
   }
 </style>

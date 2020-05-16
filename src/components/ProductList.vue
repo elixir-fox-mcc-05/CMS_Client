@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr v-for="(product, i) in products" :key="i">
-          <td><img :src="`${product.image_url}`" alt=""></td>
+          <td><img :src="`${product.image_url}`" alt="" class="img-product ml-2"></td>
           <td>{{ product.name }}</td>
           <td>{{ priceInRupiah(product.price) }}</td>
           <td>{{ product.stock }}</td>
@@ -40,11 +40,6 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 export default {
   name: 'ProductList',
-  data () {
-    return {
-      showForm: false
-    }
-  },
   watch: {
     indexProduct (value) {
       if (value !== '') {
@@ -130,7 +125,7 @@ export default {
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap');
-  img {
+  .img-product {
       width: 100px;
       height: 100px;
   }

@@ -10,7 +10,8 @@ export default new Vuex.Store({
     products: '',
     currentPage: 'productList',
     indexProduct: '',
-    indexProduct2: ''
+    indexProduct2: '',
+    loginForm: false
   },
   mutations: {
     changeLoginStatus (state, payload) {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     changeIndexProduct2 (state, payload) {
       this.state.indexProduct2 = payload
+    },
+    showLoginForm (state, payload) {
+      this.state.loginForm = payload
     }
   },
   actions: {

@@ -13,13 +13,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 // Import Fontawesome
 import { library, dom } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPlus, faTrashAlt, faEdit, faShoppingBasket } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTrashAlt, faEdit, faShoppingBasket, faEye } from '@fortawesome/free-solid-svg-icons'
 
 Vue.use(BootstrapVue)
 
 dom.watch()
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-library.add(faPlus, faTrashAlt, faEdit, faShoppingBasket)
+library.add(faPlus, faTrashAlt, faEdit, faShoppingBasket, faEye)
 
 Vue.config.productionTip = false
 
