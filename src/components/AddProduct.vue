@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h3>Add Product</h3>
+  <div id="addProduct">
     <form class="col s12">
       <div class="row">
         <div class="input-field col s12">
@@ -54,7 +53,9 @@
           <label for="newProductImgUrl">Image URL</label>
         </div>
       </div>
-      <button class="btn" @click.prevent="addNewProduct"><i class="material-icons left">add_box</i>Add Product</button>
+      <div class="center">
+        <button class="btn" @click.prevent="addNewProduct"><i class="material-icons left">add_box</i>Add Product</button>
+      </div>
     </form>
   </div>
 </template>
@@ -95,10 +96,13 @@ export default {
         }
       })
         .then(response => {
-          console.log(response.data)
+          this.$store.commit('changeCurrentErr', '')
+          this.$store.commit('changeCurrentNotif', response.data.notif)
+          this.$router.push({ name: 'ProductsTable' })
         })
         .catch(err => {
-          console.log(err)
+          this.$store.commit('changeCurrentNotif', '')
+          this.$store.commit('changeCurrentErr', err.response.data.err)
         })
     }
   },
@@ -109,6 +113,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  #addProduct {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 </style>

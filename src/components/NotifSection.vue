@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h4></h4>
+  <div class="container" id="notifSection">
+    <h5 class="center">{{ currentNotif }}</h5>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
 </script>
 
 <style scoped>
-h4 {
-  color: green
+#notifSection {
+  color: green;
+  padding-top: 20px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-<div>
-  <h3>Edit Product</h3>
+<div id="editProduct">
+  <h5 class="center">Edit Product</h5>
   <form class="col s12">
     <div class="row">
       <div class="col">
@@ -66,7 +66,16 @@
         <input v-model="editProduct.image_url" id="newProductImgUrl" type="url" class="validate">
       </div>
     </div>
-    <button class="btn" @click.prevent="editProductById">Edit Product</button>
+    <div class="center">
+      <div class="row">
+        <div class="col m6">
+          <button class="btn" @click.prevent="editProductById">Edit Product</button>
+        </div>
+        <div class="col m6">
+          <router-link :to="'/product/show_all'"><button class="btn">Cancel</button></router-link>
+        </div>
+      </div>
+    </div>
   </form>
 </div>
 </template>
@@ -127,10 +136,13 @@ export default {
         }
       })
         .then(response => {
-          console.log(response.data.notif)
+          this.$store.commit('changeCurrentErr', '')
+          this.$store.commit('changeCurrentNotif', response.data.notif)
+          this.$router.push({ name: 'ProductsTable' })
         })
         .catch(err => {
-          console.log(err)
+          this.$store.commit('changeCurrentNotif', '')
+          this.$store.commit('changeCurrentErr', err.response.data.err)
         })
     }
   },
@@ -145,5 +157,8 @@ export default {
 </script>
 
 <style>
-
+  #editProduct {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 </style>

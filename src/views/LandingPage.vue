@@ -4,6 +4,8 @@
       <div class="container">
         <div class="col s12 m4">
           <h4 class="center blue-text text-darken-2">Login</h4>
+          <NotifSection></NotifSection>
+          <ErrorSection></ErrorSection>
           <div class="input-field">
             <input id="email" v-model="user.email" type="email" class="validate" required>
             <label for="email">Email</label>
@@ -21,8 +23,14 @@
 
 <script>
 import server from '../api/index'
+import NotifSection from '../components/NotifSection'
+import ErrorSection from '../components/ErrorSection'
+
 export default {
   name: 'LandingPage',
+  components: {
+    NotifSection, ErrorSection
+  },
   data () {
     return {
       user: {
@@ -45,7 +53,8 @@ export default {
         }
       })
         .then(response => {
-          console.log(response.data)
+          this.$store.commit('changeCurrentErr', '')
+          this.$store.commit('changeCurrentNotif', response.data.notif)
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('currentUserId', response.data.data.id)
           localStorage.setItem('currentUserName', response.data.data.name)
@@ -55,7 +64,9 @@ export default {
           this.user.password = ''
         })
         .catch(err => {
-          console.log(err)
+          this.$store.commit('changeCurrentNotif', '')
+          this.$store.commit('changeCurrentErr', err.response.data.err)
+          console.log(err.response.data.err)
         })
     }
   },

@@ -1,38 +1,35 @@
 <template>
-  <div>
-    <p>Products Table</p>
-    <div id="container center">
-      <table>
-        <thead>
-          <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Stock</th>
-              <th>Price (Rp)</th>
-              <th>Action</th>
-          </tr>
-        </thead>
+  <div id="productsTable">
+    <table class="highlight">
+      <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Stock</th>
+            <th>Price (Rp)</th>
+            <th>Action</th>
+        </tr>
+      </thead>
 
-        <tbody v-for="product in productsList" :key="product.id">
-          <tr>
-            <td>{{ product.id }}</td>
-            <td>
-              <router-link :to="`/product/${product.id}`">
-              {{ product.name }}
-              </router-link>
-            </td>
-            <td>{{ product.category }}</td>
-            <td>{{ product.stock }}</td>
-            <td>{{ product.price }}</td>
-            <td>
-              <router-link :to="`/product/${product.id}/edit`"><i class="material-icons">edit</i></router-link>  |
-              <a @click.prevent="deleteProduct(product.id)"><i class="material-icons">delete</i></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <tbody v-for="product in productsList" :key="product.id">
+        <tr>
+          <td>{{ product.id }}</td>
+          <td>
+            <router-link :to="`/product/${product.id}`">
+            {{ product.name }}
+            </router-link>
+          </td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.stock }}</td>
+          <td>{{ product.price }}</td>
+          <td>
+            <router-link :to="`/product/${product.id}/edit`"><button class="btn btn-small"><i class="material-icons">edit</i></button></router-link> |
+            <button class="btn btn-small" @click.prevent="deleteProduct(product.id)"><i class="material-icons">delete</i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -56,10 +53,13 @@ export default {
         }
       })
         .then(response => {
-          console.log(response.data.notif)
+          this.$store.commit('changeCurrentErr', '')
+          this.$store.commit('changeCurrentNotif', response.data.notif)
+          this.$router.push({ name: 'ProductsTable' })
         })
         .catch(err => {
-          console.log(err)
+          this.$store.commit('changeCurrentNotif', '')
+          this.$store.commit('changeCurrentErr', err.response.data.err)
         })
     }
   },
@@ -69,6 +69,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  #productsTable {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 </style>

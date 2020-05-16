@@ -20,7 +20,6 @@ const store = new Vuex.Store({
       }
     },
     setProductsList (state, payload) {
-      console.log(payload)
       state.productsList = payload
     },
     changeCurrentNotif (state, payload) {

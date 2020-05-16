@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div id="errSection" class="container center">
     <div v-if="Array.isArray(currentErr)">
-      <h5 v-for="message in currentErr" :key="message">{{ message }}</h5>
+      <p v-for="message in currentErr" :key="message">{{ message.message }}</p>
     </div>
     <div v-else>
-      <h5>{{ currentErr }}</h5>
+      <p>{{ currentErr }}</p>
     </div>
   </div>
 </template>
@@ -21,7 +21,8 @@ export default {
 </script>
 
 <style>
-  h4 {
+  #errSection {
     color: red;
+    padding-top: 20px;
   }
 </style>
