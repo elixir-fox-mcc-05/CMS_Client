@@ -130,7 +130,7 @@
                                     <td>{{ product.stock }}</td>
                                     <td>{{ product.name }}</td>
                                     <td>Rp.{{ convertToRp(product.price) }}</td>
-                                    <td>{{ product.category_id }}</td>
+                                    <td>{{ showCatName }}</td>
                                     <td>
                                         <button class="btn btn-warning btn-sm btn-block">Edit</button>
                                         <button class="btn btn-danger btn-sm btn-block">Delete</button>
@@ -195,6 +195,7 @@ export default {
             seletedCategory: '',
             selCatName: '',
             sortByCat: [],
+            showCatName: '',
             productForm: {
                 name : '',
                 description : '',
@@ -288,6 +289,7 @@ export default {
                 }
             });
             this.sortByCat = newCat
+            this.getCatName(id)
             console.log(this.sortByCat,this.seletedCategory)
         },
         showAllProduct() {
@@ -296,6 +298,18 @@ export default {
         selectCatAddProd(id,name) {
             this.productForm.category_id = id
             this.selCatName = name
+        },
+        getCatName(id) {
+            if (id === 0) {
+                    this.showCatName = 'Uncategory'
+            } else {
+                this.$store.state.category.forEach(el => {
+                    if( id === el.id) {
+                        console.log(el.name)
+                        this.showCatName = el.name
+                    }
+                });
+            }
         }
     },
     created(){

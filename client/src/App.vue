@@ -9,5 +9,6 @@
   background: whitesmoke;
   width: 100vw;
   height: 100vh;
+  overflow: scroll;
 }
 </style>

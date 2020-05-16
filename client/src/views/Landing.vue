@@ -8,6 +8,11 @@ export default {
     name: 'landing',
     components: {
         Login
+    },
+    created () {
+        if(localStorage.getItem('token')) {
+            this.$router.push('/dashboard')
+        }
     }
 }
 </script>
