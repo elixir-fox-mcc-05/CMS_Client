@@ -8,7 +8,9 @@ export default new Vuex.Store({
   state: {
     isLogin: '',
     products: '',
-    currentPage: 'productList'
+    currentPage: 'productList',
+    indexProduct: '',
+    indexProduct2: ''
   },
   mutations: {
     changeLoginStatus (state, payload) {
@@ -20,6 +22,14 @@ export default new Vuex.Store({
     },
     changeCurrentPage (state, payload) {
       this.state.currentPage = payload
+    },
+    changeIndexProduct (state, payload) {
+      this.state.indexProduct = payload
+      console.log(this.state.indexProduct)
+    },
+    changeIndexProduct2 (state, payload) {
+      this.state.indexProduct2 = payload
+      console.log(this.state.indexProduct2)
     }
   },
   actions: {
