@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Sneakers</a>
@@ -9,9 +9,9 @@
     <div>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCreate" data-whatever="newtask" data-dismiss="modal" aria-label="close">Create</button>
     </div>
-    <div class="row">
-        <div class="column" v-for="item in products" :key="item.id">
-            <div class="card" style="width: 18rem;">
+    <div class="row mt-3 justify-content-center">
+        <div class="column md-3" v-for="item in products" :key="item.id">
+            <div class="card" style="width: 20rem;">
                 <img :src="`${item.imageUrl}`" class="card-img-top" alt="">
                 <div class="card-body">
                     <h5 class="card-title">{{item.name}}</h5>
@@ -64,8 +64,8 @@ export default {
     return {
       products: [],
       nameProduct: '',
-      priceProduct: 0,
-      stockProduct: 0,
+      priceProduct: null,
+      stockProduct: null,
       imageUrlProduct: ''
     }
   },
@@ -99,11 +99,12 @@ export default {
           imageUrl: this.imageUrlProduct
         },
         headers: {
-          token: this.setToken
+          token: localStorage.getItem('token')
         }
       })
         .then(response => {
           console.log(response)
+          this.fetchData()
         })
         .catch(err => {
           console.log(err)

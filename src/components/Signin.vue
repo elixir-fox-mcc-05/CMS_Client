@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container" id="container">
+    <div class="container-landingPage" id="container">
       <div class="form-container sign-in-container">
         <form v-on:submit.prevent="signIn()">
           <h1>Sign in</h1>
