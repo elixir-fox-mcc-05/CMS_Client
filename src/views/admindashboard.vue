@@ -1,48 +1,23 @@
 <template>
-  <v-app>
+  <v-app class="black" style="color:white" v-if="isLogin">
     <b-col class="middle">
-      <b-row class="middle" v-if="isLogin" style="padding-top:5px;">
-        <b-container style="align-items:flex-end">
-            <b-nav style="display:flex; flex-direction:row; padding-left:45%">
-              <div class="nav-items" style='color:green;'>
-                <b-button @click.prevent="addForm" variant="outline-primary" size="lg"><b-icon icon='plus-circle' variant="danger"></b-icon> add</b-button>
-              </div>
-              <div class="nav-items" style='color: grey;'>
-                <b-button @click.prevent="addForm" variant="outline-primary" size="lg"><b-icon icon='screwdriver' variant="danger"></b-icon> edit</b-button>
-              </div>
-              <div class="nav-items" style="color:red;">
-                <b-button @click.prevent="addForm" variant="outline-primary" size="lg"><b-icon icon='slash-circle' variant="danger"></b-icon> delete</b-button>
-              </div>
-            </b-nav>
-        </b-container>
-      </b-row>
-      <b-container v-if="showAddForm">
-        <b-form>
-          <b-form-group
-            id="input-group-1"
-            label="Name :"
-            label-for="input-1"
-            description="Please Input Category Name"
-          >
-            <b-form-input
-                id="input-1"
-                v-model="name"
-                type="text"
-                required
-                placeholder="Input Category Name"
-              ></b-form-input>
-          </b-form-group>
-        </b-form>
-      </b-container>
-      <b-container>
-        <category :categories="categories"></category>
-      </b-container>
+      <v-container>
+        <v-card>
+          <Category></Category>
+        </v-card>
+      </v-container>
+      <v-container>
+        <v-card style="padding-top:15px">
+          <Product></Product>
+        </v-card>
+      </v-container>
     </b-col>
   </v-app>
 </template>
 
 <script>
-import category from '@/components/category'
+import Category from '@/components/category'
+import Product from '@/components/products'
 export default {
   name: 'adminDashboard',
   data () {
@@ -52,22 +27,18 @@ export default {
     }
   },
   components: {
-    category
+    Category, Product
   },
   computed: {
     isLogin () {
       return this.$store.state.isLogin
-    },
-    categories () {
-      return this.$store.state.categories
     }
   },
   create () {
     if (localStorage.getItem('token')) {
       this.$store.commit('SET_LOGIN', true)
-      this.$store.dispatch('fetchCategories', localStorage.token)
     } else {
-      this.$router.push('/')
+      this.$router.push('/login')
     }
   },
   methods: {

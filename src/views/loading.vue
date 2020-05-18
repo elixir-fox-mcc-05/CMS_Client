@@ -1,10 +1,8 @@
 <template>
-  <v-app>
-    <v-content>
-      <transition mode="in-out">
-        <img src="https://miro.medium.com/max/1600/1*e_Loq49BI4WmN7o9ItTADg.gif">
-      </transition>
-    </v-content>
+  <v-app style="size:100%">
+    <transition mode="in-out">
+      <img src="https://cdn.dribbble.com/users/722246/screenshots/5534346/loading-finger-concept_yupnguyen.gif">
+    </transition>
   </v-app>
 </template>
 

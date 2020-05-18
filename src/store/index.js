@@ -8,19 +8,12 @@ const baseUrl = 'http://localhost:3000/'
 export default new Vuex.Store({
   state: {
     isLogin: false,
-    products: [],
-    categories: [],
-    token: ''
+    token: '',
+    message: ''
   },
   mutations: {
     SET_LOGIN (state, payload) {
       state.isLogin = payload
-    },
-    SET_PRODUCT (state, payload) {
-      state.products = payload
-    },
-    SET_CATEGORIES (state, payload) {
-      state.categories = payload
     },
     SET_TOKEN (state, payload) {
       state.token = payload
@@ -30,32 +23,29 @@ export default new Vuex.Store({
     },
     ADD_PRODUCT (state, payload) {
       state.categories.push(payload)
+    },
+    SET_MESSAGE (state, payload) {
+      state.message = payload
     }
   },
   actions: {
     fetchProducts (context, payload) {
-      axios({
+      return axios({
         method: 'get',
         url: baseUrl + 'product',
         headers: {
           token: payload
         }
       })
-        .then(({ data }) => {
-          context.commit('SET_PRODUCT', data.Product)
-        })
     },
     fetchCategories (context, payload) {
-      axios({
+      return axios({
         method: 'get',
         url: baseUrl + 'category',
         headers: {
           token: payload
         }
       })
-        .then(({ data }) => {
-          context.commit('SET_CATEGORIES', data.Category)
-        })
     },
     login (context, payload) {
       return axios({
@@ -64,17 +54,19 @@ export default new Vuex.Store({
         data: payload
       })
     },
-    editCategories (context, payload) {
+    editCategory (context, payload) {
       return axios({
-        method: 'put',
+        method: 'PUT',
         url: baseUrl + `category/${payload.id}`,
         headers: {
           token: payload.token
         },
-        data: payload.data
+        data: {
+          name: payload.name
+        }
       })
     },
-    deleteCategories (context, payload) {
+    deleteCategory (context, payload) {
       return axios({
         method: 'delete',
         url: baseUrl + `category/${payload.id}`,
@@ -102,14 +94,14 @@ export default new Vuex.Store({
         }
       })
     },
-    addCategories (context, payload) {
+    addCategory (context, payload) {
       return axios({
         method: 'POST',
         url: baseUrl + 'category',
         headers: {
           token: payload.token
         },
-        data: payload.data
+        data: { name: payload.name }
       })
     },
     addProduct (context, payload) {

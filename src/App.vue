@@ -1,22 +1,55 @@
 <template>
-  <v-app id="inspire" dark>
-    <b-col class="d-flex justify-content-between" style=" padding: 5px;">
-      <b-row class="left" v-if="isLogin" style="padding-left:15px; padding-top:5px">
-        <router-link to="/">Home</router-link>
-      </b-row>
-      <b-row v-if="!isLogin && !admin" style="display:flex;flex-direction:row">
-        <div style="padding-right:15px; padding-left:15px">
-          <router-link to="/login">Login</router-link>
-        </div>
-          <router-link to="/register">Register</router-link>
-      </b-row>
-      <b-row class="right" v-if="isLogin" style="padding-right:15px">
-        <b-button variant="outline-info" class="mb-2" @click.prevent="logout">
-          <b-icon icon="power"></b-icon> Logout
-        </b-button>
-      </b-row>
-    </b-col>
-    <router-view></router-view>
+  <v-app class="black">
+    <nav>
+      <v-app-bar flat app class="black">
+        <v-app-bar-nav-icon class="grey--text" @click="drawer = !drawer" v-if="isLogin"></v-app-bar-nav-icon>
+        <v-toolbar-title class="text-uppercase grey--text" style="padding-right:10px">
+          <span class="font-weight-light">Belanja</span>
+          <span>.in</span>
+        </v-toolbar-title>
+        <v-toolbar class="black">
+          <v-btn icon v-if="!isLogin">
+            <router-link to="/login">Login</router-link>
+          </v-btn>
+        </v-toolbar>
+      </v-app-bar>
+      <v-navigation-drawer app v-model="drawer" class="grey" v-if="isLogin">
+          <v-list-item-group
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title @click.prevent="getHome">Home</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-tag</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title @click.prevent="getCategory">Category</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-shopping</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title @click.prevent="getProduct">Product</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+                <v-icon>exit_to_app</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title @click.prevent="logout">Log Out</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-navigation-drawer>
+    </nav>
+    <v-content class="black">
+      <router-view></router-view>
+    </v-content>
   </v-app>
 </template>
 <script>
@@ -24,7 +57,7 @@ export default {
   name: 'App',
   data () {
     return {
-      admin: false
+      drawer: false
     }
   },
   methods: {
@@ -32,6 +65,15 @@ export default {
       localStorage.clear()
       this.$store.commit('SET_LOGIN', false)
       this.$router.push('/')
+    },
+    getCategory () {
+      this.$router.push('/category')
+    },
+    getProduct () {
+      this.$router.push('/product')
+    },
+    getHome () {
+      this.$router.push('/admin')
     }
   },
   computed: {
@@ -42,9 +84,8 @@ export default {
   created () {
     if (localStorage.getItem('token')) {
       this.$store.commit('SET_LOGIN', true)
-    }
-    if (this.$route.fullPath === '/adminP4C5D9de2sr') {
-      this.admin = true
+    } else {
+      this.$router.push('/login')
     }
   }
 }
