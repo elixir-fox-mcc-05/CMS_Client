@@ -20,6 +20,7 @@
           <input type="number" name="qty" id="qty" placeholder="0" v-model="qty" :min="0" :max="item.Product.stock-item.quantity">
           <button type="submit" class="btn btn-primary" id="submitbtn" @click.prevent="addMore(item.id)"><b>+</b></button>
         </form>
+        <button class="btn btn-light" id="checkoutbtn" @click.prevent="checkout(item.id)">Checkout</button>
       </div>
     </div>
   </div>
@@ -27,6 +28,7 @@
 </template>
 
 <script>
+import socket from '../config/socket'
 export default {
   name: 'Itemcarts',
   props: ['item'],
@@ -36,6 +38,32 @@ export default {
     }
   },
   methods: {
+    checkout (id) {
+      this.$store.dispatch('checkOut', id)
+      .then(result =>{
+        this.$store.dispatch('getCarts')
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Checked out successfully'
+          })
+          socket.emit('transaction')
+          socket.on('finish-transaction', (data) => {
+            this.$store.dispatch('refreshProducts', data)
+          })
+      })
+    },
     addMore (id) {
       const payload = {
         id: id,
@@ -78,11 +106,10 @@ export default {
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           })
-
-          Toast.fire({
-            icon: 'success',
-            title: 'Deleted successfully'
-          })
+            Toast.fire({
+              icon: 'success',
+              title: 'Deleted successfully'
+            })
           })
     }
   }
@@ -124,6 +151,10 @@ export default {
   margin-top: 10px;
   margin-left: -20px;
   float: left;
+}
+
+#checkoutbtn{
+  margin-left: 5px;
 }
 
 .usericon {

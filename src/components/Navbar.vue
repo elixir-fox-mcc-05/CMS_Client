@@ -20,13 +20,26 @@
         <a class="nav-link" href="#" @click.prevent="home"><b>HOME</b> <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" @click.prevent="home"><b>CONTACT</b> <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#" @click.prevent="checkout"><b>CHECKOUT</b> <span class="sr-only">(current)</span></a>
       </li>
     </ul>
   </div>
   <div class="icons row">
-    <a href="#" style="font-size:24px" class="usericon" @click.prevent="cart"><i class="material-icons" id="user-btn">shopping_cart</i></a>
-    <a href="#" style="font-size:24px" class="usericon" @click.prevent="logout"><i class="material-icons" id="user-btn">person</i></a>
+  <div class="dropdown" style="margin-right: 20px;">
+    <a href="#" style="font-size:24px" class="usericon"><i class="material-icons" id="user-btn">shopping_cart</i></a>
+    <div class="dropdown-content-cart">
+      <a href="#"  @click.prevent="cart"><b>MY CART</b></a>
+      <a href="#"  @click.prevent="checkout"><b>CHECKOUT LIST</b></a>
+    </div>
+  </div>
+    <div class="dropdown-user">
+    <a href="#" style="font-size:24px" class="usericon"><i class="material-icons" id="user-btn">person</i></a>
+      <div class="dropdown-content-user">
+      <a href="#" v-if="!logged" @click.prevent="login"><b>LOGIN</b></a>
+      <a href="#" v-if="!logged" @click.prevent="register"><b>REGISTER</b></a>
+      <a href="#" v-if="logged" @click.prevent="logout"><b>LOGOUT</b></a>
+    </div>
+    </div>
   </div>
 </nav>
 </template>
@@ -46,36 +59,79 @@ export default {
     }
   },
   created () {
-    this.isLogin = this.logged
     if (localStorage.access_token) {
-      this.isLogin = true
+      this.$store.dispatch('loggedIn')
+      this.isLogin = this.logged
     } else {
       this.isLogin = false
     }
   },
   methods: {
+    login () {
+      this.$store.dispatch('openLogin')
+    },
+    register () {
+      this.$store.dispatch('openRegister')
+    },
     home () {
       this.$router.push({
         name: 'home'
       })
+    },
+    checkout () {
+      if (localStorage.access_token) {
+        this.$router.push('/checkoutlist')
+      } else {
+        this.$store.dispatch('openLogin')
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'info',
+            title: 'You need to Login first'
+          })
+      }
     },
     cart () {
       if (localStorage.access_token) {
         this.$router.push('/cart')
       } else {
         this.$store.dispatch('openLogin')
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'info',
+            title: 'You need to Login first'
+          })
       }
     },
     logout () {
-      if (!localStorage.access_token) {
-        this.$store.dispatch('openLogin')
-      } else {
-        this.isLogin = false
+        this.$store.dispatch('loggedOut')
         localStorage.clear()
         if (this.$router.currentRoute.path !=='/') {
           this.$router.push({
           name: 'home'
         })
+        }
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -92,8 +148,7 @@ export default {
             icon: 'success',
             title: 'Logged Out successfully'
           })
-        }
-      }
+      
     },
     findByGenre (text) {
       if (this.$router.currentRoute.path !== '/') {
@@ -143,7 +198,6 @@ export default {
   cursor: pointer;
   display: flex;
   justify-content: center;
-  margin-right: -10px;
   margin-left: 30px;
   margin-top: -5px;
   border-radius: 50px;
@@ -155,12 +209,35 @@ export default {
   display: inline-block;
 }
 
+.dropdown-user{
+  margin-right: 25px;
+}
+
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.7);
   min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content-user {
+  display: none;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 90px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  margin-right: 20px;
+}
+
+.dropdown-content-cart {
+  display: none;
+  position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+  /* min-width: 160px; */
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
@@ -174,13 +251,45 @@ export default {
   text-align: left;
 }
 
+.dropdown-content-user a {
+  color: black;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content-cart a {
+  color: black;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-  background-color: #f1f1f1
+  background-color: rgb(51, 153, 51);
+}
+
+.dropdown-content-user a:hover {
+  background-color: rgb(51, 153, 51);
+}
+
+.dropdown-content-cart a:hover {
+  background-color: rgb(51, 153, 51);
 }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-user:hover .dropdown-content-user{
+  display: block;
+}
+
+.dropdown:hover .dropdown-content-cart{
   display: block;
 }
 
@@ -198,10 +307,9 @@ export default {
   cursor: pointer;
   display: flex;
   justify-content: center;
-  margin-right: -10px;
-  margin-left: 30px;
   margin-top: -5px;
   border-radius: 50px;
+  width: 35px;
 }
 
 .usericon:hover {
@@ -225,4 +333,9 @@ export default {
 .navbar-brand:hover {
   color: orangered;
 }
+
+#user-dropwdown{
+  margin-right: 50px;
+}
+
 </style>

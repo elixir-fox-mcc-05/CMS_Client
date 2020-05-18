@@ -12,7 +12,8 @@ export default new Vuex.Store({
     showRegister: false,
     carts: [],
     itemcart: {},
-    productCards: []
+    productCards: [],
+    checkouts: []
   },
   mutations: {
     SET_PRODUCTCARDS (state, payload) {
@@ -38,6 +39,9 @@ export default new Vuex.Store({
     },
     SET_ITEMCART (state, payload) {
       state.itemcart = payload
+    },
+    SET_CHECKOUTS (state, payload) {
+      state.checkouts = payload
     }
   },
   actions: {
@@ -45,6 +49,9 @@ export default new Vuex.Store({
       context.commit('SET_LOGGED', true)
       context.commit('SET_HIDELOGIN', true)
       context.commit('SET_SHOWREGISTER', false)
+    },
+    loggedOut (context) {
+      context.commit('SET_LOGGED', false)
     },
     openRegister (context) {
       context.commit('SET_HIDELOGIN', true)
@@ -183,6 +190,42 @@ export default new Vuex.Store({
         axios({
           method: 'DELETE',
           url: 'http://localhost:3000/cart/delete/' + payload,
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
+          .then((result) => {
+            resolve(result)
+          })
+          .catch((err) => {
+            console.log(err)
+            reject(err)
+          })
+      })
+    },
+    refreshProducts (context,payload) {
+      this.commit('SET_PRODUCTS', payload)
+    },
+    getCheckouts () {
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3000/cart/checkout',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then((data) => {
+          this.commit('SET_CHECKOUTS', data.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    checkOut (context, payload) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: 'PUT',
+          url: 'http://localhost:3000/cart/checkout/' + payload,
           headers: {
             access_token: localStorage.access_token
           }
