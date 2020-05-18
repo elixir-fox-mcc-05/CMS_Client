@@ -10,11 +10,11 @@
                     <b-menu class="is-custom-mobile">
                         <b-menu-list label="Menu"  v-if="loggedIn">
                             <b-menu-item icon="information-outline" class="has-text-left" label="Account Info" @click="showAccInfo"></b-menu-item>
-                            <b-menu-item active icon="settings"  class="has-text-left " label="Product Menu">
+                            <b-menu-item icon="settings"  class="has-text-left " label="Product Menu">
                                 <b-menu-item icon="cellphone-link" label="Product List" @click.prevent="$router.push('/menu')"></b-menu-item>
                                 <b-menu-item icon="account" label="Add New Product" @click.prevent="showAddProduct"></b-menu-item>
                             </b-menu-item>
-                            <b-menu-item active icon="settings"  class="has-text-left " label="Category Menu">
+                            <b-menu-item icon="settings"  class="has-text-left " label="Category Menu">
                               <b-menu-item icon="cellphone-link" label="Categories List" @click.prevent="showAddCategories"></b-menu-item>
                                 <b-menu-item icon="account" label="Add Categories" @click.prevent="showCategoryList"></b-menu-item>
                             </b-menu-item>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex' 
+// import { mapGetters } from 'vuex'
 
 export default {
   name: 'Menu',
@@ -44,13 +44,13 @@ export default {
     }
   },
   watch: {
-    test(){
-      console.log(test)
+    test () {
+      // console.log(test)
       this.loggedin = this.$store.state.loggedIn
     }
   },
   computed: {
-    loggedIn(){
+    loggedIn () {
       return this.$store.getters.loggedIn
     }
     // loggedIn () {

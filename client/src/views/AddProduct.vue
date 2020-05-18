@@ -58,12 +58,11 @@ export default {
         }
       })
         .then(({ data }) => {
-            this.$store.dispatch('fetchProducts')
-          this.$store.commit('SET_ADDPRODUCT',data)
+          this.$store.dispatch('fetchProducts')
+          this.$store.commit('SET_ADDPRODUCT', data)
 
           console.log('add product completed')
           this.$router.push('/menu')
-
         }).catch(err => {
           console.log(err.response.data)
         })

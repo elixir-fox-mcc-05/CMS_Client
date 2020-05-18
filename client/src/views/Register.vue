@@ -24,8 +24,8 @@
             </b-input>
         </b-field>
 
-        <b-field label="Secret Password">
-            <b-input v-model="secretpassword" type="password"
+        <b-field label="Secret Password is bolulu">
+            <b-input v-model="secretpassword" type="password" placeholder="secretpassword is bolulu"
                 password-reveal>
             </b-input>
         </b-field>
@@ -50,26 +50,25 @@ export default {
   },
   methods: {
     register () {
-
-      if(this.secretpassword == 'bolulu'){
+      if (this.secretpassword === 'bolulu') {
         const newUser = {
-        first_name: this.first_name,
-        last_name: this.last_name,
-        email: this.email,
-        password: this.password
-      }
+          first_name: this.first_name,
+          last_name: this.last_name,
+          email: this.email,
+          password: this.password,
+          roles: 'admin'
+        }
 
-      this.$store.dispatch('register', newUser)
-        .then(({ data }) => {
-          this.$router.push('/')
-        })
-        .catch(err => {
-          console.log(err.response.data)
-        })
-      }else{
+        this.$store.dispatch('register', newUser)
+          .then(({ data }) => {
+            this.$router.push('/')
+          })
+          .catch(err => {
+            console.log(err.response.data)
+          })
+      } else {
         console.log('gak bisa register admin yah??')
       }
-      
     }
   },
   created () {

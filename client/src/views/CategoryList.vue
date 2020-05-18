@@ -93,7 +93,7 @@ export default {
       hasMobileCards: true,
       isComponentModalActive: false,
       selectId: 0,
-      CategoryId : 0
+      CategoryId: 0
     }
   },
   methods: {
@@ -104,7 +104,7 @@ export default {
         }
       })
         .then(({ data }) => {
-            // console.log(data.data)
+          // console.log(data.data)
           this.isComponentModalActive = true
           this.selectId = data.id
           this.name = data.name
@@ -116,26 +116,26 @@ export default {
     editCategory (id) {
       console.log(id)
       console.log(this.selectId)
-      let updatedData = {
-          name : this.name
+      const updatedData = {
+        name: this.name
       }
       console.log(updatedData)
-      server.put(`/category/edit/${id}`,updatedData,{
-        headers : {
-          token : localStorage.token
+      server.put(`/category/edit/${id}`, updatedData, {
+        headers: {
+          token: localStorage.token
         },
-        params : {
-          id : this.selectId
+        params: {
+          id: this.selectId
         }
       })
-        .then(({data}) => {
-            // this.$store.commit('SET_UPDATEPRODUCT',data)
-            console.log('edit category completed')
-            this.isComponentModalActive = false
-             this.$store.dispatch('fetchCategory')
-             .finally(_ => {
-                this.data = this.$store.state.categories
-              })
+        .then(({ data }) => {
+          // this.$store.commit('SET_UPDATEPRODUCT',data)
+          console.log('edit category completed')
+          this.isComponentModalActive = false
+          this.$store.dispatch('fetchCategory')
+            .finally(_ => {
+              this.data = this.$store.state.categories
+            })
         })
         .catch(err => {
           console.log(err.response.data)
@@ -143,7 +143,7 @@ export default {
     },
     deleteCategory (id) {
       server.delete(`/category/delete/${id}`, {
-        headers : {
+        headers: {
           token: localStorage.token
         }
       })
@@ -158,7 +158,7 @@ export default {
     close () {
       this.isComponentModalActive = false
     },
-    fetchCategory(){
+    fetchCategory () {
       this.$store.dispatch('fetchCategory')
       this.data = this.$store.state.categories
     }

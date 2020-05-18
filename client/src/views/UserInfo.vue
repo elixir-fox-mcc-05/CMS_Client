@@ -7,9 +7,9 @@
 <script>
 export default {
   name: 'UserInfo',
-  data(){
+  data () {
     return {
-      userName : localStorage.AccountName
+      userName: localStorage.AccountName
     }
   }
 }

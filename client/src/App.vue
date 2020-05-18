@@ -4,6 +4,7 @@
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 </head>
+    <Header />
     <div id="nav">
     <section class="section">
      <div class="container">
@@ -24,10 +25,12 @@
 
 <script>
 import Menu from './components/layout/Menu'
+import Header from './components/layout/Header'
 export default {
   name: 'App',
   components: {
-    Menu
+    Menu,
+    Header
   }
 }
 </script>

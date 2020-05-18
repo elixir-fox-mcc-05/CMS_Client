@@ -1,6 +1,5 @@
-
 <template>
-    <section>
+      <section>
         <b-table
             :data="isEmpty ? [] : data"
             :bordered="isBordered"
@@ -17,23 +16,19 @@
                 </b-table-column>
 
                 <b-table-column field="name" label="Name">
-                    {{ temp.row.name }}
+                    {{ temp.row.Product.name }}
                 </b-table-column>
 
-                <b-table-column field="category" label="CategoryName">
-                    {{ temp.row.Category.name }}
-                </b-table-column>
-
-                <b-table-column field="image_url" label="Image">
-                  <img v-bind:src="temp.row.image_url" height="64" width="64">
+                <b-table-column field="buyer" label="Buyer">
+                    {{ temp.row.User.first_name }} {{ temp.row.User.last_name }}
                 </b-table-column>
 
                 <b-table-column field="stock" label="Stock">
                     {{ temp.row.stock }}
                 </b-table-column>
 
-                <b-table-column field="price" label="Price">
-                    {{ temp.row.price }}
+                <b-table-column field="ispaid" label="isPaid">
+                    {{ temp.row.isPaid }}
                 </b-table-column>
 
                 <b-table-column label="Action">
@@ -119,14 +114,12 @@
     </section>
 </template>
 
-<script>
-import server from '@/api'
-// import ProductCard from '@/components/ProductCard'
-export default {
 
-  name: 'ProductList',
-  data () {
-    const data = this.$store.state.products
+<script>
+export default {
+    name: 'CartList',
+     data () {
+    const data = this.$store.state.carts
     return {
       data,
       isEmpty: false,
@@ -143,90 +136,13 @@ export default {
     }
   },
   methods: {
-    showEditMenu (id) {
-      server.get(`/products/${id}`, {
-        headers: {
-          token: localStorage.token
-        }
-      })
-        .then(({ data }) => {
-          this.isComponentModalActive = true
-          this.selectId = data.id
-          this.name = data.name
-          this.image_url = data.image_url
-          this.stock = data.stock
-          this.price = data.price
-          this.CategoryId = data.CategoryId
-        })
-        .catch(err => {
-          console.log(err.response)
-        })
-    },
-    edit (id) {
-      console.log(id)
-      console.log(this.selectId)
-      const updatedData = {
-        name: this.name,
-        image_url: this.image_url,
-        stock: this.stock,
-        price: this.price,
-        CategoryId: this.CategoryId
-      }
-      console.log(updatedData)
-      server.put(`/products/edit/${id}`, updatedData, {
-        headers: {
-          token: localStorage.token
-        },
-        params: {
-          id: this.selectId
-        }
-      })
-        .then(({ data }) => {
-          this.$store.commit('SET_UPDATEPRODUCT', data)
-          console.log('edit product completed')
-          this.isComponentModalActive = false
-          this.$store.dispatch('fetchProducts')
-            .finally(_ => {
-              this.data = this.$store.state.products
-            })
-        })
-        .catch(err => {
-          console.log(err.response.data)
-        })
-    },
-    deleteProduct (id) {
-      server.delete(`/products/delete/${id}`, {
-        headers: {
-          token: localStorage.token
-        }
-      })
-        .then(({ data }) => {
-          this.$store.commit('SET_DELETEPRODUCT', { info: 'deleted' })
-          this.fetchProduct()
-        })
-        .catch(err => {
-          console.log(err.response)
-        })
-    },
-    close () {
-      this.isComponentModalActive = false
-    },
-    fetchProduct () {
-      this.$store.dispatch('fetchProducts')
-      this.data = this.$store.state.products
-    }
+      
   },
-  created () {
-    this.$store.dispatch('fetchCategory')
-      .finally(_ => {
-        console.log('asd', this.$store.state.products)
-        this.fetchProduct()
-      })
+  created() {
+      
   }
 }
-
 </script>
 
 <style>
-
 </style>

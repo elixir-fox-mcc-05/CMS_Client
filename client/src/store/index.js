@@ -75,7 +75,7 @@ const store = new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log('category',data)
+          console.log('category', data)
           commit('SET_CATEGORIES', data.data)
         })
         .catch(err => {
