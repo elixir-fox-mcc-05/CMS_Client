@@ -7,7 +7,6 @@
         <el-input type="email" placeholder="Your last name" v-model="last_name" clearable></el-input><br><br>
         <el-input type="email" placeholder="Your mail" v-model="email" clearable></el-input><br><br>
         <el-input placeholder="Your Password" v-model="password" show-password></el-input><br><br>
-        <el-input placeholder="Your role : customer" v-model="role" clearable></el-input><br><br>
         <el-button type="primary submit" @click.prevent="onSubmit">Submit</el-button>
         <el-button type="primary" @click="cancel">Cancel</el-button>
       </form>
@@ -24,8 +23,7 @@ export default {
       first_name: '',
       last_name: '',
       email: '',
-      password: '',
-      role: ''
+      password: ''
     }
   },
   components: {
@@ -41,7 +39,7 @@ export default {
           last_name: this.last_name,
           email: this.email,
           password: this.password,
-          role: this.role
+          role: 'admin'
         }
       })
         .then(newUser => {

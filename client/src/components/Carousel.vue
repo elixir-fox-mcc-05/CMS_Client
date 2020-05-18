@@ -1,11 +1,10 @@
 <template>
 <div>
     <el-carousel indicator-position="outside">
-    <el-carousel-item v-for="(item, o) in dashboard" :key="o">
+    <el-carousel-item v-for="(item, o) in dashboard" :key="o" style="height: 60vw">
       <img :src="item.img" alt="">
     </el-carousel-item>
     </el-carousel><br>
-    <iframe width="930" height="480" src="https://www.youtube.com/embed/4l_nl1-oVu0?autoplay=1" frameborder="0" allow="autoplay;" allowfullscreen></iframe>
 </div>
 </template>
 

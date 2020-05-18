@@ -20,7 +20,7 @@ export default {
   methods: {
     handleSelect (key, keyPath) {
       this.activeIndex = `${key}`
-      this.activeIndex2 = keyPath[0]
+      this.activeIndex2 = `${key}`
     },
     home () { this.$router.push('/') },
     login () { this.$router.push({ path: '/login' }) },
