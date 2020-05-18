@@ -65,7 +65,7 @@ export default {
     decrement (i, data) {
       axios({
         method: 'DELETE',
-        url: `https://cms-client-52ec6.web.app/carts/${data[i].id}`,
+        url: `https://mighty-hamlet-29943.herokuapp.com/carts/${data[i].id}`,
         headers: {
           access_token: localStorage.access_token
         }
@@ -83,7 +83,7 @@ export default {
     getAll () {
       axios({
         method: 'GET',
-        url: 'https://cms-client-52ec6.web.app/carts',
+        url: 'https://mighty-hamlet-29943.herokuapp.com/carts',
         headers: {
           access_token: localStorage.access_token
         }

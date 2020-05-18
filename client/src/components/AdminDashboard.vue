@@ -31,7 +31,7 @@ export default {
     getProduct () {
       axios({
         method: 'GET',
-        url: `https://cms-client-52ec6.web.app/products/${this.id}`,
+        url: `https://mighty-hamlet-29943.herokuapp.com/products/${this.id}`,
         headers: { access_token: localStorage.access_token }
       })
         .then(({ data }) => {

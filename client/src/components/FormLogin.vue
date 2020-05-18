@@ -29,7 +29,7 @@ export default {
     onSubmit () {
       axios({
         method: 'POST',
-        url: 'https://cms-client-52ec6.web.app/login',
+        url: 'https://mighty-hamlet-29943.herokuapp.com/login',
         data: {
           email: this.email,
           password: this.password

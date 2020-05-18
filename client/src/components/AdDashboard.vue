@@ -67,7 +67,7 @@ export default {
     getAll () {
       axios({
         method: 'GET',
-        url: 'https://cms-client-52ec6.web.app/products'
+        url: 'https://mighty-hamlet-29943.herokuapp.com/products'
       })
         .then(({ data }) => {
           this.$store.commit('SET_ALL_PRODUCT', data.products)
@@ -77,7 +77,7 @@ export default {
     increment (i, data) {
       axios({
         method: 'PUT',
-        url: `https://cms-client-52ec6.web.app/products/${data[i].id}`,
+        url: `https://mighty-hamlet-29943.herokuapp.com/products/${data[i].id}`,
         data: {
           stock: data[i].stock += 1
         }
@@ -90,7 +90,7 @@ export default {
     deleteProduct (i, data) {
       axios({
         method: 'DELETE',
-        url: `https://cms-client-52ec6.web.app/products/${data[i].id}`,
+        url: `https://mighty-hamlet-29943.herokuapp.com/products/${data[i].id}`,
         headers: {
           access_token: localStorage.access_token
         }

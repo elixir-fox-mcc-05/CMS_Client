@@ -40,7 +40,7 @@ export default {
       if (localStorage.access_token) {
         axios({
           method: 'GET',
-          url: 'https://cms-client-52ec6.web.app/indetify',
+          url: 'https://mighty-hamlet-29943.herokuapp.com/indetify',
           headers: {
             access_token: localStorage.access_token
           }

@@ -35,7 +35,7 @@ export default {
     onSubmit () {
       axios({
         method: 'POST',
-        url: 'https://cms-client-52ec6.web.app/register',
+        url: 'https://mighty-hamlet-29943.herokuapp.com/register',
         data: {
           first_name: this.first_name,
           last_name: this.last_name,
