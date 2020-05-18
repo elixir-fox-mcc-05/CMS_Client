@@ -23,7 +23,7 @@ export default {
     add () {
       axios({
         method: 'PUT',
-        url: `http://localhost:3000/products/${this.detailItem.id}`,
+        url: `https://cms-client-52ec6.web.app/products/${this.detailItem.id}`,
         headers: {
           access_token: localStorage.access_token
         },
@@ -42,7 +42,7 @@ export default {
     deleteProduct () {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3000/products/${this.detailItem.id}`,
+        url: `https://cms-client-52ec6.web.app/products/${this.detailItem.id}`,
         headers: {
           access_token: localStorage.access_token
         }

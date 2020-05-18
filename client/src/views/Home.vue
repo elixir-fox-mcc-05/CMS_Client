@@ -40,7 +40,7 @@ export default {
       if (localStorage.access_token) {
         axios({
           method: 'GET',
-          url: 'http://localhost:3000/indetify',
+          url: 'https://cms-client-52ec6.web.app/indetify',
           headers: {
             access_token: localStorage.access_token
           }

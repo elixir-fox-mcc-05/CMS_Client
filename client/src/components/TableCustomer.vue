@@ -61,7 +61,7 @@ export default {
     cart () {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/carts',
+        url: 'https://cms-client-52ec6.web.app/carts',
         headers: {
           access_token: localStorage.access_token
         }
@@ -76,7 +76,7 @@ export default {
         if (data[i].stock > 0) {
           axios({
             method: 'PUT',
-            url: `http://localhost:3000/products/${data[i].id}`,
+            url: `https://cms-client-52ec6.web.app/products/${data[i].id}`,
             data: {
               stock: data[i].stock -= 1
             }
@@ -85,7 +85,7 @@ export default {
               this.$store.commit('SET_CATEGORY_DATA', this.getAllData)
               axios({
                 method: 'POST',
-                url: 'http://localhost:3000/carts',
+                url: 'https://cms-client-52ec6.web.app/carts',
                 data: {
                   ProductId: data[i].id,
                   quantity: 1
@@ -130,7 +130,7 @@ export default {
     if (localStorage.access_token) {
       axios({
         method: 'GET',
-        url: `http://localhost:3000/products/category/${this.categorySearch}`
+        url: `https://cms-client-52ec6.web.app/products/category/${this.categorySearch}`
       })
         .then(({ data }) => {
           this.$store.commit('SET_CATEGORY_DATA', data.products)

@@ -35,7 +35,7 @@ export default {
     onSubmit () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/register',
+        url: 'https://cms-client-52ec6.web.app/register',
         data: {
           first_name: this.first_name,
           last_name: this.last_name,

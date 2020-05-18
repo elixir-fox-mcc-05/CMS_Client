@@ -31,7 +31,7 @@ export default {
     getProduct () {
       axios({
         method: 'GET',
-        url: `http://localhost:3000/products/${this.id}`,
+        url: `https://cms-client-52ec6.web.app/products/${this.id}`,
         headers: { access_token: localStorage.access_token }
       })
         .then(({ data }) => {

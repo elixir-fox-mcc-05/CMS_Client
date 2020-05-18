@@ -29,7 +29,7 @@ export default {
     onSubmit () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/login',
+        url: 'https://cms-client-52ec6.web.app/login',
         data: {
           email: this.email,
           password: this.password

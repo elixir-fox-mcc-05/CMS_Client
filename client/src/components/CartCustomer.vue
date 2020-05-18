@@ -65,7 +65,7 @@ export default {
     decrement (i, data) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3000/carts/${data[i].id}`,
+        url: `https://cms-client-52ec6.web.app/carts/${data[i].id}`,
         headers: {
           access_token: localStorage.access_token
         }
@@ -83,7 +83,7 @@ export default {
     getAll () {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/carts',
+        url: 'https://cms-client-52ec6.web.app/carts',
         headers: {
           access_token: localStorage.access_token
         }

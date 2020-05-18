@@ -37,7 +37,7 @@ export default {
     onSubmit () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/products',
+        url: 'https://cms-client-52ec6.web.app/products',
         headers: {
           access_token: localStorage.access_token
         },
