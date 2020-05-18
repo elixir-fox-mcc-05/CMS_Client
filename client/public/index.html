@@ -14,12 +14,24 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/7.14.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->
 
-    <!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCsvc57GsckP1S2-mdOaF1KunQCgezv4FU",
+        authDomain: "simple-eccommerce.firebaseapp.com",
+        databaseURL: "https://simple-eccommerce.firebaseio.com",
+        projectId: "simple-eccommerce",
+        storageBucket: "simple-eccommerce.appspot.com",
+        messagingSenderId: "175584113026",
+        appId: "1:175584113026:web:e2b5601f2ce875e9609f9b"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>
