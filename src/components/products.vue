@@ -16,7 +16,7 @@
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark v-on="on" size="lg">Add Product</v-btn>
+            <v-btn color="black white--text" v-on="on" size="lg">Add Product</v-btn>
           </template>
           <v-card @keyup.native.enter.prevent="save">
             <v-card-title>
@@ -27,28 +27,33 @@
               <v-container>
                 <v-row left>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.name" label="Product name"></v-text-field>
+                    <v-text-field :rules="nameRules" v-model="editedItem.name" label="Product name"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.image_url" label="Product Image Url"></v-text-field>
+                    <v-text-field :rules="imageRules" v-model="editedItem.image_url" label="Product Image Url"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.price" label="Product Price"></v-text-field>
+                    <v-text-field :rules="priceRules" type="number" v-model="editedItem.price" label="Product Price"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.stock" label="Product Stock"></v-text-field>
+                    <v-text-field :rules="stockRules" type="number" v-model="editedItem.stock" label="Product Stock"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.CategoryId" label="Product Category Id"></v-text-field>
-                  </v-col>
+                  <v-select
+                    v-model="editedItem.CategoryId"
+                    :items="categories"
+                    item-text="name"
+                    item-value="id"
+                    :rules="categoryRules"
+                    label="Category"
+                  ></v-select>
                 </v-row>
               </v-container>
             </v-card-text>
@@ -92,7 +97,7 @@ export default {
         price: 0,
         stock: 0,
         image_url: '',
-        CategoryId: 0,
+        CategoryId: null,
         id: 0
       },
       defaultItem: {
@@ -112,7 +117,8 @@ export default {
         {
           text: 'Image Url',
           sortable: false,
-          value: 'image_url'
+          value: 'image_url',
+          width: '20%'
         },
         {
           text: 'Price',
@@ -132,11 +138,28 @@ export default {
         {
           text: 'Category Name',
           sortable: true,
-          value: 'Categories.Name'
+          value: 'Category.name'
         },
         { text: 'Actions', value: 'actions', sortable: false }
       ],
-      message: ''
+      message: '',
+      nameRules: [
+        v => !!v || 'Name is required'
+      ],
+      priceRules: [
+        v => !!v || 'Price is required',
+        v => typeof (v) !== 'number' || 'Price must be Integer'
+      ],
+      stockRules: [
+        v => !!v || 'Stock is required',
+        v => typeof (v) !== 'number' || 'Price must be Integer'
+      ],
+      imageRules: [
+        v => !!v || 'Image is required'
+      ],
+      categoryRules: [
+        v => !!v || 'Category is required'
+      ]
     }
   },
   methods: {
@@ -175,10 +198,10 @@ export default {
       const payload = {
         token: localStorage.getItem('token'),
         name: this.editedItem.name,
-        price: this.editItem.price,
-        stock: this.editItem.stock,
-        image_url: this.editItem.image_url,
-        CategoryId: this.editItem.CategoryId,
+        price: this.editedItem.price,
+        stock: this.editedItem.stock,
+        image_url: this.editedItem.image_url,
+        CategoryId: this.editedItem.CategoryId,
         id: this.editItem.id
       }
       if (this.editedIndex > -1) {
@@ -195,7 +218,7 @@ export default {
       } else {
         this.$store.dispatch('addProduct', payload)
           .then(({ data }) => {
-            this.items.push(data.Category)
+            this.items.push(data.Product)
           })
           .catch(err => {
             this.message = err.response.data.msg

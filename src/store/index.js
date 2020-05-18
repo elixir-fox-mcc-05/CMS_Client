@@ -9,7 +9,9 @@ export default new Vuex.Store({
   state: {
     isLogin: false,
     token: '',
-    message: ''
+    message: '',
+    categories: [],
+    products: []
   },
   mutations: {
     SET_LOGIN (state, payload) {
@@ -17,6 +19,12 @@ export default new Vuex.Store({
     },
     SET_TOKEN (state, payload) {
       state.token = payload
+    },
+    SET_CATEGORIES (state, payload) {
+      state.categories = payload
+    },
+    SET_PRODUCTS (state, payload) {
+      state.products = payload
     },
     ADD_CATEGORIES (state, payload) {
       state.categories.push(payload)
@@ -107,11 +115,17 @@ export default new Vuex.Store({
     addProduct (context, payload) {
       return axios({
         method: 'POST',
-        url: baseUrl + 'category',
+        url: baseUrl + 'product',
         headers: {
           token: payload.token
         },
-        data: payload.data
+        data: {
+          name: payload.name,
+          image_url: payload.image_url,
+          price: payload.price,
+          stock: payload.stock,
+          CategoryId: payload.CategoryId
+        }
       })
     }
   },

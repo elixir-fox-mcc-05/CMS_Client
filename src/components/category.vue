@@ -16,7 +16,7 @@
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark v-on="on" size="lg">Add Category</v-btn>
+            <v-btn color="black white--text" v-on="on" size="lg">Add Category</v-btn>
           </template>
           <v-card @keyup.native.enter.prevent="save">
             <v-card-title>
@@ -27,7 +27,7 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.name" label="Category name"></v-text-field>
+                    <v-text-field v-model="editedItem.name" :rules="nameRules" label="Category name"></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
@@ -90,7 +90,10 @@ export default {
         },
         { text: 'Actions', value: 'actions', sortable: false }
       ],
-      message: ''
+      message: '',
+      nameRules: [
+        v => !!v || 'Name is required'
+      ]
     }
   },
   methods: {
