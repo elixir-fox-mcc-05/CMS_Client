@@ -163,7 +163,7 @@
                                     <td>{{ product.stock }}</td>
                                     <td>{{ product.name }}</td>
                                     <td>Rp.{{ convertToRp(product.price) }}</td>
-                                    <td>{{ product.category_id }}</td>
+                                    s
                                     <td>
                                         <button class="btn btn-warning btn-sm btn-block">Edit</button>
                                         <button class="btn btn-danger btn-sm btn-block">Delete</button>
