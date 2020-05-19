@@ -9,7 +9,7 @@
     <td>{{ product.category_name }} </td>
     <td>
         <button class="btn btn-warning btn-sm btn-block">Edit</button>
-        <button class="btn btn-danger btn-sm btn-block" @click.prevent="deletBtn(product.id)">Delete</button>
+        <button class="btn btn-danger btn-sm btn-block" @click.prevent="deleteBtn(product.id)">Delete</button>
     </td>
 </tr>
 </template>
@@ -24,7 +24,7 @@ export default {
         convertToRp (price) {
             return convertToRp(price)
         },
-        deletBtn (id) {
+        deleteBtn (id) {
             this.$store.dispatch('deleteProduct', id)
         }
     }

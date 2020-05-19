@@ -105,7 +105,7 @@
                             </div>
                         </form>
                     </div> <br>  
-                    <!-- show all -->     
+                    <!-- show product -->     
                     <div class="table-responsive"
                     >
                         <table class="table table-striped table-sm">
@@ -119,7 +119,16 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <!-- show All -->
+                            <tbody v-if="!filter">
+                                <ProductList
+                                    v-for="product in products"
+                                    :key="product.id"
+                                    :product="product"
+                                ></ProductList>
+                            </tbody>
+                            <!-- filter arr -->
+                            <tbody v-else>
                                 <ProductList
                                     v-for="product in products"
                                     :key="product.id"
@@ -148,6 +157,8 @@ export default {
             baseUrl : '',
             filter: '',
             addBtn: false,
+            sortBy: '',
+            selCatName: '',
             productForm: {
                 name : '',
                 description : '',
@@ -173,21 +184,42 @@ export default {
             let newProd = []
             if (!this.filter) {
                 this.$store.state.product.forEach(element => {
-                    let { name, description, price, stock, imgUrl, category_id } = element
+                    let {id, name, description, price, stock, imgUrl, category_id } = element
                     if (element.category_id === 0 || element.category_id === null) {
                         newProd.push({
-                            name, description, price, stock, imgUrl, category_id,
+                            id, name, description, price, stock, imgUrl, category_id,
                             category_name : "uncategory"
                         })
                     } else {
                         this.$store.state.category.forEach(el => {
                             if (category_id === el.id) {
                                 newProd.push({
-                                    name, description, price, stock, imgUrl, category_id,
+                                    id, name, description, price, stock, imgUrl, category_id,
                                     category_name : el.name
                                 })
                             }
                         });
+                    }
+                });
+            } else {
+                this.$store.state.product.forEach(element => {
+                    if (element.category_id === this.filter) {
+                        let {id, name, description, price, stock, imgUrl, category_id } = element
+                        if (element.category_id === -1) {
+                            newProd.push({
+                                id, name, description, price, stock, imgUrl, category_id,
+                                category_name : "uncategory"
+                            })
+                        } else {
+                            this.$store.state.category.forEach(el => {
+                                if (category_id === el.id) {
+                                    newProd.push({
+                                        id, name, description, price, stock, imgUrl, category_id,
+                                        category_name : el.name
+                                    })
+                                }
+                            });
+                        }
                     }
                 });
             }
@@ -272,11 +304,6 @@ export default {
         }
     },
     watch: {
-        filter () {
-            if (this.filter || this.filter === 0) {
-                console.log(this.filter)
-            }
-        }
     },
     created(){
         this.$store.dispatch('getProduct')
