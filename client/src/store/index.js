@@ -1,42 +1,58 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Axios from 'axios'
+import Server from '../api'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    baseUrl: 'http://localhost:3000',
     product: [],
-    category: [],
+    category: []
   },
   mutations: {
-    GET_PRODUCT() {
-        Axios({
+    SET_PRODUCT (state, payload) {
+      state.product = payload
+    },
+    SET_CATEGORY (state, payload) {
+      state.category = payload
+    }
+  },
+  actions: {
+    getProduct (context) {
+        Server({
             method: 'get',
-            url: this.state.baseUrl+'/product'
+            url: '/product'
         })
         .then(result=>{
-          this.state.product = result.data
+          context.commit('SET_PRODUCT', result.data)
         })
         .catch(err=>{
         })
     },
-    GET_CATEGORY() {
-      Axios({
+    getCategory (context) {
+      Server({
           method: 'get',
-          url: this.state.baseUrl+'/category'
+          url: '/category'
       })
       .then(result=>{
-        this.state.category = result.data
-        console.log(result)
+        context.commit('SET_CATEGORY', result.data)
       })
       .catch(err=>{
         console.log(err)
       })
-  }
-  },
-  actions: {
+    },
+    deleteProduct (context,id) {
+      Server ({
+        method: 'delete',
+        url: '/product/'+id
+      })
+      .then (result =>{
+        context.dispatch('getProduct')
+      })
+      .catch (err =>{
+        console.log(err)
+      })
+    }
   },
   modules: {
   }

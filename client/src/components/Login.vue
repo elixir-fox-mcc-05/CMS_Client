@@ -51,7 +51,8 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Server from '../api'
+
 export default {
     name: "login",
     data () {
@@ -60,14 +61,13 @@ export default {
             password: '',
             passInputType: 'password',
             errRes: '',
-            baseUrl: ''
         }
     },
     methods: {
         loginSubmit () {
-            Axios({
+            Server({
                 method: 'post',
-                url: this.baseUrl+'/user/login',
+                url: '/user/login',
                 data: {
                     username: this.username,
                     password: this.password
@@ -91,7 +91,6 @@ export default {
         }
     },
     created() {
-        this.baseUrl = this.$store.state.baseUrl 
     }
 }
 </script>

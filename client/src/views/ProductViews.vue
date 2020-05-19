@@ -71,9 +71,8 @@
                     <!-- end nav -->
                     
                     <div class="input-group row" v-if="!addBtn">
-                        <div class="input-group-prepend col-9">
+                        <div class="input-group-prepend col-8">
                             <button class="btn btn-outline-secondary dropdown-toggle btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            v-if="category.length > 0"
                             >Filter by Category</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item"
@@ -82,13 +81,13 @@
                                     All
                                 </a>
                                 <a class="dropdown-item"
-                                @click.prevent="sortByCategory(0)"
+                                @click.prevent="filterBtn(-1)"
                                 >
                                     Uncategory
                                 </a>
                                 <a class="dropdown-item" 
                                 v-for="(cat,i) in category" :key="i"
-                                @click.prevent="sortByCategory(cat.id)"
+                                @click.prevent="filterBtn(cat.id)"
                                 >
                                     {{ cat.name }}
                                 </a>
@@ -105,11 +104,9 @@
                                 </div>
                             </div>
                         </form>
-                    </div> <br>
-                    
-                    <!-- show by category -->
+                    </div> <br>  
+                    <!-- show all -->     
                     <div class="table-responsive"
-                    v-if="!addBtn && seletedCategory || seletedCategory === 0"
                     >
                         <table class="table table-striped table-sm">
                             <thead>
@@ -123,52 +120,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(product,i) in sortByCat" :key="i">
-                                    <td>
-                                        <img :src="product.imgUrl" :alt="product.title" width="100px" height="100px">
-                                    </td>
-                                    <td>{{ product.stock }}</td>
-                                    <td>{{ product.name }}</td>
-                                    <td>Rp.{{ convertToRp(product.price) }}</td>
-                                    <td>{{ showCatName }}</td>
-                                    <td>
-                                        <button class="btn btn-warning btn-sm btn-block">Edit</button>
-                                        <button class="btn btn-danger btn-sm btn-block">Delete</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- show all -->
-                    <div class="table-responsive" 
-                    v-else
-                    >
-                        <table class="table table-striped table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Stock</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Category</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(product,i) in products" :key="i">
-                                    <td>
-                                        <img :src="product.imgUrl" :alt="product.title" width="100px" height="100px">
-                                    </td>
-                                    <td>{{ product.stock }}</td>
-                                    <td>{{ product.name }}</td>
-                                    <td>Rp.{{ convertToRp(product.price) }}</td>
-                                    s
-                                    <td>
-                                        <button class="btn btn-warning btn-sm btn-block">Edit</button>
-                                        <button class="btn btn-danger btn-sm btn-block">Delete</button>
-                                    </td>
-                                </tr>
+                                <ProductList
+                                    v-for="product in products"
+                                    :key="product.id"
+                                    :product="product"
+                                ></ProductList>
                             </tbody>
                         </table>
                     </div>
@@ -182,20 +138,16 @@
 <script>
 import sidebarMenu from '../components/Navbar'
 import topNavbar from '../components/topNavbar'
-import convertToRp from '../script/convertToRp.js'
-import Axios from 'axios'
+import ProductList from '../components/ProductList'
+import Server from '../api'
+
 export default {
     name: 'product',
     data () {
         return {
             baseUrl : '',
-            products: [],
-            category: [],
+            filter: '',
             addBtn: false,
-            seletedCategory: '',
-            selCatName: '',
-            sortByCat: [],
-            showCatName: '',
             productForm: {
                 name : '',
                 description : '',
@@ -213,14 +165,39 @@ export default {
     },
     components: {
         sidebarMenu,
-        topNavbar
+        topNavbar,
+        ProductList
     },
     computed: {
+        products () {
+            let newProd = []
+            if (!this.filter) {
+                this.$store.state.product.forEach(element => {
+                    let { name, description, price, stock, imgUrl, category_id } = element
+                    if (element.category_id === 0 || element.category_id === null) {
+                        newProd.push({
+                            name, description, price, stock, imgUrl, category_id,
+                            category_name : "uncategory"
+                        })
+                    } else {
+                        this.$store.state.category.forEach(el => {
+                            if (category_id === el.id) {
+                                newProd.push({
+                                    name, description, price, stock, imgUrl, category_id,
+                                    category_name : el.name
+                                })
+                            }
+                        });
+                    }
+                });
+            }
+            return newProd
+        },
+        category () {
+            return this.$store.state.category
+        }
     },
     methods: {
-        convertToRp(price) {
-            return convertToRp(price)
-        },
         addProductBtn() {
             if(!this.addBtn) {
                 this.addBtn = true
@@ -230,41 +207,43 @@ export default {
         },
         addProductSubmit() {
             let { name,description,price,stock,imgUrl,category_id } = this.productForm
-            console.log(this.productForm)
-            // Axios({
-            //     method: 'post',
-            //     url: this.baseUrl+'/product',
-            //     data: {
-            //         name,description,price,stock,imgUrl,category_id
-            //     }
-            // })
-            // .then(result=>{
-            //     this.addSuc = ''
-            //     this.addErr = ''
-            //     this.productForm.name = '',
-            //     this.productForm.description = '',
-            //     this.productForm.price = '',
-            //     this.productForm.stock = '',
-            //     this.productForm.imgUrl = '',
-            //     this.productForm.category_id = ''
-            //     this.addSuc = 'Succesfully adding product'
-            // })
-            // .catch(err=>{
-            //     this.addSuc = ''
-            //     this.addErr = ''
-            //     this.addErr = err.response.data.msg
-            // })
+            Server({
+                method: 'post',
+                url: '/product',
+                data: {
+                    name,description,price,stock,imgUrl,category_id
+                }
+            })
+            .then(result=>{
+                this.addSuc = ''
+                this.addErr = ''
+                this.productForm.name = '',
+                this.productForm.description = '',
+                this.productForm.price = '',
+                this.productForm.stock = '',
+                this.productForm.imgUrl = '',
+                this.productForm.category_id = ''
+                this.addSuc = 'Succesfully adding product'
+                this.$store.dispatch('getProduct')
+            })
+            .catch(err=>{
+                this.addSuc = ''
+                this.addErr = ''
+                this.addErr = err.response.data.msg
+            })
         },
         addCat() {
-            Axios({
+            Server({
                 method: 'post',
-                url: this.baseUrl+'/category',
+                url: '/category',
                 data: {
                     name: this.categoryForm.name
                 }
             })
             .then(result=>{
+                this.$store.dispatch('getCategory')
                 console.log(result)
+                this.categoryForm.name = ''
             })
             .catch(err=>{
                 console.log(err)
@@ -280,44 +259,28 @@ export default {
             imgUrl = '',
             category_id = ''
         },
-        sortByCategory(id) {
-            this.seletedCategory = id
-            let newCat = []
-            this.$store.state.product.forEach(elem => {
-                if (elem.category_id === id) {
-                    newCat.push(elem)
-                }
-            });
-            this.sortByCat = newCat
-            this.getCatName(id)
-            console.log(this.sortByCat,this.seletedCategory)
-        },
         showAllProduct() {
-            this.seletedCategory = ''
+            this.filter = ''
+        },
+        filterBtn (id) {
+            this.filter = id
+            console.log(id)
         },
         selectCatAddProd(id,name) {
             this.productForm.category_id = id
             this.selCatName = name
-        },
-        getCatName(id) {
-            if (id === 0) {
-                    this.showCatName = 'Uncategory'
-            } else {
-                this.$store.state.category.forEach(el => {
-                    if( id === el.id) {
-                        console.log(el.name)
-                        this.showCatName = el.name
-                    }
-                });
+        }
+    },
+    watch: {
+        filter () {
+            if (this.filter || this.filter === 0) {
+                console.log(this.filter)
             }
         }
     },
     created(){
-        this.baseUrl = this.$store.state.baseUrl
-        this.products = this.$store.state.product
-        this.category = this.$store.state.category
-        this.$store.commit('GET_PRODUCT')
-        this.$store.commit('GET_CATEGORY')
+        this.$store.dispatch('getProduct')
+        this.$store.dispatch('getCategory')
     }
 }
 </script>
