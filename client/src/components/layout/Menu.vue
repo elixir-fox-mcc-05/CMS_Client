@@ -18,6 +18,10 @@
                               <b-menu-item icon="cellphone-link" label="Categories List" @click.prevent="showAddCategories"></b-menu-item>
                                 <b-menu-item icon="account" label="Add Categories" @click.prevent="showCategoryList"></b-menu-item>
                             </b-menu-item>
+                            <b-menu-item icon="settings"  class="has-text-left " label="Transactions Menu">
+                              <b-menu-item icon="cellphone-link" label="Transactions List" @click.prevent="showCartList"></b-menu-item>
+                                <b-menu-item disabled icon="account" label="Add Transaction" @click.prevent="showaddCart"></b-menu-item>
+                            </b-menu-item>
                         </b-menu-list>
                         <b-menu-list label="Menu" v-if="!loggedIn">
                             <b-menu-item label="Login" class="has-text-left" icon="account" @click="$router.push('/')"></b-menu-item>
@@ -75,6 +79,12 @@ export default {
     },
     showAddCategories () {
       this.$router.push('/category')
+    },
+    showaddCart () {
+      this.$router.push('/')
+    },
+    showCartList () {
+      this.$router.push('/cartlist')
     }
   },
   created () {

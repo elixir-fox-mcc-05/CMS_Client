@@ -20,7 +20,7 @@
                     {{ temp.row.name }}
                 </b-table-column>
 
-                <b-table-column field="category" label="CategoryName">
+                <b-table-column field="category" label="Category">
                     {{ temp.row.Category.name }}
                 </b-table-column>
 

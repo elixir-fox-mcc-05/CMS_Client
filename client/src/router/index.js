@@ -7,6 +7,7 @@ import AddProduct from '../views/AddProduct'
 import CategoryList from '../views/CategoryList'
 import AddCategory from '../views/AddCategory'
 import UserInfo from '../views/UserInfo'
+import CartList from '../views/CartList'
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,10 @@ const routes = [
   {
     path: '/info',
     component: UserInfo
+  },
+  {
+    path: '/cartlist',
+    component: CartList
   }
 ]
 

@@ -8,6 +8,7 @@ const store = new Vuex.Store({
   state: {
     select: 'login',
     products: [],
+    carts: [],
     categories: [],
     loggedIn: false,
     updateData: {},

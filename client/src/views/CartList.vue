@@ -114,11 +114,12 @@
     </section>
 </template>
 
-
 <script>
+import server from '@/api'
+
 export default {
-    name: 'CartList',
-     data () {
+  name: 'CartList',
+  data () {
     const data = this.$store.state.carts
     return {
       data,
@@ -136,10 +137,10 @@ export default {
     }
   },
   methods: {
-      
+
   },
-  created() {
-      
+  created () {
+
   }
 }
 </script>
