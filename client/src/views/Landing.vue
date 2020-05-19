@@ -12,6 +12,11 @@ export default {
   name: 'Landing',
   components: {
     LoginForm
+  },
+  created () {
+    if (localStorage.token) {
+      this.$router.push({ name: 'MainPage' })
+    }
   }
 }
 </script>

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Landing from '../views/Landing.vue'
 import MainPage from '../views/MainPage.vue'
+import DetailProduct from '../views/DetailProduct.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/mainPage',
     name: 'MainPage',
     component: MainPage
+  },
+  {
+    path: '/detail/:productId',
+    name: 'DetailProduct',
+    component: DetailProduct
   }
 ]
 

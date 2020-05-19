@@ -35,21 +35,20 @@ export default {
     return {
       loginEmail: '',
       loginPassword: '',
-      errorMessage: false,
-      payload: {}
+      errorMessage: false
     }
   },
   methods: {
     login () {
-      this.payload = {
+      this.$store.dispatch('login', {
         email: this.loginEmail,
         password: this.loginPassword
-      }
-      this.$store.dispatch('login', this.payload)
+      })
         .then(({ data }) => {
           localStorage.setItem('token', data.token)
           this.$router.push('mainPage')
           this.errorMessage = false
+          this.$store.commit('SET_LOGIN', true)
         })
         .catch(err => {
           this.errorMessage = err.response.data.errors[0].message

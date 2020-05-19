@@ -7,11 +7,15 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    isLogin: false
+    isLogin: false,
+    products: []
   },
   mutations: {
     SET_LOGIN (state, payload) {
       state.isLogin = payload
+    },
+    SET_PRODUCTS (state, payload) {
+      state.products = payload
     }
   },
   actions: {
@@ -20,6 +24,19 @@ const store = new Vuex.Store({
         email: payload.email,
         password: payload.password
       })
+    },
+    readAllProduct ({ commit }, token) {
+      return server.get('/products', {
+        headers: {
+          token
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_PRODUCTS', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 })

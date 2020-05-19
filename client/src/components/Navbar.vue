@@ -6,18 +6,15 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'Navbar',
-  computed: {
-    isLogin () {
-      return this.$store.state.isLogin
-    }
-  },
   methods: {
+    ...mapMutations(['SET_LOGIN']),
     logout () {
       localStorage.clear()
       this.$router.push({ name: 'Landing' })
-      this.$store.commit('SET_LOGIN', false)
+      this.SET_LOGIN(false)
     }
   }
 }
