@@ -16,7 +16,7 @@
                     {{ temp.row.id }}
                 </b-table-column>
 
-                <b-table-column field="name" label="Name" searchable="true">
+                <b-table-column field="name" label="Name" :searchable="true">
                     {{ temp.row.name }}
                 </b-table-column>
 

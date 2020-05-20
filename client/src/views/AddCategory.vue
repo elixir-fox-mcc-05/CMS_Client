@@ -29,7 +29,7 @@ export default {
         }
       })
         .then(({ data }) => {
-          this.$router.push('/menu')
+          this.$router.push('/category')
         })
     }
   },

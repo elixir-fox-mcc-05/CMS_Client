@@ -1,11 +1,68 @@
 <template>
-    <div>
+<section>
 
-    </div>
+        <b-field label="Name">
+            <b-input v-model="nameproduct" placeholder="No label" rounded></b-input>
+        </b-field>
+
+        <b-field label="Image URL">
+            <b-input v-model="image_url" placeholder="No label" rounded></b-input>
+        </b-field>
+
+        <button @click.prevent="newBanner" class="button is-dark">
+            <b-icon icon="check"></b-icon>
+            <span>Finish</span>
+        </button>
+
+    </section>
 </template>
 
 <script>
+import server from '../api'
+
 export default {
-  name: 'AddBanner'
+  name: 'addBanner',
+  data () {
+    return {
+      categories: ['asd', 'asdf'],
+      category: []
+    }
+  },
+  methods: {
+    newBanner () {
+      const newData = {
+        name: this.nameproduct,
+        image_url: this.image_url,
+        stock: this.stock,
+        price: this.price,
+        CategoryId: this.category
+      }
+      console.log(newData)
+      server.post('/banner/add', newData, {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          this.$store.dispatch('fetchBanner')
+        //   this.$store.commit('SET_ADDPRODUCT', data)
+
+          console.log('add banner completed')
+          this.$router.push('/bannerlist')
+        }).catch(err => {
+          console.log(err.response.data)
+        })
+    }
+
+  },
+  created () {
+    if (!localStorage.token) {
+      this.$router.push('/')
+    }
+  }
 }
 </script>
+
+<style>
+
+</style>
