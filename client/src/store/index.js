@@ -10,6 +10,7 @@ const store = new Vuex.Store({
     products: [],
     carts: [],
     categories: [],
+    banners: [],
     loggedIn: false,
     updateData: {},
     deletedData: {},
@@ -38,6 +39,10 @@ const store = new Vuex.Store({
     },
     SET_CARTS (state, payload) {
       state.carts = payload
+      // console.log('zzz', state.carts)
+    },
+    SET_BANNERS (state, payload) {
+      state.banners = payload
     }
   },
   actions: {
@@ -48,7 +53,7 @@ const store = new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log('buset', data.data)
+          console.log('products', data.data)
           commit('SET_PRODUCTS', data.data)
         })
         .catch(err => {
@@ -94,8 +99,22 @@ const store = new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log('cart', data)
+          console.log('cart', data.data)
           commit('SET_CARTS', data.data)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    fetchBanners ({ commit, state }) {
+      return server.get('/banner/list', {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          console.log('banners', data.data)
+          commit('SET_BANNERS', data.data)
         })
         .catch(err => {
           console.log(err.response)
@@ -103,7 +122,11 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    loggedIn: state => state.loggedIn
+    loggedIn: state => state.loggedIn,
+    carts: state => state.carts,
+    products: state => state.products,
+    categories: state => state.categories,
+    banners: state => state.banners
   },
   modules: {
   }

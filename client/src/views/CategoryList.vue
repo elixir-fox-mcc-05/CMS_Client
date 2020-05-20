@@ -2,7 +2,7 @@
 <template>
     <section>
         <b-table
-            :data="isEmpty ? [] : data"
+            :data="isEmpty ? [] : categories"
             :bordered="isBordered"
             :striped="isStriped"
             :narrowed="isNarrowed"
@@ -16,7 +16,7 @@
                     {{ temp.row.id }}
                 </b-table-column>
 
-                <b-table-column field="name" label="Name">
+                <b-table-column field="name" label="Name" searchable="true">
                     {{ temp.row.name }}
                 </b-table-column>
 
@@ -80,9 +80,7 @@ export default {
 
   name: 'ProductList',
   data () {
-    const data = this.$store.state.categories
     return {
-      data,
       isEmpty: false,
       isBordered: false,
       isStriped: false,
@@ -133,9 +131,9 @@ export default {
           console.log('edit category completed')
           this.isComponentModalActive = false
           this.$store.dispatch('fetchCategory')
-            .finally(_ => {
-              this.data = this.$store.state.categories
-            })
+            // .finally(_ => {
+            //   this.data = this.$store.state.categories
+            // })
         })
         .catch(err => {
           console.log(err.response.data)
@@ -160,16 +158,21 @@ export default {
     },
     fetchCategory () {
       this.$store.dispatch('fetchCategory')
-      this.data = this.$store.state.categories
+      // this.data = this.$store.state.categories
     }
   },
   created () {
     this.$store.dispatch('fetchCategory')
-      .finally(_ => {
-        console.log('asd', this.$store.state.categories)
-        this.data = this.$store.state.categories
-      })
-  }
+      // .finally(_ => {
+      //   console.log('asd', this.$store.state.categories)
+      //   this.data = this.$store.state.categories
+      // })
+  },
+  computed: {
+    categories(){
+      return this.$store.getters.categories
+    }
+  },
 }
 
 </script>

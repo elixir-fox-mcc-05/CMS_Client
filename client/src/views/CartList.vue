@@ -1,7 +1,7 @@
 <template>
       <section>
         <b-table
-            :data="isEmpty ? [] : data"
+            :data="isEmpty ? [] : carts"
             :bordered="isBordered"
             :striped="isStriped"
             :narrowed="isNarrowed"
@@ -15,7 +15,7 @@
                     {{ temp.row.id }}
                 </b-table-column>
 
-                <b-table-column field="name" label="Name">
+                <b-table-column field="name" label="Name" searchable="true">
                     {{ temp.row.Product.name }}
                 </b-table-column>
 
@@ -64,30 +64,29 @@
                     </header>
                     <section class="modal-card-body">
 
-                        <b-field label="Stock">
-                            <b-input
-                                v-model="stock"
-                                type="text"
-                                :value="stock"
-                                placeholder="Stock"
-                                required>
-                            </b-input>
+                        <b-field label="Quantity">
+                            <b-numberinput v-model="stock"></b-numberinput>
                         </b-field>
 
-                        <b-field label="Price">
-                            <b-input
-                                v-model="price"
-                                type="text"
-                                :value="price"
-                                placeholder="Price"
-                                required>
-                            </b-input>
-                        </b-field>
+                         <div class="block">
+                         <h1><strong>is paid ?</strong></h1><br>
+            <b-radio v-model="isPaid"
+                name="name"
+                native-value="true">
+                True
+            </b-radio>
+            <b-radio v-model="isPaid"
+                name="name"
+                native-value="false">
+                False
+            </b-radio>
+
+        </div>
 
                     </section>
                     <footer class="modal-card-foot">
                         <button class="button" type="button" @click="close">Close</button>
-                        <button class="button is-primary" @click.prevent="edit(selectId)">Edit Product</button>
+                        <button class="button is-primary" @click.prevent="edit(selectId)">Edit Cart</button>
                     </footer>
                 </div>
             </form>
@@ -96,14 +95,12 @@
 </template>
 
 <script>
-// import server from '@/api'
+import server from '@/api'
 
 export default {
   name: 'CartList',
   data () {
-    const data = this.$store.state.carts
     return {
-      data,
       isEmpty: false,
       isBordered: false,
       isStriped: false,
@@ -131,26 +128,64 @@ export default {
         .then(({ data }) => {
           // console.log(data.data)
           this.isComponentModalActive = true
-          this.selectId = data.id
-          this.name = data.name
+          this.selectId = data.data.id
+          this.stock = data.data.quantity
+          this.isPaid = data.data.isPaid
         })
         .catch(err => {
           console.log(err.response)
         })
     },
-    deleteCart () {
-
+    deleteCart (id) {
+      server.delete(`/cart/delete/${id}`, {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          console.log('delete completed')
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
     },
     edit (id) {
+      const editCart = {
+        quantity: this.stock,
+        isPaid: this.isPaid
+      }
 
+      server.put(`/cart/edit/${id}`, editCart, {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          console.log('edit completed')
+          this.$store.dispatch('fetchCart')
+            .finally(_ => {
+              this.isComponentModalActive = false
+            })
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    close () {
+      this.isComponentModalActive = false
     }
   },
   created () {
     this.$store.dispatch('fetchCart')
-      .finally(_ => {
-        console.log('asd', this.$store.state.products)
-        this.fetchCart()
-      })
+    //   .finally(_ => {
+    //     console.log('asd', this.$store.state.products)
+    //     this.fetchCart()
+    //   })
+  },
+  computed: {
+    carts () {
+      return this.$store.getters.carts
+    }
   }
 }
 </script>

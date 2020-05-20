@@ -1,8 +1,9 @@
 
 <template>
     <section>
+
         <b-table
-            :data="isEmpty ? [] : data"
+            :data="isEmpty ? [] : products"
             :bordered="isBordered"
             :striped="isStriped"
             :narrowed="isNarrowed"
@@ -16,11 +17,11 @@
                     {{ temp.row.id }}
                 </b-table-column>
 
-                <b-table-column field="name" label="Name">
+                <b-table-column field="name" label="Name" searchable="true">
                     {{ temp.row.name }}
                 </b-table-column>
 
-                <b-table-column field="category" label="Category">
+                <b-table-column field="category" label="Category" searchable="true">
                     {{ temp.row.Category.name }}
                 </b-table-column>
 
@@ -126,9 +127,7 @@ export default {
 
   name: 'ProductList',
   data () {
-    const data = this.$store.state.products
     return {
-      data,
       isEmpty: false,
       isBordered: false,
       isStriped: false,
@@ -183,12 +182,13 @@ export default {
       })
         .then(({ data }) => {
           this.$store.commit('SET_UPDATEPRODUCT', data)
+          this.$store.dispatch('fetchProducts')
           console.log('edit product completed')
           this.isComponentModalActive = false
-          this.$store.dispatch('fetchProducts')
-            .finally(_ => {
-              this.data = this.$store.state.products
-            })
+          // this.$store.dispatch('fetchProducts')
+          //   .finally(_ => {
+          //     this.data = this.$store.state.products
+          //   })
         })
         .catch(err => {
           console.log(err.response.data)
@@ -202,7 +202,7 @@ export default {
       })
         .then(({ data }) => {
           this.$store.commit('SET_DELETEPRODUCT', { info: 'deleted' })
-          this.fetchProduct()
+          this.$store.dispatch('fetchProducts')
         })
         .catch(err => {
           console.log(err.response)
@@ -210,18 +210,19 @@ export default {
     },
     close () {
       this.isComponentModalActive = false
-    },
-    fetchProduct () {
-      this.$store.dispatch('fetchProducts')
-      this.data = this.$store.state.products
     }
   },
   created () {
     this.$store.dispatch('fetchCategory')
-      .finally(_ => {
-        console.log('asd', this.$store.state.products)
-        this.fetchProduct()
-      })
+    // .finally(_ => {
+    //   console.log('asd', this.$store.state.products)
+    //   this.fetchProduct()
+    // })
+  },
+  computed: {
+    products () {
+      return this.$store.getters.products
+    }
   }
 }
 

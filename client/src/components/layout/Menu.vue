@@ -20,10 +20,10 @@
                             </b-menu-item>
                             <b-menu-item icon="settings"  class="has-text-left " label="Transactions Menu">
                               <b-menu-item icon="cellphone-link" label="Transactions List" @click.prevent="showCartList"></b-menu-item>
-                                <b-menu-item disabled icon="account" label="Add Transaction" @click.prevent="showaddCart"></b-menu-item>
+                                <b-menu-item icon="account" label="Add Transaction" @click.prevent="showaddCart"></b-menu-item>
                             </b-menu-item>
                             <b-menu-item icon="settings"  class="has-text-left " label="Banner Menu">
-                              <b-menu-item icon="cellphone-link" label="Banner List" @click.prevent="showBannerList"></b-menu-item>
+                              <b-menu-item  disabled icon="cellphone-link" label="Banner List" @click.prevent="showBannerList"></b-menu-item>
                                 <b-menu-item disabled icon="account" label="Add Banner" @click.prevent="showaddBanner"></b-menu-item>
                             </b-menu-item>
                         </b-menu-list>
@@ -85,7 +85,7 @@ export default {
       this.$router.push('/category')
     },
     showaddCart () {
-      this.$router.push('/')
+      this.$router.push('/addcart')
     },
     showCartList () {
       this.$router.push('/cartlist')
