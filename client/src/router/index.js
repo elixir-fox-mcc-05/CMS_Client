@@ -1,22 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
+import Missing from "../components/Missing.vue";
 import Dashboard from "../views/Dashboard.vue";
+// dashboard children
+// product start
 import Product from "../components/Product.vue";
-import Member from "../components/Member.vue";
+import AddProduct from "../components/AddProduct.vue";
+import EditProduct from "../components/EditProduct.vue";
+import DeleteProduct from "../components/DeleteProduct.vue";
+// user start
+import User from "../components/User.vue";
+import AddUser from "../components/AddUser.vue";
+import EditUser from "../components/EditUser.vue";
+import DeleteUser from "../components/DeleteUser.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/login",
     name: "Login",
     component: Login
   },
@@ -28,17 +32,53 @@ const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    component: Dashboard
+    component: Dashboard,
+    children: [
+      {
+        path: "product",
+        name: "Product",
+        component: Product
+      },
+      {
+        path: "add-product",
+        name: "AddProduct",
+        component: AddProduct
+      },
+      {
+        path: "edit-product/:id",
+        name: "EditProduct",
+        component: EditProduct
+      },
+      {
+        path: "delete-product/:id",
+        name: "DleteProduct",
+        component: DeleteProduct
+      },
+      {
+        path: "user",
+        name: "User",
+        component: User
+      },
+      {
+        path: "add-user",
+        name: "AddUser",
+        component: AddUser
+      },
+      {
+        path: "edit-user/:id",
+        name: "EditUser",
+        component: EditUser
+      },
+      {
+        path: "delete-user/:id",
+        name: "DleteUser",
+        component: DeleteUser
+      },
+    ]
   },
   {
-    path: "/dashboard/:id",
-    name: "Admin Page",
-    component: Product
-  },
-  {
-    path: "/dashboard/member",
-    name: "Member Page",
-    component: Member
+    path: "*",
+    component: Missing
   }
 ];
 

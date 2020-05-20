@@ -1,17 +1,28 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div v-if="!isLogin" id="nav" class="sticky">
       <div id="Logo">
         <p>Bukalipik</p>
       </div>
-      <router-link class="nav-name" to="/">Home</router-link>
-      <router-link class="nav-name" to="/login">Login</router-link>
+      <router-link class="nav-name" to="/">Login</router-link>
       <router-link class="nav-name" to="/register">Register</router-link>
-      <router-link class="nav-name" to="/dashboard">Dashboard</router-link>
     </div>
-    <router-view />
+    <transition name="view">
+      <router-view />
+    </transition>
   </div>
 </template>
+
+<script>
+export default {
+  name: "App",
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin;
+    }
+  }
+};
+</script>
 
 <style>
 #app {
@@ -34,10 +45,17 @@
 }
 
 #nav {
-  padding: 10px 50px 10px;
+  padding: 10px 100px 10px;
   background: white;
   display: flex;
   align-items: center;
+  position: sticky;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 #nav a {
@@ -47,5 +65,14 @@
 
 #nav a.router-link-exact-active {
   color: #2096f3;
+}
+
+.view-enter-active,
+.view-leave-active {
+  transition: opacity 0.5s;
+}
+.view-enter,
+.view-leave-to {
+  opacity: 0;
 }
 </style>

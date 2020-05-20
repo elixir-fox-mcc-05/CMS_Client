@@ -1,8 +1,7 @@
 <template>
   <div class="dashboard">
-    <div class="adminNavbar">
+    <div class="adminNavbar sticky">
       <div class="profile">
-        <p class="myProfile">My Profile</p>
         <div class="image">
           <div class="circleImage"></div>
           <img src="../assets/profile-pict.jpg" alt="profile-pict" />
@@ -11,36 +10,41 @@
         <p class="role">Administrator</p>
       </div>
       <div class="link">
-        <div class="product navLink">
-          <i class="fas fa-shopping-bag"></i>
-          <p>Product</p>
-        </div>
-        <div class="member navLink">
-          <i class="fas fa-user"></i>
-          <p>Member</p>
-        </div>
-        <div class="logout navLink">
+        <router-link class="nav-name" to="/dashboard/product">
+          <div class="product navLink">
+            <i class="fas fa-shopping-bag"></i>
+            <p>Product</p>
+          </div>
+        </router-link>
+        <router-link class="nav-name" to="/dashboard/user">
+          <div class="user navLink">
+            <i class="fas fa-user"></i>
+            <p>User</p>
+          </div>
+        </router-link>
+        <div @click.prevent="logout" class="logout navLink">
           <i class="fas fa-sign-out-alt"></i>
           <p>Logout</p>
         </div>
       </div>
     </div>
-    <div class="content">
-      <Product />
-      <Member />
-    </div>
-    <router-view />
+    <transition name="view">
+      <router-view />
+    </transition>
   </div>
 </template>
 
 <script>
-import Product from "../components/Product";
-import Member from "../components/Member";
 export default {
-  name: `"Dashboard"`,
-  components: {
-    Product,
-    Member
+  name: "Dashboard",
+  methods: {
+    logout() {
+      this.$store.commit("SET_LOGIN", false);
+      this.$router.push("/");
+    }
+  },
+  created() {
+    this.$store.commit("SET_LOGIN", true);
   }
 };
 </script>
@@ -48,6 +52,12 @@ export default {
 <style scoped>
 .dashboard {
   display: flex;
+  /* position: fixed; */
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 .adminNavbar {
   display: flex;
@@ -59,12 +69,7 @@ export default {
 }
 .profile {
   width: 100%;
-  padding-top: 50px;
-}
-.profile .myProfile {
-  font-size: 25px;
-  font-weight: bold;
-  margin-bottom: 30px;
+  padding-top: 30px;
 }
 .image {
   display: flex;
@@ -74,56 +79,72 @@ export default {
 }
 .image .circleImage {
   border: 5px solid #2096f3;
-  width: 160px;
-  height: 160px;
+  width: 120px;
+  height: 120px;
   align-self: center;
   border-radius: 50%;
 }
 .image img {
-  margin-top: -145px;
-  width: 130px;
-  height: 130px;
+  margin-top: -110px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
 }
 .name {
-  margin-top: 20px;
+  margin-top: 15px;
   font-weight: bold;
-  font-size: 26px;
+  font-size: 20px;
 }
 .role {
-  font-size: 18px;
+  font-size: 16px;
+  margin-bottom: 20%;
 }
 .link {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
 }
 .navLink {
-  margin-top: 40px;
+  /* margin-top: 10%; */
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-left: 30%;
+  padding-left: 10%;
   cursor: pointer;
-  height: 70px;
-}
-.navlink:active,
-.navlink:hover {
-  background: #f5f6fa;
+  height: 40px;
 }
 .navLink p {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   margin-left: 20px;
   color: #909090;
 }
-.navLink p:hover {
-  color: #2096f3;
-}
 .fas {
-  font-size: 20px;
+  font-size: 16px;
   color: #909090;
+}
+.product:hover,
+.product:active {
+  background: #f5f6fa;
+}
+.user:hover,
+.user:active {
+  background: #f5f6fa;
+}
+.logout {
+  margin-left: 10%;
+  width: 80%;
+  padding-left: 8%;
+}
+.logout:hover,
+.logout:active {
+  background: #f5f6fa;
+}
+.navLink p:hover,
+.navlink p:active {
+  color: #2096f3;
 }
 .fas:active,
 .fas:hover {

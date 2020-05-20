@@ -1,40 +1,40 @@
 <template>
-  <div class="productContainer">
-    <h1>Products</h1>
-    <router-link to="/dashboard/add-product">
-      <button class="addProduct">Add Product</button>
+  <div class="userContainer">
+    <h1>User</h1>
+    <router-link to="/dashboard/add-user">
+      <button class="addUser">Add User</button>
     </router-link>
-    <div class="product">
+    <div class="user">
       <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Image</th>
             <th>Name</th>
-            <th>Price</th>
-            <th>Stock</th>
+            <th>Email</th>
+            <th>Role</th>
             <th>Action</th>
           </tr>
         </thead>
-        <tbody v-for="product in productList" :key="product.id">
+        <tbody v-for="user in userList" :key="user.id">
           <tr>
-            <td>{{ product.id }}</td>
+            <td>{{ user.id }}</td>
             <td>
-              <img :src="product.image_url" alt="product image" />
+              <img :src="user.image_url" alt="user image" />
             </td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.stock }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
             <td>
               <button
-                @click.prevent="showEditPage(product.id)"
+                @click.prevent="showEditPage(user.id)"
                 class="edit"
                 href=""
               >
                 Edit
               </button>
               <button
-                @click.prevent="showDeletePage(product.id)"
+                @click.prevent="showDeletePage(user.id)"
                 class="delete"
                 href=""
               >
@@ -50,35 +50,35 @@
 
 <script>
 export default {
-  name: "Product",
+  name: "User",
   computed: {
     currentPage() {
       return this.$store.state.currentPage;
     },
-    productList() {
-      return this.$store.state.productList;
+    userList() {
+      return this.$store.state.userList;
     }
   },
-  methods: {
+   methods: {
     showEditPage(id) {
-      this.$router.push(`/dashboard/edit-product/${id}`);
+      this.$router.push(`/dashboard/edit-user/${id}`);
     },
     showDeletePage(id) {
-      this.$router.push(`/dashboard/delete-product/${id}`);
+      this.$router.push(`/dashboard/delete-user/${id}`);
     }
   },
   created() {
-    this.$store.dispatch("fetchProductList");
+    this.$store.dispatch("fetchUserList");
   }
 };
 </script>
 
 <style scoped>
-.productContainer {
+.userContainer {
   padding-left: 17.5vw;
   padding-top: 4vh;
 }
-.addProduct {
+.addUser {
   margin-top: -20px;
   margin-right: -70vw;
   text-decoration: none;
@@ -90,11 +90,11 @@ export default {
   border: none;
   cursor: pointer;
 }
-.addProduct:focus {
+.addUser:focus {
   outline: none;
   background: #1b88db;
 }
-.product {
+.user {
   background: white;
   border-radius: 20px;
 }
@@ -111,7 +111,7 @@ table {
 }
 th,
 td {
-  padding: 20px 40px 0;
+  padding: 20px 0 40px 40px;
   text-align: left;
 }
 th {
@@ -124,7 +124,11 @@ td {
   vertical-align: center;
 }
 img {
-  width: 5vw;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #2096f3;
 }
 .edit {
   margin-right: 20px;
