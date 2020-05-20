@@ -8,11 +8,7 @@
       <div class="formInput">
         <label class="labelAddUser">
           <h4>User Name:</h4>
-          <input
-            v-model="editUser.name"
-            type="text"
-            class="addUserInput"
-          />
+          <input v-model="editUser.name" type="text" class="addUserInput" />
         </label>
         <label class="labelAddUser">
           <h4>Image Url:</h4>
@@ -24,25 +20,13 @@
         </label>
         <label class="labelAddUser">
           <h4>Email:</h4>
-          <input
-            v-model="editUser.email"
-            type="text"
-            class="addUserInput"
-          />
+          <input v-model="editUser.email" type="text" class="addUserInput" />
         </label>
         <label class="labelAddUser">
           <h4>Role:</h4>
-          <input
-            v-model="editUser.role"
-            type="text"
-            class="addUserInput"
-          />
+          <input v-model="editUser.role" type="text" class="addUserInput" />
         </label>
-        <input
-          @click.prevent="editUserById"
-          type="submit"
-          class="submitForm"
-        />
+        <input @click.prevent="editUserById" type="submit" class="submitForm" />
       </div>
     </div>
   </div>
@@ -69,10 +53,10 @@ export default {
     getUserById() {
       server({
         method: "get",
-        url: `/users/${this.$route.params.id}`
-        // headers: {
-        //   token: localStorage.token
-        // }
+        url: `/users/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.token
+        }
       })
         .then(response => {
           this.editUser = response.data;
@@ -85,9 +69,9 @@ export default {
       server({
         method: "put",
         url: `/users/${this.$route.params.id}`,
-        // headers: {
-        //   token: localStorage.token
-        // },
+        headers: {
+          token: localStorage.token
+        },
         data: {
           name: this.editUser.name,
           image_url: this.editUser.image_url,
@@ -146,7 +130,7 @@ h1 {
   text-transform: uppercase;
   color: #313236;
   font-size: 20px;
-  margin-left: -20vw;
+  margin-left: -23vw;
   margin-bottom: 10px;
 }
 

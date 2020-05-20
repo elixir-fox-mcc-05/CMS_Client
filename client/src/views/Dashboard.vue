@@ -4,10 +4,13 @@
       <div class="profile">
         <div class="image">
           <div class="circleImage"></div>
-          <img src="../assets/profile-pict.jpg" alt="profile-pict" />
+          <img
+            :src="this.$store.state.userLogin.image_url"
+            alt="profile-pict"
+          />
         </div>
-        <p class="name">Amir Faisal Z</p>
-        <p class="role">Administrator</p>
+        <p class="name">{{ this.$store.state.userLogin.name }}</p>
+        <p class="role">{{ this.$store.state.userLogin.role }}</p>
       </div>
       <div class="link">
         <router-link class="nav-name" to="/dashboard/product">
@@ -37,8 +40,10 @@
 <script>
 export default {
   name: "Dashboard",
+  props: ["user"],
   methods: {
     logout() {
+      localStorage.clear();
       this.$store.commit("SET_LOGIN", false);
       this.$router.push("/");
     }

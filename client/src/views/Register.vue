@@ -1,11 +1,13 @@
 <template>
   <div class="registerPage">
     <div>
-      <img src="../assets/register-bg.png" alt="" />
+      <img src="../assets/register-bg.png" alt />
     </div>
     <div class="container">
       <h1>Create Bukalipik account</h1>
       <p class="label">it's free and always will be</p>
+      <Notif class="notif"/>
+      <Error class="error"/>
       <input
         v-model="name"
         class="username"
@@ -33,7 +35,7 @@
       <button @click.prevent="register">Register</button>
       <p class="login">
         already have an account?
-        <a @click.prevent="login" href="">login here </a>
+        <a @click.prevent="login" href>login here</a>
       </p>
       <div class="copyright">
         <p>Copyright © 2020</p>
@@ -44,23 +46,47 @@
 </template>
 
 <script>
+import server from "../api";
+import Notif from "../components/Notif";
+import Error from "../components/Error";
 export default {
   name: "Register",
+  components: {
+    Notif,
+    Error
+  },
   data() {
     return {
       name: "",
       email: "",
       password: "",
-      image_url: "",
-      show: true,
-      token: "",
-      message: "",
-      errMessage: ""
+      image_url: ""
     };
   },
   methods: {
     register() {
-      this.$router.push("/");
+      server({
+        method: "post",
+        url: "/register",
+        data: {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          image_url: this.image_url
+        }
+      })
+        .then(response => {
+          this.$store.commit("CHANGE_MYERROR", "");
+          this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
+          (this.name = ""),
+          (this.email = ""),
+          (this.password = ""),
+          (this.image_url = "");
+        })
+        .catch(err => {
+          this.$store.commit("CHANGE_MYNOTIF", "");
+          this.$store.commit("CHANGE_MYERROR", err.response.data.err);
+        });
     },
     login() {
       this.$router.push("/");
@@ -142,7 +168,7 @@ export default {
     text-align: right;
   }
   .copyright {
-    margin-top: 10vh;
+    margin-top: 7vh;
     margin-right: 3vw;
     display: flex;
     justify-content: center;
@@ -156,82 +182,15 @@ export default {
     width: 40vw;
     margin-left: 8vw;
     z-index: 99999;
-    /* background: royalblue; */
   }
-}
-
-/* Large screens ----------- */
-@media only screen and (min-width: 1824px) {
-  .loginPage {
-    display: flex;
-  }
-  .container {
-    width: 100vw;
-    height: 100vh;
-    margin-left: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  h1 {
-    margin-top: 150px;
-    margin-left: 80px;
-    font-weight: bold;
-    font-size: 50px;
-    text-align: left;
-    color: #4d4e52;
-  }
-  .label {
-    text-align: left;
-    margin-left: 80px;
-    font-size: 25px;
-    margin-top: 30px;
-    color: #676a6f;
-  }
-  .username {
-    margin-top: 30px;
-    margin-left: 80px;
-    width: 20vw;
-    height: 5vh;
-    border: none;
-    box-shadow: 0 20px 70px rgba(66, 154, 236, 0.185);
+  .notif,
+  .error {
+    padding: 5px;
+    margin-bottom: -25px;
+    margin-top: 15px;
+    width: 30vw;
+    margin-left: 10vw;
     border-radius: 20px;
-    padding-left: 20px;
-    color: #676a6f;
-  }
-  .username:focus {
-    outline: none;
-  }
-  button {
-    margin-top: 30px;
-    margin-left: 80px;
-    width: 20vw;
-    height: 5vh;
-    box-shadow: 0 20px 70px rgba(66, 154, 236, 0.185);
-    border-radius: 20px;
-    padding-left: 20px;
-    background: #409d7e;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 26px;
-  }
-  button:focus {
-    outline: none;
-  }
-  button:hover {
-    background: #58caa4;
-  }
-  .copyright {
-    margin-top: 35vh;
-    margin-left: 80px;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    text-align: left;
-  }
-  img {
-    margin-top: 7vh;
-    margin-right: 8vw;
   }
 }
 </style>

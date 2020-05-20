@@ -8,7 +8,10 @@ export default new Vuex.Store({
   state: {
     isLogin: false,
     productList: [],
-    userList: []
+    userList: [],
+    myNotif: "",
+    myError: "",
+    userLogin: {}
   },
   mutations: {
     SET_LOGIN(state, payload) {
@@ -19,16 +22,25 @@ export default new Vuex.Store({
     },
     SET_USERLIST(state, payload) {
       state.userList = payload;
+    },
+    CHANGE_MYNOTIF(state, payload) {
+      state.myNotif = payload;
+    },
+    CHANGE_MYERROR(state, payload) {
+      state.myError = payload;
+    },
+    CHANGE_USERLOGIN(state, payload) {
+      state.userLogin = payload;
     }
   },
   actions: {
     fetchProductList(context) {
       server({
         method: "get",
-        url: "/products"
-        // headers: {
-        //   token: localStorage.token
-        // }
+        url: "/products",
+        headers: {
+          token: localStorage.token
+        }
       })
         .then(response => {
           context.commit("SET_PRODUCTLIST", response.data);
@@ -38,15 +50,16 @@ export default new Vuex.Store({
         });
     },
     fetchUserList(context) {
+      console.log("masuk fetch user list <+++++++++");
       server({
         method: "get",
-        url: "/users"
-        // headers: {
-        //   token: localStorage.token
-        // }
+        url: "/user-list",
+        headers: {
+          token: localStorage.token
+        }
       })
         .then(response => {
-          context.commit("SET_USERLIST", response.data);
+          context.commit("SET_USERLIST", response.data.users);
         })
         .catch(err => {
           console.log(err);

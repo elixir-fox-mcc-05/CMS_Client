@@ -8,35 +8,19 @@
       <div class="formInput">
         <label class="labelAddUser">
           <h4>User Name:</h4>
-          <input
-            v-model="newUser.name"
-            type="text"
-            class="addUserInput"
-          />
+          <input v-model="newUser.name" type="text" class="addUserInput" />
         </label>
         <label class="labelAddUser">
           <h4>Image Url:</h4>
-          <input
-            v-model="newUser.image_url"
-            type="text"
-            class="addUserInput"
-          />
+          <input v-model="newUser.image_url" type="text" class="addUserInput" />
         </label>
         <label class="labelAddUser">
           <h4>Email:</h4>
-          <input
-            v-model="newUser.email"
-            type="text"
-            class="addUserInput"
-          />
+          <input v-model="newUser.email" type="text" class="addUserInput" />
         </label>
         <label class="labelAddUser">
           <h4>Role:</h4>
-          <input
-            v-model="newUser.role"
-            type="text"
-            class="addUserInput"
-          />
+          <input v-model="newUser.role" type="text" class="addUserInput" />
         </label>
         <input
           @click.prevent="addNewUser"
@@ -71,9 +55,9 @@ export default {
       server({
         method: "post",
         url: "/users",
-        // headers: {
-        //   token: localStorage.token
-        // },
+        headers: {
+          token: localStorage.token
+        },
         data: {
           name: this.newUser.name,
           image_url: this.newUser.image_url,
@@ -126,7 +110,7 @@ h1 {
   text-transform: uppercase;
   color: #313236;
   font-size: 20px;
-  margin-left: -20vw;
+  margin-left: -23vw;
   margin-bottom: 10px;
 }
 
