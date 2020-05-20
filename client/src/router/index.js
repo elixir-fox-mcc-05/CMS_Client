@@ -8,6 +8,9 @@ import CategoryList from '../views/CategoryList'
 import AddCategory from '../views/AddCategory'
 import UserInfo from '../views/UserInfo'
 import CartList from '../views/CartList'
+import AddCart from '../views/AddCart'
+import BannerList from '../views/BannerList'
+import AddBanner from '../views/AddBanner'
 
 Vue.use(VueRouter)
 
@@ -53,6 +56,19 @@ const routes = [
   {
     path: '/cartlist',
     component: CartList
+  },
+  {
+    path: '/addcart',
+    component: AddCart
+  },
+  {
+    path: '/bannerlist',
+    component: BannerList
+  },
+  {
+    path: '/addbanner',
+    component: AddBanner
+
   }
 ]
 

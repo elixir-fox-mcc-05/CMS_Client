@@ -23,8 +23,8 @@
                     {{ temp.row.User.first_name }} {{ temp.row.User.last_name }}
                 </b-table-column>
 
-                <b-table-column field="stock" label="Stock">
-                    {{ temp.row.stock }}
+                <b-table-column field="quantity" label="Quantity">
+                    {{ temp.row.quantity }}
                 </b-table-column>
 
                 <b-table-column field="ispaid" label="isPaid">
@@ -35,7 +35,7 @@
                     <span>
                       <div class="buttons">
                          <b-button @click="showEditMenu(temp.row.id)" type="is-primary">Edit</b-button>
-                          <b-button @click="deleteProduct(temp.row.id)" type="is-primary">Delete</b-button>
+                          <b-button @click="deleteCart(temp.row.id)" type="is-primary">Delete</b-button>
                           </div>
                     </span>
                 </b-table-column>
@@ -60,28 +60,9 @@
              <form action="">
                 <div class="modal-card" style="width: 50%">
                     <header class="modal-card-head">
-                        <p class="modal-card-title">Edit Product</p>
+                        <p class="modal-card-title">Edit Cart</p>
                     </header>
                     <section class="modal-card-body">
-                        <b-field label="name">
-                            <b-input
-                                v-model="name"
-                                type="text"
-                                :value="name"
-                                placeholder="Product Name"
-                                required>
-                            </b-input>
-                        </b-field>
-
-                        <b-field label="Image URL">
-                            <b-input
-                                v-model="image_url"
-                                type="text"
-                                :value="image_url"
-                                placeholder="Image URL"
-                                required>
-                            </b-input>
-                        </b-field>
 
                         <b-field label="Stock">
                             <b-input
@@ -115,7 +96,7 @@
 </template>
 
 <script>
-import server from '@/api'
+// import server from '@/api'
 
 export default {
   name: 'CartList',
@@ -137,10 +118,39 @@ export default {
     }
   },
   methods: {
+    fetchCart () {
+      this.$store.dispatch('fetchCart')
+      this.data = this.$store.state.carts
+    },
+    showEditMenu (id) {
+      server.get(`/cart/${id}`, {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          // console.log(data.data)
+          this.isComponentModalActive = true
+          this.selectId = data.id
+          this.name = data.name
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    deleteCart () {
 
+    },
+    edit (id) {
+
+    }
   },
   created () {
-
+    this.$store.dispatch('fetchCart')
+      .finally(_ => {
+        console.log('asd', this.$store.state.products)
+        this.fetchCart()
+      })
   }
 }
 </script>

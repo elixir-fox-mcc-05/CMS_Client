@@ -22,6 +22,10 @@
                               <b-menu-item icon="cellphone-link" label="Transactions List" @click.prevent="showCartList"></b-menu-item>
                                 <b-menu-item disabled icon="account" label="Add Transaction" @click.prevent="showaddCart"></b-menu-item>
                             </b-menu-item>
+                            <b-menu-item icon="settings"  class="has-text-left " label="Banner Menu">
+                              <b-menu-item icon="cellphone-link" label="Banner List" @click.prevent="showBannerList"></b-menu-item>
+                                <b-menu-item disabled icon="account" label="Add Banner" @click.prevent="showaddBanner"></b-menu-item>
+                            </b-menu-item>
                         </b-menu-list>
                         <b-menu-list label="Menu" v-if="!loggedIn">
                             <b-menu-item label="Login" class="has-text-left" icon="account" @click="$router.push('/')"></b-menu-item>
@@ -85,6 +89,12 @@ export default {
     },
     showCartList () {
       this.$router.push('/cartlist')
+    },
+    showBannerList () {
+      this.$router.push('/bannerlist')
+    },
+    showaddBanner () {
+      this.$router.push('/addbanner')
     }
   },
   created () {

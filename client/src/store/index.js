@@ -35,6 +35,9 @@ const store = new Vuex.Store({
       // console.log(payload)
       state.categories = payload
       // console.log('aso', state.categories)
+    },
+    SET_CARTS (state, payload) {
+      state.carts = payload
     }
   },
   actions: {
@@ -66,7 +69,8 @@ const store = new Vuex.Store({
         first_name: payload.first_name,
         last_name: payload.last_name,
         email: payload.email,
-        password: payload.password
+        password: payload.password,
+        roles: payload.roles
       })
     },
     fetchCategory ({ commit, state }) {
@@ -78,6 +82,20 @@ const store = new Vuex.Store({
         .then(({ data }) => {
           console.log('category', data)
           commit('SET_CATEGORIES', data.data)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    fetchCart ({ commit, state }) {
+      return server.get('/cart/list', {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          console.log('cart', data)
+          commit('SET_CARTS', data.data)
         })
         .catch(err => {
           console.log(err.response)
