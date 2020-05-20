@@ -8,14 +8,14 @@ export default new Vuex.Store({
   state: {
     version: '0.1',
     isSignedIn: false,
-    items: []
+    products: []
   },
   mutations: {
     SET_SIGNED_IN (state, payload) {
       state.isSignedIn = payload
     },
-    SET_ITEMS (state, payload) {
-      state.items = payload
+    SET_PRODUCTS (state, payload) {
+      state.products = payload
     }
   },
   actions: {
@@ -37,9 +37,28 @@ export default new Vuex.Store({
     },
     createProduct (context, payload) {
       return axiosShot({
-        methos: 'POST',
+        method: 'POST',
         url: '/products',
         data: payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+    getProductById (context, payload) {
+      return axiosShot({
+        method: 'GET',
+        url: '/products/' + payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+    updateProduct (context, payload) {
+      return axiosShot({
+        method: 'PUT',
+        url: '/products/' + payload.id,
+        data: payload.data,
         headers: {
           access_token: localStorage.getItem('access_token')
         }

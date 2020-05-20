@@ -1,10 +1,10 @@
 <template>
   <div>
-    <b-form @submit.prevent="createProduct">
+    <b-form @submit.prevent="updateProduct">
       <b-form-group id="input-group-1" label="Product name:" label-for="name">
         <b-form-input
           id="name"
-          v-model="name"
+          v-model="selectedProduct.name"
           type="text"
           required
           placeholder="eg. iced cappucino"
@@ -14,7 +14,7 @@
       <b-form-group id="input-group-2" label="Image URL:" label-for="image">
         <b-form-input
           id="image"
-          v-model="image_url"
+          v-model="selectedProduct.image_url"
           type="url"
           required
           placeholder="http://yourimage.url"
@@ -24,7 +24,7 @@
       <b-form-group id="input-group-3" label="Price:" label-for="price">
         <b-form-input
           id="price"
-          v-model="price"
+          v-model="selectedProduct.price"
           type="number"
           required
           placeholder="eg. 10000"
@@ -35,7 +35,7 @@
       <b-form-group id="input-group-4" label="Stock:" label-for="stock">
         <b-form-input
           id="stock"
-          v-model="stock"
+          v-model="selectedProduct.stock"
           type="number"
           required
           placeholder="eg. 10"
@@ -50,15 +50,8 @@
 
 <script>
 export default {
-  name: 'FormCreateProduct',
-  data () {
-    return {
-      name: '',
-      image_url: '',
-      price: '',
-      stock: ''
-    }
-  },
+  name: 'FormUpdateProduct',
+  props: ['selectedProduct'],
   methods: {
     fetchProducts () {
       this.$store
@@ -70,31 +63,31 @@ export default {
           console.log(err)
         })
     },
-    createProduct () {
+    updateProduct () {
       const payload = {
-        name: this.name,
-        image_url: this.image_url,
-        price: this.price,
-        stock: this.stock
+        data: {
+          name: this.selectedProduct.name,
+          image_url: this.selectedProduct.image_url,
+          price: this.selectedProduct.price,
+          stock: this.selectedProduct.stock
+        },
+        id: this.selectedProduct.id
       }
       this.$store
-        .dispatch('createProduct', payload)
+        .dispatch('updateProduct', payload)
         .then(({ data }) => {
-          const newAddedProductName = data.CreatedProduct.name
+          const updateProductName = data.UpdatedProduct.name
           this.fetchProducts()
           this.$emit('closeModal')
           this.$swal.fire(
-            `Success add "${newAddedProductName}"`,
-            'You just added a new product!',
+            `Success update "${updateProductName}"`,
+            'You just updated a product!',
             'success'
           )
         })
         .catch(({ err }) => {
           console.log(err)
         })
-    },
-    closeModal () {
-      this.$refs['modal-create'].hide()
     }
   }
 }

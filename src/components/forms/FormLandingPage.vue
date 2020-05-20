@@ -3,7 +3,7 @@
     <div class="sidenav">
       <div class="login-main-text">
         <h2>
-          E-commerce<br />
+          E-Commerce CMS<br />
           Administrator
         </h2>
         <p>Sign In to access admin dashboard.</p><hr />

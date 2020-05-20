@@ -5,7 +5,7 @@
         <template v-slot:header>Welcome back,</template>
 
         <template v-slot:lead>
-          <p>E-Commerce CMS, version {{ version }}</p>
+          <p>E-Commerce CMS Dashboard, version {{ version }}</p>
         </template>
 
         <hr class="my-4" />
@@ -17,10 +17,20 @@
 
         <b-button variant="primary" href="#products"
           >your product list</b-button
-        > |
-        <b-button variant="success" v-b-modal.modal-create>Add New Product</b-button>
+        >
+        |
+        <b-button variant="success" v-b-modal.modal-create
+          >Add New Product</b-button
+        >
 
-        <b-modal id="modal-create" ref="modal-create" title="Create a new product">
+        <b-modal
+          id="modal-create"
+          ref="modal-create"
+          title="Create a new product"
+          header-bg-variant="primary"
+          header-text-variant="light"
+          footerBgVariant="secondary"
+        >
           <FormCreateProduct @closeModal="closeModal" />
           <template v-slot:modal-footer>
             <div class="w-100 h-auto"></div>

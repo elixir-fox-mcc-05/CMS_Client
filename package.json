@@ -12,8 +12,10 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.14.0",
     "core-js": "^3.6.4",
+    "sweetalert2": "^9.11.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
+    "vue-sweetalert2": "^3.0.5",
     "vuetable-2": "^2.0.0-beta.4",
     "vuex": "^3.1.3"
   },
