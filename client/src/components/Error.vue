@@ -4,7 +4,7 @@
       <p v-for="message in myError" :key="message">{{ message.message }}</p>
     </div>
     <div v-else>
-      <p>{{ myError }}</p>
+      <p>{{ myError.msg }}</p>
     </div>
   </div>
 </template>

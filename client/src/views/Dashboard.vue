@@ -19,7 +19,11 @@
             <p>Product</p>
           </div>
         </router-link>
-        <router-link class="nav-name" to="/dashboard/user">
+        <router-link
+          v-if="this.$store.state.userLogin.role == 'Super-admin'"
+          class="nav-name"
+          to="/dashboard/user"
+        >
           <div class="user navLink">
             <i class="fas fa-user"></i>
             <p>User</p>
