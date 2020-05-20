@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Landing from '../views/Landing.vue'
 import MainPage from '../views/MainPage.vue'
 import DetailProduct from '../views/DetailProduct.vue'
+import AddProduct from '../views/AddProduct.vue'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/mainPage',
     name: 'MainPage',
     component: MainPage
+  },
+  {
+    path: '/add',
+    name: 'AddProduct',
+    component: AddProduct
   },
   {
     path: '/detail/:productId',

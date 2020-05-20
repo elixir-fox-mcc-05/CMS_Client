@@ -3,8 +3,9 @@
         <table class="table table-hover table-bordered table-dark table-responsive-md">
             <thead>
                 <tr>
-                    <th scope="col" class="text-center">Id</th>
+                    <th scope="col" class="text-center">No</th>
                     <th scope="col" class="text-center col-4">Name</th>
+                    <th scope="col" class="text-center">Id</th>
                     <th scope="col" class="text-center">Description</th>
                     <th scope="col" class="text-center">Image</th>
                     <th scope="col" class="text-center col-2">Price (IDR)</th>
@@ -17,8 +18,9 @@
                 :to="`/detail/${product.id}`"
                 tag="tr"
                 >
-                    <th scope="row">{{ product.id }}</th>
+                    <th scope="row">{{ i+1 }}.</th>
                     <td>{{ product.name }}</td>
+                    <td>{{ product.id }}</td>
                     <td>
                         <div v-if="product.description == 'No description'">
                             <h6 class="text-center text-danger bold">X</h6>

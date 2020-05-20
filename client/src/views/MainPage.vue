@@ -2,7 +2,8 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <h1>Products</h1>
+        <h1>List All Product</h1>
+        <button class="btn btn-info mt-xl-0 my-3" type="button" @click="toAddProduct">Add Product</button>
         <ListProduct :products="products.products" />
       </div>
     </div>
@@ -22,7 +23,10 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_LOGIN']),
-    ...mapActions(['readAllProduct'])
+    ...mapActions(['readAllProduct']),
+    toAddProduct () {
+      this.$router.push('/add')
+    }
   },
   created () {
     if (!localStorage.token) {

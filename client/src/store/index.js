@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import server from '../api'
-// import server from '../api'
 
 Vue.use(Vuex)
 
@@ -37,6 +36,20 @@ const store = new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    addProduct ({ commit }, payload) {
+      const token = payload.token
+      return server.post('/products', {
+        name: payload.name,
+        description: payload.description,
+        image_url: payload.image_url,
+        price: payload.price,
+        stock: payload.stock
+      }, {
+        headers: {
+          token
+        }
+      })
     }
   }
 })
