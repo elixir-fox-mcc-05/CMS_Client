@@ -88,7 +88,6 @@ export default {
   name: 'fetchProduct',
   data () {
     return {
-      products: [],
       id: null,
       name: '',
       image_url: '',
@@ -97,22 +96,6 @@ export default {
     }
   },
   methods: {
-    fetchProduct () {
-      axios({
-        method: 'get',
-        url: 'http://localhost:3000/product',
-        headers: {
-          access_token: localStorage.access_token
-        }
-      })
-        .then(data => {
-          this.products = data.data.products
-        //   console.log(this.products)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
     getProduct (product) {
       this.id = product.id
       this.name = product.name
@@ -135,7 +118,7 @@ export default {
         }
       })
         .then(data => {
-          this.fetchProduct()
+          this.$store.dispatch('fetchProduct')
         })
         .catch(err => {
           console.log(err)
@@ -150,16 +133,21 @@ export default {
         }
       })
         .then(data => {
-          this.fetchProduct()
+          this.$store.dispatch('fetchProduct')
         })
         .catch(err => {
           console.log(err)
         })
     }
   },
+  computed: {
+    products () {
+      return this.$store.state.products
+    }
+  },
   created () {
     if (localStorage.access_token) {
-      this.fetchProduct()
+      this.$store.dispatch('fetchProduct')
     }
   }
 }

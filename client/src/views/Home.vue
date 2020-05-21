@@ -78,7 +78,7 @@ export default {
         }
       })
         .then(data => {
-          console.log(data)
+          this.$store.dispatch('fetchProduct')
         //   fetchProduct
         })
         .catch(err => {
@@ -86,9 +86,16 @@ export default {
         })
     }
   },
+  computed: {
+    products () {
+      return this.$store.state.products
+    }
+  },
   created () {
     if (!localStorage.access_token) {
       this.$router.push({ name: 'LoginPage' })
+    } else {
+      this.$store.dispatch('fetchProduct')
     }
   }
 }
