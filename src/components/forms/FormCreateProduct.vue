@@ -6,7 +6,6 @@
           id="name"
           v-model="name"
           type="text"
-          required
           placeholder="eg. iced cappucino"
         ></b-form-input>
       </b-form-group>
@@ -16,20 +15,20 @@
           id="image"
           v-model="image_url"
           type="url"
-          required
           placeholder="http://yourimage.url"
         ></b-form-input>
       </b-form-group>
 
       <b-form-group id="input-group-3" label="Price:" label-for="price">
+        <b-input-group prepend="Rp" append=".00">
         <b-form-input
           id="price"
           v-model="price"
           type="number"
-          required
           placeholder="eg. 10000"
-          min="1"
-        ></b-form-input>
+        >
+        </b-form-input>
+        </b-input-group>
       </b-form-group>
 
       <b-form-group id="input-group-4" label="Stock:" label-for="stock">
@@ -37,14 +36,16 @@
           id="stock"
           v-model="stock"
           type="number"
-          required
           placeholder="eg. 10"
-          min="1"
         ></b-form-input>
       </b-form-group>
 
       <b-button type="submit" variant="dark">Submit</b-button>
     </b-form>
+    <br />
+    <div v-if="createProductError">
+      <b-alert variant="warning" show><p v-for="error in createProductErrorMessage" :key="error.message">!-- {{ error.message }}</p></b-alert>
+    </div>
   </div>
 </template>
 
@@ -56,7 +57,9 @@ export default {
       name: '',
       image_url: '',
       price: '',
-      stock: ''
+      stock: '',
+      createProductError: false,
+      createProductErrorMessage: []
     }
   },
   methods: {
@@ -66,7 +69,7 @@ export default {
         .then(({ data }) => {
           this.$store.commit('SET_PRODUCTS', data.Products)
         })
-        .catch(({ err }) => {
+        .catch((err) => {
           console.log(err)
         })
     },
@@ -89,8 +92,19 @@ export default {
             'success'
           )
         })
-        .catch(({ err }) => {
-          console.log(err)
+        .catch((err) => {
+          this.createProductError = true
+          this.createProductErrorMessage = ''
+          const manyError = Array.isArray(err.response.data.message)
+          const arr = []
+          if (manyError) {
+            for (let i = 0; i < err.response.data.message.length; i++) {
+              arr.push(err.response.data.message[i])
+            }
+            this.createProductErrorMessage = arr
+          } else {
+            this.createProductErrorMessage += '!-- ' + err.response.data.message
+          }
         })
     },
     closeModal () {

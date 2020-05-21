@@ -1,14 +1,14 @@
 <template>
   <div class="d-flex justify-content-around flex-wrap">
     <div>
-      <b-jumbotron>
+      <b-jumbotron border-variant="dark">
         <template v-slot:header>Welcome back,</template>
 
         <template v-slot:lead>
           <p>E-Commerce CMS Dashboard, version {{ version }}</p>
         </template>
 
-        <hr class="my-4" />
+        <hr class="my-1" />
 
         <p>
           This is an admin dashboard page, you can fetch, create, update, delete

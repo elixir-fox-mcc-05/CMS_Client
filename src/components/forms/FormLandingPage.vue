@@ -32,12 +32,17 @@
                 placeholder="*********"
               />
             </div>
-            <button type="submit" class="btn btn-black text-white">
+            <button v-if="!loading" type="submit" class="btn btn-black text-white">
               Sign In
             </button>
-            |
-            <button type="reset" class="btn btn-secondary">Reset</button>
+            <span v-if="!loading"> | </span>
+            <button v-if="!loading" type="reset" class="btn btn-secondary">Reset</button>
+            <b-spinner v-else label="Spinning"></b-spinner>
           </form>
+          <br />
+          <div v-if="signInError">
+            <b-alert variant="warning" show>{{ signInErrorMessage }}</b-alert>
+          </div>
         </div>
       </div>
     </div>
@@ -50,11 +55,15 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      loading: false,
+      signInError: false,
+      signInErrorMessage: ''
     }
   },
   methods: {
     signIn () {
+      this.loading = true
       const payload = {
         email: this.email,
         password: this.password
@@ -62,12 +71,18 @@ export default {
       this.$store
         .dispatch('signIn', payload)
         .then(({ data }) => {
+          this.loading = false
+          this.signInError = false
+          this.signInErrorMessage = ''
           this.$store.commit('SET_SIGNED_IN', true)
           localStorage.setItem('access_token', data.access_token)
           this.$router.push('/dashboard')
         })
-        .catch(({ err }) => {
-          console.log(err)
+        .catch((err) => {
+          this.loading = false
+          this.signInError = true
+          this.signInErrorMessage = ''
+          this.signInErrorMessage += err.response.data.message
         })
     }
   }

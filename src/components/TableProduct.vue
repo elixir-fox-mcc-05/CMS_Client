@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h3>Products</h3>
+      <h3>Products (total: {{ totalProducts }})</h3>
       <b-row>
         <b-col lg="3" class="my-1">
           <b-form-group
@@ -47,27 +47,38 @@
       </b-row>
       <b-table
         id="products"
+        class="table"
         bordered="bordered"
         head-variant="dark"
         tbody-tr-class="text-center text-justify"
+        tbody-td-class="align-middle"
         thead-tr-class="text-center text-justify"
         :items="products"
         :fields="fields"
         :filter="filter"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
-        responsive="sm"
+        responsive="md"
         :per-page="perPage"
         :current-page="currentPage"
       >
+        <template v-slot:cell(Name)="data">
+          <p class="font-weight-bold">{{ data.value }}</p>
+        </template>
+        <template v-slot:cell(Image)="data">
+          <img :src="data.value" width="200" height="auto"/>
+        </template>
+        <template v-slot:cell(Price)="data">
+          {{ convertToCurrency(data.value) }}
+        </template>
         <template v-slot:cell(id)="data">
           <b-button
-            variant="outline-warning"
+            variant="warning"
             @click="getProductBeforeUpdateProduct(data.value)"
             >Edit</b-button
           >
           -
-          <b-button variant="outline-danger" @click="showMsgBoxDelete(data.value)">Delete</b-button>
+          <b-button variant="danger" @click="showMsgBoxDelete(data.value)">Delete</b-button>
         </template>
       </b-table>
     </div>
@@ -84,7 +95,7 @@
       <b-modal
         id="modal-edit"
         ref="modal-edit"
-        title="Edit Product"
+        title="Edit a product"
         header-bg-variant="warning"
         header-text-variant="light"
         footerBgVariant="secondary"
@@ -103,6 +114,7 @@
 
 <script>
 import FormUpdateProduct from '@/components/forms/FormUpdateProduct'
+import currency from '@/helpers/currency'
 
 export default {
   name: 'TableProduct',
@@ -157,7 +169,7 @@ export default {
     showMsgBoxDelete (id) {
       this.boxDelete = ''
       this.$bvModal.msgBoxConfirm('Please confirm that you want to delete?', {
-        title: 'Please Confirm',
+        title: 'Please confirm',
         size: 'sm',
         buttonSize: 'sm',
         okVariant: 'danger',
@@ -186,12 +198,15 @@ export default {
           this.$swal.fire(
             `Success delete "${deletedProductName}"`,
             'You just deleted a product!',
-            'info'
+            'success'
           )
         })
         .catch(({ err }) => {
           console.log(err)
         })
+    },
+    convertToCurrency (money) {
+      return currency(money)
     },
     closeModal () {
       this.$refs['modal-edit'].hide()
@@ -211,6 +226,9 @@ export default {
       })
       return products
     },
+    totalProducts () {
+      return this.$store.state.products.length
+    },
     rows () {
       return this.products.length
     }
@@ -221,4 +239,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.table > tbody > tr > td {
+     vertical-align: middle;
+}
+</style>

@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     version: '0.1',
     isSignedIn: false,
-    products: []
+    products: [],
+    totalProducts: 0
   },
   mutations: {
     SET_SIGNED_IN (state, payload) {
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     },
     SET_PRODUCTS (state, payload) {
       state.products = payload
+    },
+    SET_TOTAL_PRODUCTS (state, payload) {
+      state.totalProducts = payload
     }
   },
   actions: {
