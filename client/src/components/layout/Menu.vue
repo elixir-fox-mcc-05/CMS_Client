@@ -71,6 +71,7 @@ export default {
       this.$store.state.loggedIn = false
       this.$store.commit('SET_LOGIN', false)
       this.$router.push('/')
+      this.$buefy.toast.open('logged out')
     },
     showAccInfo () {
       this.$router.push('/info')

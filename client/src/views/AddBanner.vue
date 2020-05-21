@@ -6,7 +6,7 @@
         </b-field>
 
         <b-field label="Image URL">
-            <b-input v-model="image_url" placeholder="No label" rounded></b-input>
+            <b-input v-model="image_url" placeholder="No label" rounded type="url"></b-input>
         </b-field>
 
         <button @click.prevent="newBanner" class="button is-dark">

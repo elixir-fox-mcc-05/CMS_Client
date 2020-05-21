@@ -21,7 +21,7 @@
                     {{ temp.row.name }}
                 </b-table-column>
 
-                <b-table-column field="category" label="Category" :searchable="true">
+                <b-table-column field="category" label="Category" :searchable="false">
                     {{ temp.row.Category.name }}
                 </b-table-column>
 
@@ -82,7 +82,7 @@
                         <b-field label="Image URL">
                             <b-input
                                 v-model="image_url"
-                                type="text"
+                                type="url"
                                 :value="image_url"
                                 placeholder="Image URL"
                                 required>
@@ -223,6 +223,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('fetchProducts')
     this.$store.dispatch('fetchCategory')
     // .finally(_ => {
     //   console.log('asd', this.$store.state.products)

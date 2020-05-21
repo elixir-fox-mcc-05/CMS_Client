@@ -1,16 +1,14 @@
 <template>
     <section>
         <b-field label="First Name">
-            <b-input v-model="first_name"></b-input>
+            <b-input v-model="first_name" type="text"></b-input>
         </b-field>
 
         <b-field label="Last Name">
-            <b-input v-model="last_name"></b-input>
+            <b-input v-model="last_name" type="text"></b-input>
         </b-field>
 
-        <b-field label="Email"
-            type="is-danger"
-            message="This email is invalid">
+        <b-field label="Email">
             <b-input v-model="email"
                 type="email"
                 value="john@"
@@ -68,6 +66,14 @@ export default {
           })
       } else {
         console.log('gak bisa register admin yah??')
+        this.$buefy.snackbar.open({
+                    duration: 5000,
+                    message: 'Register must with correct secret password',
+                    type: 'is-danger',
+                    position: 'is-top',
+                    queue: true
+                   
+                })
       }
     }
   },

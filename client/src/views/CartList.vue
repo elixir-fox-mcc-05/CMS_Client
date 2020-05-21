@@ -134,6 +134,14 @@ export default {
         })
         .catch(err => {
           console.log(err.response)
+          this.$buefy.snackbar.open({
+                    duration: 5000,
+                    message: err.response.data.error,
+                    type: 'is-danger',
+                    position: 'is-top',
+                    queue: true
+                   
+                })
         })
     },
     deleteCart (id) {
