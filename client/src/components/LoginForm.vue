@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mb-5">
       <div class="row">
           <div class="col-lg-9 col-lg-7 col-lg-5 mx-auto text-center">
           <br />
@@ -19,7 +19,7 @@
                       <label for="inputPassword">Password</label>
                       <input type="password" v-model="loginPassword" class="form-control" placeholder="Password" required>
                   </div><br>
-                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
+                  <button class="btn btn-lg btn-dark btn-block text-uppercase" type="submit">Login</button>
               </form>
           </div>
           </div>

@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-info bg-info justify-content-between">
+    <nav class="navbar navbar-info bg-info justify-content-between border-bottom border-dark">
         <h5 class="">Products Management System</h5>
         <button class="btn btn-dark" type="button" @click.prevent="logout">LOGOUT</button>
     </nav>

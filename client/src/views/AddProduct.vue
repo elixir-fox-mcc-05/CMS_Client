@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mb-5">
         <div class="row">
         <div class="col-lg-12">
             <h1>Add Product</h1>
@@ -9,7 +9,7 @@
                     <label class="col-sm-2 col-form-label"><strong>Name</strong></label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" v-model="addName" placeholder="Product Name" required>
-                        <small id="passwordHelpBlock" class="form-text text-muted">
+                        <small class="form-text text-muted">
                             Product Name must be 1-60 characters long
                         </small>
                     </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </form>
-            <button type="button" @click="cancel" class="btn btn-warning">Cancel</button>
+            <button type="button" @click="cancel" class="btn btn-warning mb-5">Cancel</button>
         </div>
         </div>
     </div>

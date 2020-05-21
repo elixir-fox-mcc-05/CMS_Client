@@ -1,9 +1,11 @@
 <template>
-  <div class="container">
+  <div class="container mb-5">
     <div class="row">
       <div class="col-lg-12">
         <h1>List All Product</h1>
-        <button class="btn btn-info mt-xl-0 my-3" type="button" @click="toAddProduct">Add Product</button>
+        <div class="text-center">
+          <button class="btn btn-info mt-xl-0 my-3" type="button" @click="toAddProduct">Add Product</button>
+        </div>
         <ListProduct :products="products.products" />
       </div>
     </div>

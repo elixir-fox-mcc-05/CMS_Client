@@ -50,6 +50,36 @@ const store = new Vuex.Store({
           token
         }
       })
+    },
+    updateProduct ({ commit }, payload) {
+      const token = payload.token
+      return server.put(`/products/${payload.productId}`, {
+        name: payload.editName,
+        description: payload.editDescription,
+        image_url: payload.editImageUrl,
+        price: payload.editPrice,
+        stock: payload.editStock
+      }, {
+        headers: {
+          token
+        }
+      })
+    },
+    searchProduct ({ commit }, payload) {
+      const token = payload.token
+      return server.get(`/products/${payload.productId}`, {
+        headers: {
+          token
+        }
+      })
+    },
+    deleteProduct ({ commit }, payload) {
+      const token = payload.token
+      return server.delete(`/products/${payload.productId}`, {
+        headers: {
+          token
+        }
+      })
     }
   }
 })
