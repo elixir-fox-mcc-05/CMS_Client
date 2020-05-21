@@ -46,9 +46,9 @@ export default {
     }
   },
   created () {
-    if (!localStorage.token) {
-      this.$router.push('/')
-    }
+    // if (!localStorage.token) {
+    //   this.$router.push('/')
+    // }
   }
 }
 </script>

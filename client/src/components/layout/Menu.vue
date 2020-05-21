@@ -102,8 +102,6 @@ export default {
     if (localStorage.token) {
       this.$store.state.loggedIn = true
       this.$store.dispatch('fetchProducts')
-    } else {
-      this.$router.push('/')
     }
   }
 }

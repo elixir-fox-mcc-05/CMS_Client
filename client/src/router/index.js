@@ -31,7 +31,14 @@ const routes = [
   {
     path: '/menu',
     name: 'Menu',
-    component: ProductList
+    component: ProductList,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      }else {
+        next({ path: '/' })
+      }
+    }
   },
   {
     path: '/register',
@@ -39,35 +46,91 @@ const routes = [
   },
   {
     path: '/addproduct',
-    component: AddProduct
+    component: AddProduct,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      }else {
+        next({ path: '/' })
+      }
+    }
   },
   {
     path: '/category',
-    component: CategoryList
+    component: CategoryList,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      }else {
+        next({ path: '/' })
+      }
+    }
   },
   {
     path: '/addcategory',
-    component: AddCategory
+    component: AddCategory,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      }else {
+        next({ path: '/' })
+      }
+    }
   },
   {
     path: '/info',
-    component: UserInfo
+    component: UserInfo,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      }else {
+        next({ path: '/' })
+      }
+    }
   },
   {
     path: '/cartlist',
-    component: CartList
+    component: CartList,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      }else {
+        next({ path: '/' })
+      }
+    }
   },
   {
     path: '/addcart',
-    component: AddCart
+    component: AddCart,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      }else {
+        next({ path: '/' })
+      }
+    }
   },
   {
     path: '/bannerlist',
-    component: BannerList
+    component: BannerList,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      }else {
+        next({ path: '/' })
+      }
+    }
   },
   {
     path: '/addbanner',
-    component: AddBanner
+    component: AddBanner,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      }else {
+        next({ path: '/' })
+      }
+    }
 
   }
 ]

@@ -19,7 +19,7 @@
 
         <div class="columns is-mobile is-centered">
           <div class="column is-half">
-          <b-field label="Subject">
+          <b-field label="Category">
             <b-select v-model="category" placeholder="Select a subject" expanded rounded>
                 <option v-for="(category,i ) in categories" :key="i" v-bind:value="category.id">{{category.name}}</option>
             </b-select>
@@ -92,9 +92,9 @@ export default {
 
   },
   created () {
-    if (!localStorage.token) {
-      this.$router.push('/')
-    }
+    // if (!localStorage.token) {
+    //   this.$router.push('/')
+    // }
     this.$store.dispatch('fetchCategory')
       .finally(_ => {
         // console.log('bobo'+this.$store.state.categories)
