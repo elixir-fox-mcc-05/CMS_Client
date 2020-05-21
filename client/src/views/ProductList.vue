@@ -62,9 +62,14 @@
             </template>
         </b-table>
         <b-modal :active.sync="isComponentModalActive"
-            has-modal-card full-screen :can-cancel="false">
+            has-modal-card
+            full-screen
+            aria-role="dialog"
+            aria-modal
+            trap-focus
+            :can-cancel="false">
              <form action="">
-                <div class="modal-card" style="width: 50%">
+                <div class="modal-card" style="position:absolute;bottom:25%;left:25%;width: 50%;">
                     <header class="modal-card-head">
                         <p class="modal-card-title">Edit Product</p>
                     </header>

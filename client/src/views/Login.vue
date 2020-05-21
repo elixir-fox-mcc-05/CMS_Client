@@ -42,7 +42,7 @@ export default {
           console.log(data)
           if (data.roles === 'admin') {
             console.log('masuk')
-            
+
             const token = data.token
             const accountname = `${data.first_name} ${data.last_name}`
             localStorage.setItem('token', token)
@@ -50,17 +50,16 @@ export default {
             // this.$store.state.loggedIn
             this.$store.commit('SET_LOGIN', true)
             // console.log('asdasd loggedIn', this.$store.state.loggedIn)
-            
           } else {
             console.log('login must with admin account only')
             this.$buefy.snackbar.open({
-                    duration: 5000,
-                    message: 'login must with admin account only',
-                    type: 'is-danger',
-                    position: 'is-top',
-                    queue: true
-                   
-                })
+              duration: 5000,
+              message: 'login must with admin account only',
+              type: 'is-danger',
+              position: 'is-top',
+              queue: true
+
+            })
           }
 
           // this.$store.state.loggedIn = true
@@ -68,7 +67,7 @@ export default {
         })
         .finally(_ => {
           this.$router.push('/menu')
-         })
+        })
         .catch(err => {
           console.log(err.response.data)
           this.$buefy.snackbar.open({

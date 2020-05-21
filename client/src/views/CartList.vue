@@ -58,7 +58,7 @@
         <b-modal :active.sync="isComponentModalActive"
             has-modal-card full-screen :can-cancel="false">
              <form action="">
-                <div class="modal-card" style="width: 50%">
+                <div class="modal-card" style="position:absolute;bottom:25%;left:25%;width: 50%;">
                     <header class="modal-card-head">
                         <p class="modal-card-title">Edit Cart</p>
                     </header>
@@ -135,13 +135,13 @@ export default {
         .catch(err => {
           console.log(err.response)
           this.$buefy.snackbar.open({
-                    duration: 5000,
-                    message: err.response.data.error,
-                    type: 'is-danger',
-                    position: 'is-top',
-                    queue: true
-                   
-                })
+            duration: 5000,
+            message: err.response.data.error,
+            type: 'is-danger',
+            position: 'is-top',
+            queue: true
+
+          })
         })
     },
     deleteCart (id) {

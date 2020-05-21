@@ -67,13 +67,13 @@ export default {
       } else {
         console.log('gak bisa register admin yah??')
         this.$buefy.snackbar.open({
-                    duration: 5000,
-                    message: 'Register must with correct secret password',
-                    type: 'is-danger',
-                    position: 'is-top',
-                    queue: true
-                   
-                })
+          duration: 5000,
+          message: 'Register must with correct secret password',
+          type: 'is-danger',
+          position: 'is-top',
+          queue: true
+
+        })
       }
     }
   },

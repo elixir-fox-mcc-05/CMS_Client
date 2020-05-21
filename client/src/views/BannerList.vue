@@ -52,7 +52,7 @@
         <b-modal :active.sync="isComponentModalActive"
             has-modal-card full-screen :can-cancel="false">
              <form action="">
-                <div class="modal-card" style="width: 50%">
+                <div class="modal-card" style="position:absolute;bottom:25%;left:25%;width: 50%;">
                     <header class="modal-card-head">
                         <p class="modal-card-title">Edit Banner</p>
                     </header>
@@ -70,7 +70,7 @@
                         <b-field label="Image URL">
                             <b-input
                                 v-model="image_url"
-                                type="text"
+                                type="url"
                                 :value="image_url"
                                 placeholder="Image URL"
                                 required>

@@ -47,7 +47,7 @@
         <b-modal :active.sync="isComponentModalActive"
             has-modal-card full-screen :can-cancel="false">
              <form action="">
-                <div class="modal-card" style="width: 50%">
+                <div class="modal-card" style="position:absolute;bottom:35%;left:25%;width: 50%;">
                     <header class="modal-card-head">
                         <p class="modal-card-title">Edit Category</p>
                     </header>
@@ -112,8 +112,8 @@ export default {
         })
     },
     editCategory (id) {
-      console.log(id)
-      console.log(this.selectId)
+      // console.log(id)
+      // console.log(this.selectId)
       const updatedData = {
         name: this.name
       }
@@ -128,7 +128,7 @@ export default {
       })
         .then(({ data }) => {
           // this.$store.commit('SET_UPDATEPRODUCT',data)
-          console.log('edit category completed')
+          // console.log('edit category completed')
           this.isComponentModalActive = false
           this.$store.dispatch('fetchCategory')
           this.$buefy.toast.open('Edit Category Completed')
@@ -155,7 +155,7 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log('delete category completed')
+          // console.log('delete category completed')
           this.$buefy.toast.open('Delete Category Completed')
           this.fetchCategory()
         })
