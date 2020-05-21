@@ -22,8 +22,8 @@ export default {
   name: "Missing404Page",
   methods: {
     toLogin() {
-      this.$router.push("/");
-      this.$store.commit("SET_LOGIN", false);
+      this.$router.push({ name: "Login" });
+      // this.$store.commit("CHANGE_USERLOGIN", response.data.data);
     }
   },
   created() {

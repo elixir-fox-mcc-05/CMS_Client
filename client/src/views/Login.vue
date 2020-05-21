@@ -3,8 +3,8 @@
     <div class="container">
       <h1>Welcome to The Greatest Ecommerce Ever, Bukalipik</h1>
       <p class="label">Please insert your email and password, to login</p>
-      <Notif class="notif"/>
-      <Error class="error"/>
+      <Notif class="notif" />
+      <Error class="error" />
       <input
         v-model="email"
         class="username"
@@ -86,8 +86,15 @@ export default {
           this.$store.commit("CHANGE_MYERROR", "");
           this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userName", response.data.data.name);
+          localStorage.setItem("userRole", response.data.data.role);
+          localStorage.setItem("userImage", response.data.data.image_url);
           this.$store.commit("SET_LOGIN", true);
-          this.$store.commit("CHANGE_USERLOGIN", response.data.data);
+          this.$store.commit("CHANGE_USERLOGIN", {
+            role: localStorage.getItem("userRole"),
+            image_url: localStorage.getItem("userImage"),
+            name: localStorage.getItem("userName")
+          });
           this.$router.push("/dashboard/product");
           (this.user.email = ""), (this.user.password = "");
         })
@@ -106,6 +113,9 @@ export default {
     if (localStorage.token) {
       this.$router.push("/dashboard/product");
       this.$store.dispatch("fetchProductsList");
+      this.$store.commit("SET_LOGIN", true);
+    } else {
+      this.$store.commit("SET_LOGIN", false);
     }
   }
 };

@@ -44,16 +44,31 @@
 <script>
 export default {
   name: "Dashboard",
-  props: ["user"],
   methods: {
     logout() {
       localStorage.clear();
       this.$store.commit("SET_LOGIN", false);
       this.$router.push("/");
+    },
+    stateLogin() {
+      let userLogin = this.$store.state.userLogin;
+      console.log("state is ", userLogin);
+      // return state.item;
     }
   },
   created() {
-    this.$store.commit("SET_LOGIN", true);
+    if (localStorage.token) {
+      this.$store.commit("SET_LOGIN", true);
+      this.stateLogin();
+      this.$store.commit("CHANGE_USERLOGIN", {
+        role: localStorage.getItem("userRole"),
+        image_url: localStorage.getItem("userImage"),
+        name: localStorage.getItem("userName")
+      });
+    } else {
+      this.$store.commit("SET_LOGIN", false);
+      this.$router.push("/");
+    }
   }
 };
 </script>

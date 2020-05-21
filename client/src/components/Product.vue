@@ -68,7 +68,12 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchProductList");
+    if (!localStorage.token) {
+      this.$store.commit("SET_LOGIN", false);
+      this.$router.push("/");
+    } else {
+      this.$store.dispatch("fetchProductList");
+    }
   }
 };
 </script>
