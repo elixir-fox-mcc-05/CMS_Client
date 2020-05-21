@@ -30,6 +30,18 @@ export default {
       })
         .then(({ data }) => {
           this.$router.push('/category')
+          this.$buefy.toast.open('Add Category Completed')
+        })
+        .catch(err => {
+          console.log(err.response.data.error)
+          this.$buefy.snackbar.open({
+            duration: 5000,
+            message: err.response.data.error,
+            type: 'is-danger',
+            position: 'is-top',
+            queue: true
+
+          })
         })
     }
   },

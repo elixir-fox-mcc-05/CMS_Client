@@ -131,12 +131,21 @@ export default {
           console.log('edit category completed')
           this.isComponentModalActive = false
           this.$store.dispatch('fetchCategory')
-            // .finally(_ => {
-            //   this.data = this.$store.state.categories
-            // })
+          this.$buefy.toast.open('Edit Category Completed')
+          // .finally(_ => {
+          //   this.data = this.$store.state.categories
+          // })
         })
         .catch(err => {
           console.log(err.response.data)
+          this.$buefy.snackbar.open({
+            duration: 5000,
+            message: err.response.data.error,
+            type: 'is-danger',
+            position: 'is-top',
+            queue: true
+
+          })
         })
     },
     deleteCategory (id) {
@@ -147,6 +156,7 @@ export default {
       })
         .then(({ data }) => {
           console.log('delete category completed')
+          this.$buefy.toast.open('Delete Category Completed')
           this.fetchCategory()
         })
         .catch(err => {
@@ -163,16 +173,16 @@ export default {
   },
   created () {
     this.$store.dispatch('fetchCategory')
-      // .finally(_ => {
-      //   console.log('asd', this.$store.state.categories)
-      //   this.data = this.$store.state.categories
-      // })
+    // .finally(_ => {
+    //   console.log('asd', this.$store.state.categories)
+    //   this.data = this.$store.state.categories
+    // })
   },
   computed: {
-    categories(){
+    categories () {
       return this.$store.getters.categories
     }
-  },
+  }
 }
 
 </script>

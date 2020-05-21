@@ -185,6 +185,7 @@ export default {
           this.$store.dispatch('fetchProducts')
           console.log('edit product completed')
           this.isComponentModalActive = false
+          this.$buefy.toast.open('Edit Product Completed')
           // this.$store.dispatch('fetchProducts')
           //   .finally(_ => {
           //     this.data = this.$store.state.products
@@ -192,6 +193,14 @@ export default {
         })
         .catch(err => {
           console.log(err.response.data)
+          this.$buefy.snackbar.open({
+            duration: 5000,
+            message: err.response.data.error[0],
+            type: 'is-danger',
+            position: 'is-top',
+            queue: true
+
+          })
         })
     },
     deleteProduct (id) {
@@ -203,6 +212,7 @@ export default {
         .then(({ data }) => {
           this.$store.commit('SET_DELETEPRODUCT', { info: 'deleted' })
           this.$store.dispatch('fetchProducts')
+          this.$buefy.toast.open('Delete Product Completed')
         })
         .catch(err => {
           console.log(err.response)
@@ -222,6 +232,9 @@ export default {
   computed: {
     products () {
       return this.$store.getters.products
+    },
+    categories () {
+      return this.$store.getters.categories
     }
   }
 }

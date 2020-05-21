@@ -151,8 +151,9 @@ export default {
         .then(({ data }) => {
           this.$store.commit('SET_UPDATEPRODUCT', data)
           this.$store.dispatch('fetchBanners')
-          console.log('edit banner completed')
+          console.log('Edit banner completed')
           this.isComponentModalActive = false
+          this.$buefy.toast.open('Edit Banner Completed')
           // this.$store.dispatch('fetchProducts')
           //   .finally(_ => {
           //     this.data = this.$store.state.products
@@ -160,6 +161,14 @@ export default {
         })
         .catch(err => {
           console.log(err.response.data)
+          this.$buefy.snackbar.open({
+            duration: 5000,
+            message: err.response.data.error,
+            type: 'is-danger',
+            position: 'is-top',
+            queue: true
+
+          })
         })
     },
     deleteBanner (id) {
@@ -170,6 +179,7 @@ export default {
       })
         .then(({ data }) => {
         //   this.$store.commit('SET_DELETEPRODUCT', { info: 'deleted' })
+          this.$buefy.toast.open('Delete Banner Completed')
           this.$store.dispatch('fetchBanners')
         })
         .catch(err => {
@@ -188,8 +198,8 @@ export default {
     // })
   },
   computed: {
-    banners(){
-        return this.$store.getters.banners
+    banners () {
+      return this.$store.getters.banners
     }
   }
 }

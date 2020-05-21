@@ -1,31 +1,27 @@
 <template>
 <section>
 
-        <b-field label="Name">
-            <b-input v-model="nameproduct" placeholder="No label" rounded></b-input>
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">
+          <b-field label="UserId">
+            <b-input v-model="UserIdCart" placeholder="No label" rounded></b-input>
         </b-field>
 
-        <b-field label="iImage URL">
-            <b-input v-model="image_url" placeholder="No label" rounded></b-input>
-        </b-field>
-
-        <b-field label="Stock">
-            <b-input v-model="stock" placeholder="No label" rounded></b-input>
-        </b-field>
-
-        <b-field label="Price">
-            <b-input v-model="price" placeholder="No label" rounded></b-input>
-        </b-field>
-
-        <b-field label="Subject">
-            <b-select v-model="category" placeholder="Select a subject">
-                <option v-for="(category,i ) in categories" :key="i" v-bind:value="category.id">{{category.name}}</option>
+            <b-field label="ProductId" >
+            <b-select v-model="ProductIdCart" placeholder="Select a subject" expanded rounded>
+                <option v-for="(product,i ) in products" :key="i" v-bind:value="product.id">{{product.name}}</option>
             </b-select>
         </b-field>
 
-        <button @click.prevent="newProduct" class="button is-dark">
-            <b-icon icon="check"></b-icon>
-            <span>Finish</span>
+        <b-field label="Stock">
+            <b-numberinput  v-model="stock"  placeholder="number of quantity" rounded></b-numberinput>
+        </b-field>
+          </div>
+        </div>
+
+        <button @click.prevent="newCart" class="button is-dark">
+            <b-icon icon="cart"></b-icon>
+            <span>Add New Cart</span>
         </button>
 
     </section>
@@ -43,26 +39,25 @@ export default {
     }
   },
   methods: {
-    newProduct () {
+    newCart () {
       const newData = {
-        name: this.nameproduct,
-        image_url: this.image_url,
-        stock: this.stock,
-        price: this.price,
-        CategoryId: this.category
+        UserId: this.UserIdCart,
+        ProductId: this.ProductIdCart,
+        quantity: this.stock
+
       }
       console.log(newData)
-      server.post('/products/add', newData, {
+      server.post('/cart/add', newData, {
         headers: {
           token: localStorage.token
         }
       })
         .then(({ data }) => {
-          this.$store.dispatch('fetchProducts')
-          this.$store.commit('SET_ADDPRODUCT', data)
+          this.$store.dispatch('fetchCart')
+          this.$store.commit('SET_ADDCART', data)
 
           console.log('add product completed')
-          this.$router.push('/menu')
+          this.$router.push('/cartlist')
         }).catch(err => {
           console.log(err.response.data)
         })
@@ -74,9 +69,9 @@ export default {
 
   },
   computed: {
-      products(){
-          return this.$store.getters.products
-      }
+    products () {
+      return this.$store.getters.products
+    }
   },
   created () {
     if (!localStorage.token) {

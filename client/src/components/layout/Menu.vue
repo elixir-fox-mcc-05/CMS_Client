@@ -10,21 +10,21 @@
                     <b-menu class="is-custom-mobile">
                         <b-menu-list label="Menu"  v-if="loggedIn">
                             <b-menu-item icon="information-outline" class="has-text-left" label="Account Info" @click="showAccInfo"></b-menu-item>
-                            <b-menu-item icon="settings"  class="has-text-left " label="Product Menu">
-                                <b-menu-item icon="cellphone-link" label="Product List" @click.prevent="$router.push('/menu')"></b-menu-item>
-                                <b-menu-item icon="account" label="Add New Product" @click.prevent="showAddProduct"></b-menu-item>
+                            <b-menu-item icon="package"  class="has-text-left " label="Product Menu">
+                                <b-menu-item icon="package-variant-closed" label="Product List" @click.prevent="$router.push('/menu')"></b-menu-item>
+                                <b-menu-item icon="package-down" label="Add New Product" @click.prevent="showAddProduct"></b-menu-item>
                             </b-menu-item>
-                            <b-menu-item icon="settings"  class="has-text-left " label="Category Menu">
+                            <b-menu-item icon="filter"  class="has-text-left " label="Category Menu">
                               <b-menu-item icon="cellphone-link" label="Categories List" @click.prevent="showAddCategories"></b-menu-item>
-                                <b-menu-item icon="account" label="Add Categories" @click.prevent="showCategoryList"></b-menu-item>
+                                <b-menu-item icon="filter-plus" label="Add Categories" @click.prevent="showCategoryList"></b-menu-item>
                             </b-menu-item>
-                            <b-menu-item icon="settings"  class="has-text-left " label="Transactions Menu">
-                              <b-menu-item icon="cellphone-link" label="Transactions List" @click.prevent="showCartList"></b-menu-item>
-                                <b-menu-item icon="account" label="Add Transaction" @click.prevent="showaddCart"></b-menu-item>
+                            <b-menu-item icon="cart-outline"  class="has-text-left " label="Transactions Menu">
+                              <b-menu-item icon="cart" label="Transactions List" @click.prevent="showCartList"></b-menu-item>
+                                <b-menu-item icon="cart-plus" label="Add Transaction" @click.prevent="showaddCart"></b-menu-item>
                             </b-menu-item>
-                            <b-menu-item icon="settings"  class="has-text-left " label="Banner Menu">
-                              <b-menu-item  icon="cellphone-link" label="Banner List" @click.prevent="showBannerList"></b-menu-item>
-                                <b-menu-item  icon="account" label="Add Banner" @click.prevent="showaddBanner"></b-menu-item>
+                            <b-menu-item icon="monitor-dashboard"  class="has-text-left " label="Banner Menu">
+                              <b-menu-item  icon="clipboard-multiple-outline" label="Banner List" @click.prevent="showBannerList"></b-menu-item>
+                                <b-menu-item  icon="clipboard-plus-outline" label="Add Banner" @click.prevent="showaddBanner"></b-menu-item>
                             </b-menu-item>
                         </b-menu-list>
                         <b-menu-list label="Menu" v-if="!loggedIn">

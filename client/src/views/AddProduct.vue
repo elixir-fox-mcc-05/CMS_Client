@@ -5,7 +5,7 @@
             <b-input v-model="nameproduct" placeholder="No label" rounded></b-input>
         </b-field>
 
-        <b-field label="iImage URL">
+        <b-field label="Image URL">
             <b-input v-model="image_url" placeholder="No label" rounded></b-input>
         </b-field>
 
@@ -17,15 +17,18 @@
             <b-input v-model="price" placeholder="No label" rounded></b-input>
         </b-field>
 
-        <b-field label="Subject">
-            <b-select v-model="category" placeholder="Select a subject">
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">
+          <b-field label="Subject">
+            <b-select v-model="category" placeholder="Select a subject" expanded rounded>
                 <option v-for="(category,i ) in categories" :key="i" v-bind:value="category.id">{{category.name}}</option>
             </b-select>
         </b-field>
-
+        </div>
+        </div>
         <button @click.prevent="newProduct" class="button is-dark">
             <b-icon icon="check"></b-icon>
-            <span>Finish</span>
+            <span>Add Product</span>
         </button>
 
     </section>
@@ -51,6 +54,7 @@ export default {
         price: this.price,
         CategoryId: this.category
       }
+
       console.log(newData)
       server.post('/products/add', newData, {
         headers: {
@@ -63,8 +67,19 @@ export default {
 
           console.log('add product completed')
           this.$router.push('/menu')
-        }).catch(err => {
-          console.log(err.response.data)
+          this.$buefy.toast.open('Add Product Completed')
+        })
+        .catch(err => {
+          console.log(err.response.data.error)
+          // this.$buefy.snackbar.open(err.response.data.error[0])
+          this.$buefy.snackbar.open({
+            duration: 5000,
+            message: err.response.data.error[0],
+            type: 'is-danger',
+            position: 'is-top',
+            queue: true
+
+          })
         })
     },
     categoryList () {

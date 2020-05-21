@@ -14,7 +14,8 @@ const store = new Vuex.Store({
     loggedIn: false,
     updateData: {},
     deletedData: {},
-    addData: {}
+    addData: {},
+    addcart: {}
   },
   mutations: {
     SET_LOGIN (state, payload) {
@@ -43,6 +44,9 @@ const store = new Vuex.Store({
     },
     SET_BANNERS (state, payload) {
       state.banners = payload
+    },
+    SET_ADDCART (state, payload) {
+      state.addcart = payload
     }
   },
   actions: {

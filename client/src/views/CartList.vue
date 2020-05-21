@@ -144,6 +144,8 @@ export default {
       })
         .then(({ data }) => {
           console.log('delete completed')
+          this.$store.dispatch('fetchCart')
+          this.$buefy.toast.open('Delete Transaction Completed')
         })
         .catch(err => {
           console.log(err.response)
@@ -165,6 +167,7 @@ export default {
           this.$store.dispatch('fetchCart')
             .finally(_ => {
               this.isComponentModalActive = false
+              this.$buefy.toast.open('Edit Transaction Completed')
             })
         })
         .catch(err => {
