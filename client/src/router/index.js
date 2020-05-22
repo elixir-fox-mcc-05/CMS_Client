@@ -35,7 +35,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (localStorage.token) {
         next()
-      }else {
+      } else {
         next({ path: '/' })
       }
     }
@@ -50,7 +50,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (localStorage.token) {
         next()
-      }else {
+      } else {
         next({ path: '/' })
       }
     }
@@ -61,7 +61,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (localStorage.token) {
         next()
-      }else {
+      } else {
         next({ path: '/' })
       }
     }
@@ -72,7 +72,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (localStorage.token) {
         next()
-      }else {
+      } else {
         next({ path: '/' })
       }
     }
@@ -83,7 +83,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (localStorage.token) {
         next()
-      }else {
+      } else {
         next({ path: '/' })
       }
     }
@@ -94,7 +94,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (localStorage.token) {
         next()
-      }else {
+      } else {
         next({ path: '/' })
       }
     }
@@ -105,7 +105,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (localStorage.token) {
         next()
-      }else {
+      } else {
         next({ path: '/' })
       }
     }
@@ -116,7 +116,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (localStorage.token) {
         next()
-      }else {
+      } else {
         next({ path: '/' })
       }
     }
@@ -127,7 +127,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (localStorage.token) {
         next()
-      }else {
+      } else {
         next({ path: '/' })
       }
     }

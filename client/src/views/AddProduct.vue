@@ -72,14 +72,25 @@ export default {
         .catch(err => {
           console.log(err.response.data.error)
           // this.$buefy.snackbar.open(err.response.data.error[0])
-          this.$buefy.snackbar.open({
-            duration: 5000,
-            message: err.response.data.error[0],
-            type: 'is-danger',
-            position: 'is-top',
-            queue: true
+          if (Array.isArray(err.response.data.error)) {
+            this.$buefy.snackbar.open({
+              duration: 5000,
+              message: err.response.data.error[0],
+              type: 'is-danger',
+              position: 'is-top',
+              queue: true
 
-          })
+            })
+          } else {
+            this.$buefy.snackbar.open({
+              duration: 5000,
+              message: err.response.data.error,
+              type: 'is-danger',
+              position: 'is-top',
+              queue: true
+
+            })
+          }
         })
     },
     categoryList () {

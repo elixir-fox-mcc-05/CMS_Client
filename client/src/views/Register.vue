@@ -11,8 +11,7 @@
         <b-field label="Email">
             <b-input v-model="email"
                 type="email"
-                value="john@"
-                maxlength="30">
+                value="john@">
             </b-input>
         </b-field>
 
