@@ -49,7 +49,13 @@
                         <button type="submit" class="btn btn-info">UPDATE</button>
                     </div>
                     <div class="col">
-                        <button type="button" @click="productDelete" class="btn btn-danger">DELETE</button>
+                        <b-button id="popover-button-variant" class="btn btn-danger">DELETE</b-button>
+                        <b-popover target="popover-button-variant" placement="top" variant="danger" triggers="focus">
+                          <template v-slot:title>Are you sure?</template>
+                          <div class="text-center">
+                            <button type="button" @click="productDelete" class="btn btn-dark btn-sm">Yes</button>
+                          </div>
+                        </b-popover>
                     </div>
                 </div>
             </form>
