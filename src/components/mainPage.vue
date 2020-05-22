@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Sneakers</a>
-        <div class="btn btn-dark ml-auto" id="log-out" v-on:click.prevent="logout" >Logout</div>
-        </nav>
-    </div>
     <div class="mt-3 d-flex justify-content-end">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCreate" data-whatever="newtask" data-dismiss="modal" aria-label="close">Create</button>
     </div>
@@ -135,10 +129,6 @@ export default {
     }
   },
   methods: {
-    logout () {
-      localStorage.clear()
-      this.$router.push({ name: 'LandingPage' })
-    },
     fetchData () {
       axios({
         method: 'get',
@@ -243,12 +233,14 @@ export default {
     }
   },
   computed: {
-    setToken () {
-      return this.$store.state.token
+    setCurrentUserName () {
+      return this.$store.state.currentUserName
     }
   },
   created () {
     this.fetchData()
+    // console.log(this.$store.state.currentUserName, 'ini username')
+    this.$store.commit('set_login', true)
   }
 }
 </script>

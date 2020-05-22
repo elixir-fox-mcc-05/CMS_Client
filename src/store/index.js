@@ -5,12 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: '',
+    isLogin: false,
     currentUsername: ''
   },
   mutations: {
-    set_token (state, payload) {
-      state.token = payload
+    set_login (state, payload) {
+      state.isLogin = payload
     },
     set_currentUserName (state, payload) {
       state.currentUserName = payload

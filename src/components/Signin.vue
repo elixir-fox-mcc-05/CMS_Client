@@ -24,18 +24,18 @@
               <div class="modal-dialog" role="document">
                   <div class="modal-content">
                   <div class="modal-header">
-                      <h1 class="modal-title" id="exampleModalLabel">Enter your personal details and start journey with us</h1>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                       </button>
                   </div>
                   <div class="modal-body">
                       <form v-on:submit.prevent="register()">
-                        <h2>Choose your genre !</h2>
-                        <label >Your room email:</label>
+                        <label >Email:</label>
                         <input id="emailRegist" type="email" placeholder="email" v-model="emailRegist"><br>
                         <label for="">Password :</label><br>
                         <input type="password" id="passwordRegist" v-model="passwordRegist">
+                        <label >Username :</label><br>
+                        <input type="text" id="username" v-model="username">
                       </form>
                   </div>
                   <div class="modal-footer">
@@ -62,7 +62,8 @@ export default {
       emailRegist: '',
       passwordRegist: '',
       token: localStorage.getItem('token'),
-      errorMsg: ''
+      errorMsg: '',
+      username: ''
     }
   },
   methods: {
@@ -75,7 +76,7 @@ export default {
           console.log(response)
           if (response) {
             localStorage.setItem('token', response.data.token)
-            this.$store.commit('set_token', this.token)
+            this.$store.commit('set_login', true)
             this.$store.commit('set_currentUserName', this.email)
             this.$router.push('/mainPage')
           }
@@ -95,6 +96,7 @@ export default {
       })
         .then(response => {
           console.log(response)
+          this.$store.commit('set_currentUserName', this.username)
         })
         .catch(err => {
           setTimeout(() => {
