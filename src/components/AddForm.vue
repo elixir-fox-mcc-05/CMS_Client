@@ -25,11 +25,12 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="image_url">Image URL</label>
-                <input type="text" image_url="image_url" placeholder="Product image_url" class="form-control" v-model="image_url">
-                <div v-for="(feedback,i) in feedbacks" :key="i">
-                  <div v-html="feedback"></div>
-                </div>
+              <label for="upload">Upload Image:</label>
+              <input type="file" @change="imageUpload">
+              <button @click.prevent="uploadImage">Upload</button>
+              <div v-for="(feedback,i) in feedbacks" :key="i">
+                <div v-html="feedback"></div>
+              </div>
             </div>
             <div class="btn-form">
               <button type="submit" class="btn btn-success">Submit</button>
@@ -49,12 +50,36 @@ export default {
       price: '',
       category: '',
       image_url: '',
+      image: '',
       feedbacks: []
     }
   },
   methods: {
     showProductList () {
       this.$store.commit('changeCurrentPage', 'productList')
+    },
+    imageUpload (event) {
+      this.image = event.target.files[0]
+    },
+    uploadImage () {
+      var formDataBody = new FormData()
+      formDataBody.append('image', this.image, this.image.name)
+      axios.post('http://localhost:3000/products/upload', formDataBody)
+        .then(response => {
+          const { data } = response
+          this.image_url = data.Location
+          Swal.fire(
+            'Good job!',
+            'Upload Success!',
+            'success'
+          )
+        })
+        .catch(err => {
+          err = err.response
+          console.log(err)
+          const { data } = err
+          console.log(data)
+        })
     },
     submitForm () {
       axios.post('http://localhost:3000/products', {
