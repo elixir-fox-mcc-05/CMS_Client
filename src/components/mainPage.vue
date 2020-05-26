@@ -41,6 +41,10 @@
                         <input type="stockProduct" id="stockProduct" v-model="stockProductCreate"><br>
                         <label for="">ImageUrl :</label>
                         <input type="imageUrlProduct" id="imageUrlProduct" v-model="imageUrlProductCreate"><br>
+                        <label for="">Type :</label>
+                        <select name="typeProduct" id="typeProduct" v-model="CategoryId">
+                            <option v-for="item in type" :key="item.id" :value="item.id"> {{item.type}} </option>
+                        </select>
                       </form>
                   </div>
                   <div class="modal-footer">
@@ -71,6 +75,10 @@
                         <input type="stockProduct" id="stockProduct" v-model="stockProduct"><br>
                         <label for="">ImageUrl :</label>
                         <input type="imageUrlProduct" id="imageUrlProduct" v-model="imageUrlProduct"><br>
+                        <label for="">Type :</label>
+                        <select name="typeProduct" id="typeProduct" v-model="CategoryId">
+                            <option v-for="item in type" :key="item.id" :value="item.id"> {{item.type}} </option>
+                        </select>
                       </form>
                   </div>
                   <div class="modal-footer">
@@ -125,10 +133,25 @@ export default {
       priceProductCreate: null,
       stockProductCreate: null,
       imageUrlProductCreate: '',
-      errMsg: ''
+      errMsg: '',
+      CategoryId: null,
+      type: []
     }
   },
   methods: {
+    fetchType () {
+      axios({
+        method: 'get',
+        url: baseUrl + '/categories/'
+      })
+        .then(response => {
+          this.type = response.data.Categories
+          console.log(this.type, 'ini type')
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
     fetchData () {
       axios({
         method: 'get',
@@ -144,6 +167,7 @@ export default {
         })
     },
     createProduct () {
+      console.log(this.CategoryId, 'categoryid')
       axios({
         method: 'post',
         url: `${baseUrl}/products/`,
@@ -151,7 +175,8 @@ export default {
           name: this.nameProductCreate,
           price: this.priceProductCreate,
           stock: this.stockProductCreate,
-          imageUrl: this.imageUrlProductCreate
+          imageUrl: this.imageUrlProductCreate,
+          CategoryId: this.CategoryId
         },
         headers: {
           token: localStorage.getItem('token')
@@ -238,6 +263,7 @@ export default {
     }
   },
   created () {
+    this.fetchType()
     this.fetchData()
     // console.log(this.$store.state.currentUserName, 'ini username')
     this.$store.commit('set_login', true)
