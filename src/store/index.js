@@ -9,7 +9,8 @@ export default new Vuex.Store({
     version: '0.1',
     isSignedIn: false,
     products: [],
-    totalProducts: 0
+    totalProducts: 0,
+    users: []
   },
   mutations: {
     SET_SIGNED_IN (state, payload) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     SET_TOTAL_PRODUCTS (state, payload) {
       state.totalProducts = payload
+    },
+    SET_USERS (state, payload) {
+      state.users = payload
     }
   },
   actions: {
@@ -72,6 +76,24 @@ export default new Vuex.Store({
       return axiosShot({
         method: 'DELETE',
         url: '/products/' + payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+    fetchUsers (context, payload) {
+      return axiosShot({
+        method: 'GET',
+        url: '/allusers',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+    banUser (context, payload) {
+      return axiosShot({
+        method: 'DELETE',
+        url: '/banuser/' + payload,
         headers: {
           access_token: localStorage.getItem('access_token')
         }

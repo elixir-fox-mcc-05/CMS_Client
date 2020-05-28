@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h3><font-awesome-icon icon="cubes" /> Products (total: {{ totalProducts }})</h3>
+      <h3><font-awesome-icon icon="cubes" /> Registered Users (total: {{ totalUsers }})</h3>
       <b-row>
         <b-col lg="3" class="my-1">
           <b-form-group
@@ -46,14 +46,14 @@
         </b-col>
       </b-row>
       <b-table
-        id="products"
+        id="users"
         class="table"
         bordered="bordered"
         head-variant="dark"
         tbody-tr-class="text-center text-justify"
         tbody-td-class="align-middle"
         thead-tr-class="text-center text-justify"
-        :items="products"
+        :items="users"
         :fields="fields"
         :filter="filter"
         :sort-by.sync="sortBy"
@@ -62,23 +62,8 @@
         :per-page="perPage"
         :current-page="currentPage"
       >
-        <template v-slot:cell(Name)="data">
-          <p class="font-weight-bold">{{ data.value }}</p>
-        </template>
-        <template v-slot:cell(Image)="data">
-          <img :src="data.value" width="200" height="auto"/>
-        </template>
-        <template v-slot:cell(Price)="data">
-          {{ convertToCurrency(data.value) }}
-        </template>
         <template v-slot:cell(id)="data">
-          <b-button
-            variant="warning"
-            @click="getProductBeforeUpdateProduct(data.value)"
-            ><font-awesome-icon icon="edit" /> Edit</b-button
-          >
-          -
-          <b-button variant="danger" @click="showMsgBoxDelete(data.value)"><font-awesome-icon icon="trash-alt" /> Delete</b-button>
+          <b-button variant="danger" @click="showMsgBoxDelete(data.value)"><font-awesome-icon icon="user-slash" /> Ban</b-button>
         </template>
       </b-table>
     </div>
@@ -90,39 +75,15 @@
         aria-controls="my-table"
       ></b-pagination>
     </div>
-    <!-- // ========================== // Modal // ========================== -->
-    <div>
-      <b-modal
-        id="modal-edit"
-        ref="modal-edit"
-        title="Edit a product"
-        header-bg-variant="warning"
-        header-text-variant="light"
-        footerBgVariant="secondary"
-      >
-        <FormUpdateProduct
-          :selectedProduct="selectedProduct"
-          @closeModal="closeModal"
-        />
-        <template v-slot:modal-footer>
-          <div class="w-100 h-auto"></div>
-        </template>
-      </b-modal>
-    </div>
   </div>
 </template>
 
 <script>
-import FormUpdateProduct from '@/components/forms/FormUpdateProduct'
-import currency from '@/helpers/currency'
-
 export default {
-  name: 'TableProduct',
+  name: 'TableUser',
   props: ['perPage', 'pageOptions'],
   data () {
     return {
-      idOfSelectedProduct: '',
-      selectedProduct: '',
       show: false,
       bordered: true,
       filter: null,
@@ -131,43 +92,26 @@ export default {
       sortDesc: true,
       fields: [
         { key: 'Name', sortable: true },
-        { key: 'Image', sortable: false },
-        { key: 'Price', sortable: true },
-        { key: 'Stock', sortable: true },
+        { key: 'Email', sortable: false },
         { key: 'id', label: 'Options' }
       ],
       boxDelete: ''
     }
   },
-  components: {
-    FormUpdateProduct
-  },
   methods: {
-    fetchProducts () {
+    fetchUsers () {
       this.$store
-        .dispatch('fetchProducts')
+        .dispatch('fetchUsers')
         .then(({ data }) => {
-          this.$store.commit('SET_PRODUCTS', data.Products)
+          this.$store.commit('SET_USERS', data.Users)
         })
         .catch(({ err }) => {
           console.log(err)
         })
-    },
-    getProductBeforeUpdateProduct (id) {
-      this.idOfSelectedProduct = id
-      this.$store
-        .dispatch('getProductById', id)
-        .then(({ data }) => {
-          this.selectedProduct = data.Product
-        })
-        .catch(({ err }) => {
-          console.log(err)
-        })
-      this.$refs['modal-edit'].show()
     },
     showMsgBoxDelete (id) {
       this.boxDelete = ''
-      this.$bvModal.msgBoxConfirm('Please confirm that you want to delete?', {
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to ban?', {
         title: 'Please confirm',
         size: 'sm',
         buttonSize: 'sm',
@@ -181,59 +125,51 @@ export default {
         .then(value => {
           this.boxDelete = value
           if (value === true) {
-            this.deleteProduct(id)
+            this.banUser(id)
           }
         })
         .catch(err => {
           console.log(err)
         })
     },
-    deleteProduct (id) {
+    banUser (id) {
       this.$store
-        .dispatch('deleteProduct', id)
+        .dispatch('banUser', id)
         .then(({ data }) => {
-          const deletedProductName = data.DeletedProduct.name
-          this.fetchProducts()
+          const bannedUserName = data.BannedUser.name
+          this.fetchUsers()
           this.$swal.fire(
-            `Success delete "${deletedProductName}"`,
-            'You just deleted a product!',
+            `Success ban "${bannedUserName}"`,
+            'You just banned a user!',
             'success'
           )
         })
-        .catch(({ err }) => {
+        .catch((err) => {
           console.log(err)
         })
-    },
-    convertToCurrency (money) {
-      return currency(money)
-    },
-    closeModal () {
-      this.$refs['modal-edit'].hide()
     }
   },
   computed: {
-    products () {
-      const products = []
-      this.$store.state.products.forEach(el => {
-        products.push({
+    users () {
+      const users = []
+      this.$store.state.users.forEach(el => {
+        users.push({
           Name: el.name,
-          Image: el.image_url,
-          Price: el.price,
-          Stock: el.stock,
+          Email: el.email,
           id: el.id
         })
       })
-      return products
+      return users
     },
-    totalProducts () {
-      return this.$store.state.products.length
+    totalUsers () {
+      return this.$store.state.users.length
     },
     rows () {
-      return this.products.length
+      return this.users.length
     }
   },
   created () {
-    this.fetchProducts()
+    this.fetchUsers()
   }
 }
 </script>

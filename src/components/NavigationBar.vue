@@ -1,8 +1,10 @@
 <template>
-  <nav v-if="isSignedIn" class="navbar fixed-top navbar-dark bg-dark">
-    <a class="navbar-brand">CMS Dashboard</a>
-    <b-button variant="danger" @click="showMsgBoxSignOut">SIGN OUT</b-button>
-  </nav>
+  <div>
+    <nav v-if="isSignedIn" class="navbar fixed-top navbar-dark bg-dark">
+      <a class="navbar-brand">CMS Dashboard</a>
+      <b-button variant="danger" @click="showMsgBoxSignOut">SIGN OUT</b-button>
+    </nav>
+  </div>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div>
     <DashboardHeader />
-    <TableProduct />
+    <TableProduct :perPage="perPage" :pageOptions="pageOptions" />
   </div>
 </template>
 
@@ -10,10 +10,16 @@ import DashboardHeader from '@/components/DashboardHeader.vue'
 import TableProduct from '@/components/TableProduct.vue'
 
 export default {
-  name: 'Dashboard',
+  name: 'DashboardHome',
   components: {
-    TableProduct,
-    DashboardHeader
+    DashboardHeader,
+    TableProduct
+  },
+  data () {
+    return {
+      perPage: 2,
+      pageOptions: [2, 5]
+    }
   }
 }
 </script>

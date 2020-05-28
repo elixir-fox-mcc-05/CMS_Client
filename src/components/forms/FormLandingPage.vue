@@ -3,7 +3,7 @@
     <div class="sidenav">
       <div class="login-main-text">
         <h2>
-          E-Commerce CMS<br />
+          <font-awesome-icon icon="tachometer-alt" /> E-Commerce CMS<br />
           Administrator
         </h2>
         <p>Sign In to access admin dashboard.</p><hr />
@@ -15,7 +15,7 @@
         <div class="login-form">
           <form @submit.prevent="signIn">
             <div class="form-group">
-              <label>Email</label>
+              <label><font-awesome-icon icon="envelope-square" /> Email</label>
               <input
                 v-model="email"
                 type="email"
@@ -24,7 +24,7 @@
               />
             </div>
             <div class="form-group">
-              <label>Password</label>
+              <label><font-awesome-icon icon="key" /> Password</label>
               <input
                 v-model="password"
                 type="password"

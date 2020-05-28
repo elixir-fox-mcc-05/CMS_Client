@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-around flex-wrap">
     <div>
       <b-jumbotron border-variant="dark">
-        <template v-slot:header>Welcome back,</template>
+        <template v-slot:header><font-awesome-icon icon="tachometer-alt" /> CMS Dashboard</template>
 
         <template v-slot:lead>
           <p>E-Commerce CMS Dashboard, version {{ version }}</p>
@@ -16,11 +16,11 @@
         </p>
 
         <b-button variant="primary" href="#products"
-          >your product list</b-button
+          ><font-awesome-icon icon="list" /> Your product list</b-button
         >
         |
         <b-button variant="success" v-b-modal.modal-create
-          >Add New Product</b-button
+          ><font-awesome-icon icon="box-open" /> Add new product</b-button
         >
 
         <b-modal

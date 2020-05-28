@@ -1,6 +1,6 @@
 <template>
   <div class="container content">
-    <router-view />
+     <router-view />
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   created () {
     if (localStorage.access_token) {
       this.$store.commit('SET_SIGNED_IN', true)
-      if (this.$route.path !== '/dashboard') {
+      if (this.$route.path === '/') {
         this.$router.push('/dashboard')
       }
     } else {
@@ -23,7 +23,7 @@ export default {
 
 <style scope>
 .content {
-  margin-top: 100px;
+  margin-top: 75px;
   margin-bottom: 100px;
 }
 </style>
