@@ -92,7 +92,7 @@ export default {
     addProduct () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/product',
+        url: 'https://hidden-beyond-51968.herokuapp.com/product',
         data: {
           name: this.name,
           price: this.price,

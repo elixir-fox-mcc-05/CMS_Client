@@ -28,7 +28,7 @@ export default {
     getData () {
       axios({
         method: 'GET',
-        url: `http://localhost:3000/product/detail/${this.$route.params.id}`,
+        url: `https://hidden-beyond-51968.herokuapp.com/product/detail/${this.$route.params.id}`,
         headers: {
           access_token: localStorage.access_token
         }
@@ -41,7 +41,7 @@ export default {
     addCart (demand) {
       axios({
         method: 'POST',
-        url: `http://localhost:3000/product/cart/${this.$route.params.id}`,
+        url: `https://hidden-beyond-51968.herokuapp.com/product/cart/${this.$route.params.id}`,
         data: {
           demand: this.demand
         },
@@ -57,7 +57,7 @@ export default {
     restock (prodId, step, stock) {
       axios({
         method: 'PUT',
-        url: `http://localhost:3000/product/${prodId}`,
+        url: `https://hidden-beyond-51968.herokuapp.com/product/${prodId}`,
         data: {
           step,
           stock

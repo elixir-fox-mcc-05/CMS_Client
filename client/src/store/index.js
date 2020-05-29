@@ -36,7 +36,7 @@ const store = new Vuex.Store({
     fect: function (context) {
       return axios({
         method: 'GET',
-        url: 'http://localhost:3000/product'
+        url: 'https://hidden-beyond-51968.herokuapp.com/product'
       })
         .then((result) => {
           context.commit('GET_PRODUCT', result.data)
@@ -48,7 +48,7 @@ const store = new Vuex.Store({
     cartItems: function (context) {
       return axios({
         method: 'GET',
-        url: 'http://localhost:3000/product/cart',
+        url: 'https://hidden-beyond-51968.herokuapp.com/product/cart',
         headers: {
           access_token: localStorage.getItem('access_token')
         }

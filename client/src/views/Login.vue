@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <form @submit.prevent="login">
+    <form>
       <div class="container">
         <h2>{{loginMsg}}</h2>
         <h1>{{logReg}}</h1>
@@ -8,7 +8,8 @@
         <input type="text" placeholder="Enter Username" name="uname" required v-model="email">
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="psw" required v-model="password">
-        <button type="submit">Login</button>
+        <button v-if="logReg === 'login'" @click="login">Login</button>
+        <button v-if="logReg === 'register'" @click="login">Register</button>
         <button type="button" class="cancelbtn" @click="cancle">Cancel</button>
         <p><a v-if="!reg" href @click.prevent="register">Dint Have Account ?</a></p>
         <p><a v-if="reg" href="">Have Account ?</a></p>
@@ -51,7 +52,7 @@ export default {
     login () {
       axios({
         method: 'POST',
-        url: `http://localhost:3000/${this.logReg}`,
+        url: `https://hidden-beyond-51968.herokuapp.com/${this.logReg}`,
         data: {
           email: this.email,
           password: this.password
