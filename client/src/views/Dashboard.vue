@@ -1,22 +1,25 @@
 <template>
   <div>
-    <a class="uk-button uk-button-default btn-open" href="#modal-center" uk-toggle v-if="isAdmin">New Product</a>
+    <div>
+      <b-button v-if="isAdmin" id="show-btn" @click="showModal">New Product</b-button>
+      <b-modal ref="my-modal" hide-footer title="New Product">
+        <div class="d-block text-center">
+          <label><b>Product Name</b></label>
+          <input type="text" v-model="name">
+          <label><b>Price</b></label>
+          <input type="number" v-model="price">
+          <label><b>Tags</b></label>
+          <b-form-select v-model="tags" :options="options"></b-form-select>
+          <label><b>Stock</b></label>
+          <input type="number" v-model="stock">
+          <label><b>Image Url</b></label>
+          <input type="text" v-model="image">
+        </div>
+          <button class="button-go" @click="addProduct">Add Product</button>
+          <button type="button" class="cancelbtn" @click="cancel">Cancel</button>
+      </b-modal>
+    </div>
     <div id="modal-center" class="uk-flex-top" uk-modal>
-      <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-        <label><b>Product Name</b></label>
-        <input type="text" v-model="name">
-        <label><b>Price</b></label>
-        <input type="number" v-model="price">
-        <label><b>Stock</b></label>
-        <input type="number" v-model="stock">
-        <label><b>Image Url</b></label>
-        <input type="text" v-model="image">
-        <label><b>Tags</b></label>
-        <input type="text" v-model="tags">
-        <button class="button-go" @click="addProduct">Add Product</button>
-        <button type="button" class="cancelbtn">Cancel</button>
-        <button class="uk-modal-close-default" type="button" uk-close></button>
-      </div>
     </div>
     <div v-if="loading" class="loader"></div>
     <div class="product-container">
@@ -37,7 +40,13 @@ export default {
       price: '',
       stock: '',
       image: '',
-      tags: ''
+      tags: '',
+      options: [
+        { value: 'Meat', text: 'Meat' },
+        { value: 'Herbs', text: 'Herbs' },
+        { value: 'Other', text: 'Other' },
+        { value: 'Fruit', text: 'Fruit' }
+      ]
     }
   },
   components: {
@@ -66,6 +75,20 @@ export default {
     }
   },
   methods: {
+    showModal () {
+      this.$refs['my-modal'].show()
+    },
+    hideModal () {
+      this.$refs['my-modal'].hide()
+    },
+    cancel () {
+      this.name = ''
+      this.price = ''
+      this.stock = ''
+      this.image = ''
+      this.tags = ''
+      this.hideModal()
+    },
     addProduct () {
       axios({
         method: 'POST',
@@ -81,8 +104,13 @@ export default {
           access_token: localStorage.access_token
         }
       }).then((result) => {
-        console.log('sssssssssssssssssssssssssssssssssssss')
         this.$store.dispatch('fect')
+        this.name = ''
+        this.price = ''
+        this.stock = ''
+        this.image = ''
+        this.tags = ''
+        this.hideModal()
       }).catch((err) => {
         console.log(err)
       })

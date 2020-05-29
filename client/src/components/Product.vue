@@ -70,12 +70,14 @@ export default {
   float: right;
 }
 .card {
+  padding: 5px;
   box-shadow: 0px 14px 48px 10px rgba(0, 0, 0, 0.2);
-  max-width: 200px;
+  max-width: 300px;
   margin: auto;
   text-align: center;
   font-family: arial;
   margin-bottom: 70px;
+  margin-top: 10px;
 }
 .price {
   color: grey;

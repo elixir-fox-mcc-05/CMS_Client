@@ -34,7 +34,6 @@ export default {
   },
   created () {
     if (localStorage.access_token) {
-      console.log('adddddaaa')
       this.$router.push({ name: 'Dashboard' })
       this.$store.commit('SET_LOGIN', true)
     }
