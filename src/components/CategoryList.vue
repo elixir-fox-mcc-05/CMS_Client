@@ -11,20 +11,20 @@
         :http-options="httpHeaders"
         :css="css.table"
       >
-      <template slot="action" scope="props">
-        <button
-          class="btn btn-warning"
-          @click="editCategory(props.rowData)">
-          <span class="fas fa-edit"></span>
-          Edit
-        </button>
-        <button
-          class="btn btn-danger"
-          @click="deleteCategory(props.rowData.id, props.rowData.name)">
-          <span class="fas fa-trash-alt"></span>
-            Delete
-        </button>
-      </template>
+        <template slot="action" scope="props">
+          <button
+            class="btn btn-warning"
+            @click="editCategory(props.rowData)">
+            <span class="fas fa-edit"></span>
+            Edit
+          </button>
+          <button
+            class="btn btn-danger"
+            @click="deleteCategory(props.rowData.id, props.rowData.name)">
+            <span class="fas fa-trash-alt"></span>
+              Delete
+          </button>
+        </template>
       </Vuetable>
     </div>
   </div>

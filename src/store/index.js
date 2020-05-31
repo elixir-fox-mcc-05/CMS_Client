@@ -11,11 +11,10 @@ export default new Vuex.Store({
     email: '',
     password: '',
     collapsed: false,
-    processedId: '',
-    newProduct: {},
     product: {},
     categories: [],
-    category: ''
+    category: '',
+    isLoading: false
   },
   mutations: {
     set_email (state, payload) {
@@ -30,12 +29,6 @@ export default new Vuex.Store({
     set_collapsed (state) {
       state.collapsed = !state.collapsed
     },
-    set_id (state, payload) {
-      state.processedId = payload
-    },
-    set_new_product (state, payload) {
-      state.newProduct = payload
-    },
     set_product (state, payload) {
       state.product = payload
     },
@@ -44,6 +37,9 @@ export default new Vuex.Store({
     },
     set_category_list (state, payload) {
       state.categories = payload
+    },
+    set_loading_status (state, payload) {
+      state.isLoading = payload
     }
   },
   actions: {
@@ -53,17 +49,18 @@ export default new Vuex.Store({
         password: this.state.password
       })
     },
-    delete ({ commit }) {
+    delete ({ commit }, payload) {
       const token = localStorage.access_token
-      return server.delete(`/products/${this.state.processedId}`, {
+      return server.delete(`/products/${payload}`, {
         headers: {
           access_token: token
         }
       })
     },
-    addNewProduct ({ commit }) {
+    addNewProduct ({ commit }, payload) {
       const token = localStorage.access_token
-      const { name, imageUrl, price, stock, categoryId } = this.state.newProduct
+      const { name, imageUrl, price, stock, categoryId } = payload
+      console.log('this from store', imageUrl)
       return server.post('/products', {
         name,
         image_url: imageUrl,
@@ -76,9 +73,9 @@ export default new Vuex.Store({
         }
       })
     },
-    editProduct ({ commit }) {
+    editProduct ({ commit }, payload) {
       const token = localStorage.access_token
-      const { id, name, imageUrl, price, stock, categoryId } = this.state.product
+      const { id, name, imageUrl, price, stock, categoryId } = payload
       return server.put(`/products/${id}`, {
         name,
         image_url: imageUrl,

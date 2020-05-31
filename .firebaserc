@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "gober-sporting-goods"
+    "default": "gober-sporting-goods",
+    "dev": "gober-sporting-goods"
   }
 }

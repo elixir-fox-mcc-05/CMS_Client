@@ -186,8 +186,7 @@ export default {
       })
         .then((result) => {
           if (result.value) {
-            this.$store.commit('set_id', id)
-            this.$store.dispatch('delete')
+            this.$store.dispatch('delete', id)
               .then(res => {
                 deleteWarn.fire(
                   'deleted!',

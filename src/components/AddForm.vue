@@ -7,9 +7,10 @@
             <label for="product-name">Product Name</label>
             <input type="text" class="form-control" id="product-name" v-model="productName" placeholder="Product Name">
         </div>
-        <div class="form-group">
-          <label for="product-image">Product Image Url</label>
-          <input type="text" class="form-control" id="product-image" v-model="productUrl" placeholder="Product Image Url">
+        <label for="product-image">Product Image Url</label>
+        <div class="custom-file">
+          <input type="file" @change="setUploadImage" class="custom-file-input" id="imageUpload">
+          <label class="custom-file-label" for="customFile">Choose Product Image</label>
         </div>
         <div class="form-row">
           <div class="form-group col-md-3">
@@ -25,10 +26,20 @@
           </div>
           <div class="form-group col-md-3">
             <label for="product-stock">Stock</label>
-            <input type="number" class="form-control" id="product-stock" v-model="productStock" placeholder="Stock">
+            <input type="number" class="form-control" id="product-stock" v-model="productStock" placeholder="Stock" min="1">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block"><span class="fas fa-plus"></span> Add Product</button>
+        <button type="submit" class="btn btn-primary btn-block" v-if="!$store.state.isLoading"><span class="fas fa-plus"></span> Add Product</button>
+        <div class="progress" style="height: 20px;" v-if="$store.state.isLoading">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            :style="`width: ${uploadProgress}%;`"
+            :aria-valuenow="uploadProgress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >Progress: {{ uploadProgress.toFixed() }}%</div>
+        </div>
       </form>
     </div>
   </div>
@@ -36,6 +47,7 @@
 
 <script>
 import Swal from 'sweetalert2'
+import firebase from 'firebase'
 
 export default {
   name: 'AddForm',
@@ -45,44 +57,63 @@ export default {
       productUrl: '',
       productPrice: '',
       productStock: '',
-      productCategory: ''
+      productCategory: '',
+      uploadedImage: '',
+      uploadProgress: 0
     }
   },
   methods: {
-    addProduct () {
-      const newProduct = {
-        name: this.productName,
-        imageUrl: this.productUrl,
-        price: this.productPrice,
-        stock: this.productStock,
-        categoryId: this.productCategory
-      }
-
-      this.$store.commit('set_new_product', newProduct)
-      this.$store.dispatch('addNewProduct')
-        .then(({ data }) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Success Adding New Product',
-            text: `${newProduct.name} success added to the product list`
-          })
-          this.productName = ''
-          this.productUrl = ''
-          this.productPrice = ''
-          this.productStock = ''
-          this.$router.push({ name: 'product' })
-        })
-        .catch(err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Something Went Wrong',
-            text: `${err.response.data.error}`
-          })
-        })
-    },
     getCategory () {
       this.$store.dispatch('getAllCategory')
+    },
+    setUploadImage (event) {
+      this.uploadedImage = event.target.files[0]
+    },
+    addProduct () {
+      this.$store.commit('set_loading_status', true)
+      const storageRef = firebase.storage().ref(`${this.uploadedImage.name}`).put(this.uploadedImage)
+      storageRef.on('state_changed', snapshot => {
+        this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      }, error => { console.log(error.message) },
+      () => {
+        this.uploadProgress = 100
+        storageRef.snapshot.ref.getDownloadURL().then((url) => {
+          this.productUrl = url
+          const newProduct = {
+            name: this.productName,
+            imageUrl: this.productUrl,
+            price: this.productPrice,
+            stock: this.productStock,
+            categoryId: this.productCategory
+          }
+          this.$store.dispatch('addNewProduct', newProduct)
+            .then(({ data }) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Success Adding New Product',
+                text: `${newProduct.name} success added to the product list`
+              })
+              this.productName = ''
+              this.productUrl = ''
+              this.productPrice = ''
+              this.productStock = ''
+              this.$router.push({ name: 'product' })
+            })
+            .catch(err => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Something Went Wrong',
+                text: `${err.response.data.error}`
+              })
+            })
+            .finally(() => {
+              this.$store.commit('set_loading_status', false)
+            })
+        })
+      }
+      )
     }
+
   },
   created () {
     this.getCategory()

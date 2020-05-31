@@ -1,15 +1,16 @@
 <template>
   <div class="form-container">
     <div class="form-box">
-      <form @submit.prevent="editProduct">
+      <form @submit.prevent="processEditProduct">
         <h1>Edit Product</h1>
         <div class="form-group">
             <label for="product-name">Product Name</label>
             <input type="text" class="form-control" id="product-name" v-model="productName" placeholder="Product Name">
         </div>
-        <div class="form-group">
-          <label for="product-image">Product Image Url</label>
-          <input type="text" class="form-control" id="product-image" v-model="productUrl" placeholder="Product Image Url">
+        <label for="product-image">Product Image Url</label>
+        <div class="custom-file">
+          <input type="file" @change="setUploadImage" class="custom-file-input" id="imageUpload">
+          <label class="custom-file-label" for="customFile">Choose Product Image</label>
         </div>
         <div class="form-row">
           <div class="form-group col-md-3">
@@ -28,7 +29,17 @@
             <input type="number" class="form-control" id="product-stock" v-model="productStock" placeholder="Stock">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block"><span class="fas fa-pen-square"></span> Edit Product</button>
+        <button type="submit" class="btn btn-primary btn-block" v-if="!$store.state.isLoading"><span class="fas fa-pen-square"></span> Edit Product</button>
+        <div class="progress" style="height: 20px;" v-if="$store.state.isLoading">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            :style="`width: ${uploadProgress}%;`"
+            :aria-valuenow="uploadProgress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >Progress: {{ uploadProgress.toFixed() }}%</div>
+        </div>
       </form>
     </div>
   </div>
@@ -36,6 +47,7 @@
 
 <script>
 import Swal from 'sweetalert2'
+import firebase from 'firebase'
 
 export default {
   name: 'EditForm',
@@ -46,7 +58,9 @@ export default {
       productUrl: '',
       productPrice: '',
       productStock: '',
-      productCategory: ''
+      productCategory: '',
+      uploadedImage: '',
+      uploadProgress: 0
     }
   },
   methods: {
@@ -59,6 +73,16 @@ export default {
       this.productStock = product.stock
       this.productCategory = product.categoryId
     },
+    setUploadImage (event) {
+      this.uploadedImage = event.target.files[0]
+    },
+    processEditProduct () {
+      if (this.uploadedImage) {
+        this.firebaseUpload()
+      } else {
+        this.editProduct()
+      }
+    },
     editProduct () {
       const product = {
         id: this.productId,
@@ -68,8 +92,7 @@ export default {
         stock: this.productStock,
         categoryId: this.productCategory
       }
-      this.$store.commit('set_product', product)
-      this.$store.dispatch('editProduct')
+      this.$store.dispatch('editProduct', product)
         .then(({ data }) => {
           Swal.fire({
             icon: 'success',
@@ -91,6 +114,21 @@ export default {
             text: `${err.response.data.error}`
           })
         })
+    },
+    firebaseUpload () {
+      this.$store.commit('set_loading_status', true)
+      const storageRef = firebase.storage().ref(`${this.uploadedImage.name}`).put(this.uploadedImage)
+      storageRef.on('state_changed', snapshot => {
+        this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      }, error => { console.log(error.message) },
+      () => {
+        this.uploadProgress = 100
+        storageRef.snapshot.ref.getDownloadURL().then((url) => {
+          this.productUrl = url
+          this.editProduct()
+        })
+      }
+      )
     }
   },
   created () {
