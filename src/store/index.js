@@ -14,7 +14,8 @@ export default new Vuex.Store({
     product: {},
     categories: [],
     category: '',
-    isLoading: false
+    isLoading: false,
+    loaderSize: '200px'
   },
   mutations: {
     set_email (state, payload) {

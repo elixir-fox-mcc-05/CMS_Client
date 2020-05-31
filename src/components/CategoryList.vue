@@ -1,7 +1,9 @@
 <template>
   <div class="category-container">
+    <Origami v-if="$store.state.isLoading" class="mb-3" :size="$store.state.loaderSize"></Origami>
     <div class="category-table">
       <Vuetable
+        v-show="!$store.state.isLoading"
         ref="vuetable"
         api-url="https://secret-tundra-12625.herokuapp.com/categories/"
         :fields="fields"
@@ -10,6 +12,8 @@
         pagination.path=""
         :http-options="httpHeaders"
         :css="css.table"
+        @vuetable:loading="onLoading"
+        @vuetable:loaded="onLoaded"
       >
         <template slot="action" scope="props">
           <button
@@ -34,11 +38,12 @@
 import Vuetable from 'vuetable-2/src/components/Vuetable'
 import VuetableFieldSequence from 'vuetable-2/src/components/VuetableFieldSequence.vue'
 import Swal from 'sweetalert2'
+import { Origami } from 'vue-loading-spinner'
 
 export default {
   name: 'CategoryList',
   components: {
-    Vuetable
+    Vuetable, Origami
   },
   props: {
     rowData: {
@@ -181,6 +186,12 @@ export default {
             )
           }
         })
+    },
+    onLoading () {
+      this.$store.commit('set_loading_status', true)
+    },
+    onLoaded () {
+      this.$store.commit('set_loading_status', false)
     }
   },
   computed: {

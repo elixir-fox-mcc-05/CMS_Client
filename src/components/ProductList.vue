@@ -18,8 +18,10 @@
     <div class="small">
       <h6>*Click image to enlarge!</h6>
     </div>
+    <Origami v-if="$store.state.isLoading" class="mb-3" :size="$store.state.loaderSize"></Origami>
     <div class="product-table">
       <Vuetable
+        v-show="!$store.state.isLoading"
         ref="vuetable"
         :api-url="apiAddress"
         :fields="fields"
@@ -30,6 +32,8 @@
         :append-params="{ search: productSearch, categoryId: productCategory }"
         pagination-path="pagination"
         @vuetable:pagination-data="onPaginationData"
+        @vuetable:loading="onLoading"
+        @vuetable:loaded="onLoaded"
         :http-options="httpHeaders"
         :css="css.table"
       >
@@ -55,7 +59,7 @@
           </button>
         </template>
       </Vuetable>
-      <VuetablePagination ref="pagination" @vuetable-pagination:change-page="onChangePage" :css="css.pagination"></VuetablePagination>
+      <VuetablePagination ref="pagination" @vuetable-pagination:change-page="onChangePage" :css="css.pagination" v-show="!$store.state.isLoading"></VuetablePagination>
     </div>
   </div>
 </template>
@@ -67,11 +71,12 @@ import VuetableFieldSequence from 'vuetable-2/src/components/VuetableFieldSequen
 import Swal from 'sweetalert2'
 import accounting from 'accounting-js'
 import _ from 'lodash'
+import { Origami } from 'vue-loading-spinner'
 
 export default {
   name: 'ProductList',
   components: {
-    Vuetable, VuetablePagination
+    Vuetable, VuetablePagination, Origami
   },
   props: {
     rowData: {
@@ -268,6 +273,12 @@ export default {
     },
     clearField () {
       this.productSearch = ''
+    },
+    onLoading () {
+      this.$store.commit('set_loading_status', true)
+    },
+    onLoaded () {
+      this.$store.commit('set_loading_status', false)
     },
     debounceSearch: _.debounce(function () {
       this.$refs.vuetable.refresh()
