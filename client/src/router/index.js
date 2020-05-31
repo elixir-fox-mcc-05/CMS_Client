@@ -12,7 +12,6 @@ import EditProduct from "../components/EditProduct.vue";
 import DeleteProduct from "../components/DeleteProduct.vue";
 // user start
 import User from "../components/User.vue";
-import AddUser from "../components/AddUser.vue";
 import EditUser from "../components/EditUser.vue";
 import DeleteUser from "../components/DeleteUser.vue";
 
@@ -58,11 +57,6 @@ const routes = [
         path: "user",
         name: "User",
         component: User
-      },
-      {
-        path: "add-user",
-        name: "AddUser",
-        component: AddUser
       },
       {
         path: "edit-user/:id",

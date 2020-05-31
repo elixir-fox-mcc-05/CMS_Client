@@ -1,9 +1,6 @@
 <template>
   <div class="userContainer">
     <h1>User</h1>
-    <router-link to="/dashboard/add-user">
-      <button class="addUser">Add User</button>
-    </router-link>
     <div class="user">
       <table>
         <thead>
@@ -31,7 +28,7 @@
                 class="edit"
                 href=""
               >
-                Edit
+                Edit Role
               </button>
               <button
                 @click.prevent="showDeletePage(user.id)"

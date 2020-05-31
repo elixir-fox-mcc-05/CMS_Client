@@ -7,7 +7,7 @@
       <router-link class="nav-name" to="/">Login</router-link>
       <router-link class="nav-name" to="/register">Register</router-link>
     </div>
-    <transition name="view">
+    <transition name="fade">
       <router-view />
     </transition>
   </div>
@@ -65,14 +65,22 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #2096f3;
+  border-bottom: 1px solid #2096f3;
+  padding-bottom: 5px;
 }
 
-.view-enter-active,
-.view-leave-active {
-  transition: opacity 0.5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.5s;
 }
-.view-enter,
-.view-leave-to {
+
+.fade-enter-active {
+  transition-delay: 0.5s;
+}
+
+.fade-enter,
+.fade-leave-active {
   opacity: 0;
 }
 </style>

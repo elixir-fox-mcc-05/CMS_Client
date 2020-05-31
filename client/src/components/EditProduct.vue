@@ -69,13 +69,13 @@ export default {
     getProductById() {
       server({
         method: "get",
-        url: `/products/${this.$route.params.id}`
-        // headers: {
-        //   token: localStorage.token
-        // }
+        url: `/product/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.token
+        }
       })
         .then(response => {
-          this.editProduct = response.data;
+          this.editProduct = response.data.product;
         })
         .catch(err => {
           console.log(err);
@@ -84,10 +84,10 @@ export default {
     editProductById() {
       server({
         method: "put",
-        url: `/products/${this.$route.params.id}`,
-        // headers: {
-        //   token: localStorage.token
-        // },
+        url: `/product/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.token
+        },
         data: {
           name: this.editProduct.name,
           image_url: this.editProduct.image_url,
@@ -97,7 +97,7 @@ export default {
       })
         .then(response => {
           this.$router.push("/dashboard/product");
-          console.log(response);
+          this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
         })
         .catch(err => {
           console.log(err);

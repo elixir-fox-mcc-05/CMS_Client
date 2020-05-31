@@ -2,7 +2,12 @@
   <div class="productContainer">
     <h1>Products</h1>
     <router-link to="/dashboard/add-product">
-      <button class="addProduct">Add Product</button>
+      <button
+        v-if="this.$store.state.userLogin.role !== 'Member'"
+        class="addProduct"
+      >
+        Add Product
+      </button>
     </router-link>
     <div class="product">
       <table>
@@ -13,7 +18,7 @@
             <th>Name</th>
             <th>Price</th>
             <th>Stock</th>
-            <th>Action</th>
+            <th v-if="this.$store.state.userLogin.role !== 'Member'">Action</th>
           </tr>
         </thead>
         <tbody v-for="product in productList" :key="product.id">

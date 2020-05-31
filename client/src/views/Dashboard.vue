@@ -38,28 +38,30 @@
     <transition name="view">
       <router-view />
     </transition>
+    <Notif class="notif" />
+    <Error class="error" />
   </div>
 </template>
 
 <script>
+import Error from "../components/Error";
+import Notif from "../components/Notif";
 export default {
   name: "Dashboard",
+  components: {
+    Error,
+    Notif
+  },
   methods: {
     logout() {
       localStorage.clear();
       this.$store.commit("SET_LOGIN", false);
       this.$router.push("/");
-    },
-    stateLogin() {
-      let userLogin = this.$store.state.userLogin;
-      console.log("state is ", userLogin);
-      // return state.item;
     }
   },
   created() {
     if (localStorage.token) {
       this.$store.commit("SET_LOGIN", true);
-      this.stateLogin();
       this.$store.commit("CHANGE_USERLOGIN", {
         role: localStorage.getItem("userRole"),
         image_url: localStorage.getItem("userImage"),
@@ -76,7 +78,6 @@ export default {
 <style scoped>
 .dashboard {
   display: flex;
-  /* position: fixed; */
 }
 .sticky {
   position: fixed;
@@ -130,8 +131,11 @@ export default {
   justify-content: flex-start;
   width: 100%;
 }
+
+.link a.router-link-exact-active {
+  color: #2096f3;
+}
 .navLink {
-  /* margin-top: 10%; */
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -173,5 +177,10 @@ export default {
 .fas:active,
 .fas:hover {
   color: #2096f3;
+}
+.notif,
+.error {
+  margin-left: -45vw;
+  margin-top: 6vh;
 }
 </style>

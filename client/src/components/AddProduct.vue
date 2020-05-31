@@ -70,10 +70,10 @@ export default {
     addNewProduct() {
       server({
         method: "post",
-        url: "/products",
-        // headers: {
-        //   token: localStorage.token
-        // },
+        url: "/product",
+        headers: {
+          token: localStorage.token
+        },
         data: {
           name: this.newProduct.name,
           image_url: this.newProduct.image_url,
@@ -83,7 +83,7 @@ export default {
       }).then(response => {
         this.$store.dispatch("fetchProductList");
         this.$router.push("/dashboard/product");
-        console.log(response);
+        this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
       });
     }
   }

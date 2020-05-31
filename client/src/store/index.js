@@ -37,20 +37,19 @@ export default new Vuex.Store({
     fetchProductList(context) {
       server({
         method: "get",
-        url: "/products",
+        url: "/product",
         headers: {
           token: localStorage.token
         }
       })
         .then(response => {
-          context.commit("SET_PRODUCTLIST", response.data);
+          context.commit("SET_PRODUCTLIST", response.data.products);
         })
         .catch(err => {
           console.log(err);
         });
     },
     fetchUserList(context) {
-      console.log("masuk fetch user list <+++++++++");
       server({
         method: "get",
         url: "/user-list",

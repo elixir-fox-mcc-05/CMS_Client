@@ -27,15 +27,15 @@ export default {
     deleteProduct() {
       server({
         method: "delete",
-        url: `/products/${this.$route.params.id}`
-        // headers: {
-        //   token: localStorage.token
-        // }
+        url: `/product/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.token
+        }
       })
         .then(response => {
           this.$store.dispatch("fetchProductList");
           this.$router.push({ name: "Product" });
-          console.log(response);
+          this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
         })
         .catch(err => {
           console.log(err);

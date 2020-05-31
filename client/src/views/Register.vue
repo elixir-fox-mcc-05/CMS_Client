@@ -6,8 +6,8 @@
     <div class="container">
       <h1>Create Bukalipik account</h1>
       <p class="label">it's free and always will be</p>
-      <Notif class="notif"/>
-      <Error class="error"/>
+      <Notif class="notif" />
+      <Error class="error" />
       <input
         v-model="name"
         class="username"
@@ -31,6 +31,7 @@
         class="username"
         type="text"
         placeholder="Enter your image url"
+        @keyup.enter.prevent="register"
       />
       <button @click.prevent="register">Register</button>
       <p class="login">
@@ -79,9 +80,9 @@ export default {
           this.$store.commit("CHANGE_MYERROR", "");
           this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
           (this.name = ""),
-          (this.email = ""),
-          (this.password = ""),
-          (this.image_url = "");
+            (this.email = ""),
+            (this.password = ""),
+            (this.image_url = "");
         })
         .catch(err => {
           this.$store.commit("CHANGE_MYNOTIF", "");

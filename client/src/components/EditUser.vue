@@ -8,23 +8,20 @@
       <div class="formInput">
         <label class="labelAddUser">
           <h4>User Name:</h4>
-          <input v-model="editUser.name" type="text" class="addUserInput" />
+          <p>{{ editUser.name }}</p>
         </label>
         <label class="labelAddUser">
-          <h4>Image Url:</h4>
-          <input
-            v-model="editUser.image_url"
-            type="text"
-            class="addUserInput"
-          />
+          <h4>Current Role :</h4>
+          <p class="currentRole">{{ editUser.role }}</p>
         </label>
         <label class="labelAddUser">
-          <h4>Email:</h4>
-          <input v-model="editUser.email" type="text" class="addUserInput" />
-        </label>
-        <label class="labelAddUser">
-          <h4>Role:</h4>
-          <input v-model="editUser.role" type="text" class="addUserInput" />
+          <h4>Change Role to:</h4>
+          <select v-model="selected" class="selectRole">
+            <option value="">--Choose Role--</option>
+            <option>Super-admin</option>
+            <option>Admin</option>
+            <option>Member</option>
+          </select>
         </label>
         <input @click.prevent="editUserById" type="submit" class="submitForm" />
       </div>
@@ -38,6 +35,7 @@ export default {
   name: "EditUser",
   data() {
     return {
+      selected: "",
       editUser: {
         name: "",
         image_url: "",
@@ -53,38 +51,37 @@ export default {
     getUserById() {
       server({
         method: "get",
-        url: `/users/${this.$route.params.id}`,
+        url: `/user/${this.$route.params.id}`,
         headers: {
           token: localStorage.token
         }
       })
-        .then(response => {
-          this.editUser = response.data;
+        .then((response) => {
+          this.editUser = response.data.user;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
     editUserById() {
       server({
-        method: "put",
-        url: `/users/${this.$route.params.id}`,
+        method: "patch",
+        url: `/user/${this.$route.params.id}`,
         headers: {
           token: localStorage.token
         },
         data: {
-          name: this.editUser.name,
-          image_url: this.editUser.image_url,
-          email: this.editUser.email,
-          role: this.editUser.role
+          role: this.selected
         }
       })
-        .then(response => {
+        .then((response) => {
           this.$router.push("/dashboard/user");
-          console.log(response);
+          this.$store.commit("CHANGE_MYERROR", "");
+          this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
         })
-        .catch(err => {
-          console.log(err);
+        .catch((err) => {
+          this.$store.commit("CHANGE_MYNOTIF", "");
+          this.$store.commit("CHANGE_MYERROR", err.response.data.err);
         });
     }
   },
@@ -107,8 +104,9 @@ export default {
 }
 
 .addUserGroup {
+  margin-top: 10vh;
   width: 35vw;
-  height: 76vh;
+  height: 42vh;
   background: white;
   display: flex;
   flex-direction: column;
@@ -134,11 +132,15 @@ h1 {
   margin-bottom: 10px;
 }
 
+.formInput {
+  padding: 0 30px 20px;
+}
+
 .labelAddUser {
-  display: block;
-  width: 24vw;
-  margin: 15px 30px;
-  text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 3vh;
 }
 
 h4 {
@@ -148,24 +150,24 @@ h4 {
   color: #778192;
 }
 
-.addUserInput {
-  width: 125%;
-  margin-top: 20px;
-  font-size: 16px;
-  border-width: 0px;
-  border-bottom: 1px solid #31323623;
-  text-align: left;
-  margin-bottom: 20px;
-  font-size: 18px;
+.labelAddUser p {
+  font-size: 14px;
+  margin-left: 3vw;
+  color: #778192;
+  font-weight: bold;
 }
 
-textarea:focus,
-input:focus {
-  outline: none;
-  border-bottom: 1px solid #313236;
+.labelAddUser .currentRole {
+  margin-left: 2vw;
+}
+
+.selectRole {
+  margin-left: 1vw;
+  width: 15vw;
 }
 
 .submitForm {
+  margin-top: 5vh;
   background: #2096f3;
   color: white;
   text-transform: uppercase;

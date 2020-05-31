@@ -16,6 +16,7 @@
         class="username"
         :type="passwordFieldType"
         placeholder="Enter your password"
+        @keyup.enter.prevent="login"
       />
       <button @click.prevent="login">Login</button>
       <p class="register">
@@ -127,7 +128,7 @@ export default {
   .loginPage {
     display: flex;
     overflow: hidden;
-    position: fixed;
+    /* position: fixed; */
   }
   .container {
     width: 100%;

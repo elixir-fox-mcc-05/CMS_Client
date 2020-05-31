@@ -27,21 +27,22 @@ export default {
     deleteUser() {
       server({
         method: "delete",
-        url: `/users/${this.$route.params.id}`
-        // headers: {
-        //   token: localStorage.token
-        // }
+        url: `/user/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.token
+        }
       })
-        .then(response => {
+        .then((response) => {
           this.$store.dispatch("fetchUserList");
           this.$router.push({ name: "User" });
-          console.log(response);
+          this.$store.commit("CHANGE_MYERROR", "");
+          this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
-  },
+  }
 };
 </script>
 

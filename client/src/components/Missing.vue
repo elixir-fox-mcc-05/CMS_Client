@@ -23,7 +23,6 @@ export default {
   methods: {
     toLogin() {
       this.$router.push({ name: "Login" });
-      // this.$store.commit("CHANGE_USERLOGIN", response.data.data);
     }
   },
   created() {
