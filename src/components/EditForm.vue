@@ -1,7 +1,7 @@
 <template>
   <div class="form-container">
     <div class="form-box">
-      <form @submit.prevent="processEditProductg">
+      <form @submit.prevent="processEditProduct">
         <h1>Edit Product</h1>
         <div class="form-group">
             <label for="product-name">Product Name</label>
