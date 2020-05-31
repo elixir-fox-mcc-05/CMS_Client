@@ -3,6 +3,9 @@
     <div class="add-btn bg-primary text-white" @click.prevent="showAddForm">
       <i class="fas fa-plus"></i>
     </div>
+    <div>
+      <input type="text" v-model="keyword" @keyup="searchProduct" placeholder="Search Product..." class="form-control mt-5 mb-3">
+    </div>
     <table class="table table-sm table-hover table-striped mt-4">
       <thead>
         <tr>
@@ -38,8 +41,14 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import _ from 'lodash'
 export default {
   name: 'ProductList',
+  data () {
+    return {
+      keyword: null
+    }
+  },
   watch: {
     indexProduct (value) {
       if (value !== '') {
@@ -115,7 +124,10 @@ export default {
     priceInRupiah (price) {
       const harga = price.toLocaleString()
       return `IDR ${harga}.00`
-    }
+    },
+    searchProduct: _.debounce(function () {
+      this.$store.dispatch('searchProduct', this.keyword)
+    })
   },
   created () {
     this.$store.dispatch('fetchProducts')

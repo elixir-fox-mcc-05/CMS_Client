@@ -36,7 +36,7 @@ export default new Vuex.Store({
   },
   actions: {
     fetchProducts ({ commit }) {
-      axios.get('http://localhost:3000/products', {
+      axios.get('http://localhost:3000/products?s=', {
         headers: {
           token: localStorage.token
         }
@@ -48,6 +48,23 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+        })
+    },
+    searchProduct ({ commit }, payload) {
+      axios.get(`http://localhost:3000/products?s=${payload}`, {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(response => {
+          let { data } = response
+          data = data.Products
+          commit('getProductsData', data)
+        })
+        .catch(err => {
+          err = err.response
+          const { data } = err
+          console.log(data)
         })
     }
   },
