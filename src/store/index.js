@@ -15,7 +15,7 @@ export default new Vuex.Store({
     categories: [],
     category: '',
     isLoading: false,
-    loaderSize: '200px'
+    loaderSize: '150px'
   },
   mutations: {
     set_email (state, payload) {
@@ -44,10 +44,11 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login ({ commit }) {
+    login ({ commit }, payload) {
+      const { email, password } = payload
       return server.post('/users/login', {
-        email: this.state.email,
-        password: this.state.password
+        email,
+        password
       })
     },
     delete ({ commit }, payload) {
@@ -112,9 +113,9 @@ export default new Vuex.Store({
           })
         })
     },
-    addCategory ({ commit }) {
+    addCategory ({ commit }, payload) {
       const token = localStorage.access_token
-      const name = this.state.category
+      const name = payload
       return server.post('/categories', {
         name
       }, {
@@ -123,10 +124,10 @@ export default new Vuex.Store({
         }
       })
     },
-    editCategory ({ commit }) {
+    editCategory ({ commit }, payload) {
       const token = localStorage.access_token
-      const name = this.state.category
-      return server.put(`categories/${this.state.processedId}`, {
+      const { name, id } = payload
+      return server.put(`categories/${id}`, {
         name
       }, {
         headers: {
@@ -134,9 +135,9 @@ export default new Vuex.Store({
         }
       })
     },
-    deleteCategory ({ commit }) {
+    deleteCategory ({ commit }, payload) {
       const token = localStorage.access_token
-      return server.delete(`/categories/${this.state.processedId}`, {
+      return server.delete(`/categories/${payload}`, {
         headers: {
           access_token: token
         }

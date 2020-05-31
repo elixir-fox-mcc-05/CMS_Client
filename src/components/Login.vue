@@ -16,13 +16,14 @@
                         <label for="password">Password</label>
                         <input type="password" v-model="loginPassword" class="password" id="password" placeholder="your password here">
                     </div>
-                    <button type="submit" class="btn-login">SUBMIT</button>
+                    <button type="submit" class="btn-login" v-if="!$store.state.isLoading">SUBMIT</button>
                 </form>
                 <Error
                     v-if="errorDetected"
                     :alertMessage="alertMessage"
                 ></Error>
                 <div class="credit">
+                    <Circle2 class=" text-center mt-2" v-if="$store.state.isLoading"></Circle2>
                     <h6>Photo by Lucas Andrade from Pexels</h6>
                 </div>
             </div>
@@ -32,11 +33,12 @@
 
 <script>
 import Error from '@/components/Error.vue'
+import { Circle2 } from 'vue-loading-spinner'
 
 export default {
   name: 'Login',
   components: {
-    Error
+    Error, Circle2
   },
   data () {
     return {
@@ -48,9 +50,12 @@ export default {
   },
   methods: {
     login () {
-      this.$store.commit('set_email', this.loginEmail)
-      this.$store.commit('set_password', this.loginPassword)
-      this.$store.dispatch('login')
+      this.$store.commit('set_loading_status', true)
+      const loginData = {
+        email: this.loginEmail,
+        password: this.loginPassword
+      }
+      this.$store.dispatch('login', loginData)
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
           this.$router.push({ name: 'dashboard' })
@@ -63,6 +68,9 @@ export default {
         .catch(err => {
           this.alertMessage = err.response.data.error
           this.errorDetected = true
+        })
+        .finally(() => {
+          this.$store.commit('set_loading_status', false)
         })
     }
   }
@@ -166,8 +174,11 @@ export default {
     }
 
     .credit {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         color: whitesmoke;
-        text-align: center;
         position: relative;
         margin-top: 5px;
     }

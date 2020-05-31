@@ -102,7 +102,6 @@ export default {
   },
   methods: {
     editCategory (data) {
-      this.$store.commit('set_id', data.id)
       Swal.fire({
         title: 'Edit Category Name',
         input: 'text',
@@ -115,8 +114,11 @@ export default {
       })
         .then(result => {
           if (result.value) {
-            this.$store.commit('set_category', result.value)
-            this.$store.dispatch('editCategory')
+            const editedCategory = {
+              name: result.value,
+              id: data.id
+            }
+            this.$store.dispatch('editCategory', editedCategory)
               .then(({ data }) => {
                 Swal.fire(
                   'Edited!',
@@ -161,8 +163,7 @@ export default {
       })
         .then((result) => {
           if (result.value) {
-            this.$store.commit('set_id', id)
-            this.$store.dispatch('deleteCategory')
+            this.$store.dispatch('deleteCategory', id)
               .then(res => {
                 deleteWarn.fire(
                   'deleted!',

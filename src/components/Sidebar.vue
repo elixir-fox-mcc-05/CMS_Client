@@ -87,8 +87,7 @@ export default {
         })
           .then(result => {
             if (result.value) {
-              this.$store.commit('set_category', result.value)
-              this.$store.dispatch('addCategory')
+              this.$store.dispatch('addCategory', result.value)
                 .then(({ data }) => {
                   console.log(data)
                   Swal.fire(
