@@ -59,7 +59,20 @@
           </button>
         </template>
       </Vuetable>
-      <VuetablePagination ref="pagination" @vuetable-pagination:change-page="onChangePage" :css="css.pagination" v-show="!$store.state.isLoading"></VuetablePagination>
+      <div class="d-flex justify-content-between bg-light p-2">
+        <vuetable-pagination-info
+          v-show="!$store.state.isLoading"
+          ref="paginationInfo"
+          :css="css.pagination"
+          info-class="pull-left"
+        ></vuetable-pagination-info>
+        <VuetablePagination
+          v-show="!$store.state.isLoading"
+          ref="pagination"
+          @vuetable-pagination:change-page="onChangePage"
+          :css="css.pagination"
+        ></VuetablePagination>
+      </div>
     </div>
   </div>
 </template>
@@ -67,6 +80,7 @@
 <script>
 import Vuetable from 'vuetable-2/src/components/Vuetable'
 import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
+import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
 import VuetableFieldSequence from 'vuetable-2/src/components/VuetableFieldSequence.vue'
 import Swal from 'sweetalert2'
 import accounting from 'accounting-js'
@@ -76,7 +90,7 @@ import { Origami } from 'vue-loading-spinner'
 export default {
   name: 'ProductList',
   components: {
-    Vuetable, VuetablePagination, Origami
+    Vuetable, VuetablePagination, VuetablePaginationInfo, Origami
   },
   props: {
     rowData: {
@@ -151,7 +165,8 @@ export default {
           ascendingIcon: 'fas fa-sort-up',
           descendingIcon: 'fas fa-sort-down',
           ascendingClass: 'sorted-asc',
-          descendingClass: 'sorted-desc'
+          descendingClass: 'sorted-desc',
+          sortableIcon: 'fas fa-sort'
         },
         pagination: {
           infoClass: 'pull-left',
@@ -267,6 +282,7 @@ export default {
     },
     onPaginationData (paginationData) {
       this.$refs.pagination.setPaginationData(paginationData)
+      this.$refs.paginationInfo.setPaginationData(paginationData)
     },
     onChangePage (page) {
       this.$refs.vuetable.changePage(page)

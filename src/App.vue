@@ -8,7 +8,7 @@
       :class="{'collapsed': collapsed }"
     >
       <div class="gober">
-        <img src="./assets/gobers-logo.png" alt="gobers logo" class="logo" width="180px">
+        <img src="./assets/gobers-logo.png" alt="gobers logo" class="logo" width="180px" v-if="isLogin">
       </div>
       <hr>
       <router-view/>

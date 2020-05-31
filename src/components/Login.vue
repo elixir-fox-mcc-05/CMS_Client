@@ -18,10 +18,6 @@
                     </div>
                     <button type="submit" class="btn-login" v-if="!$store.state.isLoading">SUBMIT</button>
                 </form>
-                <Error
-                    v-if="errorDetected"
-                    :alertMessage="alertMessage"
-                ></Error>
                 <div class="credit">
                     <Circle2 class=" text-center mt-2" v-if="$store.state.isLoading"></Circle2>
                     <h6>Photo by Lucas Andrade from Pexels</h6>
@@ -32,20 +28,17 @@
 </template>
 
 <script>
-import Error from '@/components/Error.vue'
 import { Circle2 } from 'vue-loading-spinner'
 
 export default {
   name: 'Login',
   components: {
-    Error, Circle2
+    Circle2
   },
   data () {
     return {
       loginEmail: '',
-      loginPassword: '',
-      alertMessage: '',
-      errorDetected: false
+      loginPassword: ''
     }
   },
   methods: {
@@ -61,13 +54,10 @@ export default {
           this.$router.push({ name: 'dashboard' })
           this.loginEmail = ''
           this.loginPassword = ''
-          this.errorDetected = false
-          this.alertMessage = ''
           this.$store.commit('set_login_status', true)
         })
         .catch(err => {
-          this.alertMessage = err.response.data.error
-          this.errorDetected = true
+          this.$toasted.show(err.response.data.error)
         })
         .finally(() => {
           this.$store.commit('set_loading_status', false)

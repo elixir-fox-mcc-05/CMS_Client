@@ -1,5 +1,6 @@
 <template>
   <div class="category-container">
+    <h1 class="mb-3">Category List</h1>
     <Origami v-if="$store.state.isLoading" class="mb-3" :size="$store.state.loaderSize"></Origami>
     <div class="category-table">
       <Vuetable
@@ -71,13 +72,13 @@ export default {
         {
           name: 'total_product',
           title: 'Amount of Products',
-          width: '15%',
+          width: '25%',
           sortField: 'total_product'
         },
         {
           name: 'action',
           title: 'Action',
-          width: '40%'
+          width: '30%'
         }
       ],
       sortOrder: [
@@ -95,7 +96,8 @@ export default {
           ascendingIcon: 'fas fa-sort-up',
           descendingIcon: 'fas fa-sort-down',
           ascendingClass: 'sorted-asc',
-          descendingClass: 'sorted-desc'
+          descendingClass: 'sorted-desc',
+          sortableIcon: 'fas fa-sort'
         }
       }
     }

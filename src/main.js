@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import firebase from 'firebase'
+import Toasted from 'vue-toasted'
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
@@ -18,6 +19,19 @@ var firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
+
+Vue.use(Toasted, {
+  theme: 'outline',
+  position: 'top-right',
+  duration: 5000,
+  type: 'error',
+  action: {
+    text: 'Close',
+    onClick: (e, toastObject) => {
+      toastObject.goAway(0)
+    }
+  }
+})
 
 Vue.use(VueSidebarMenu)
 
