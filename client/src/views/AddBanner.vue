@@ -5,8 +5,13 @@
             <b-input v-model="namebanner" placeholder="No label" rounded></b-input>
         </b-field>
 
-        <b-field label="Image URL">
-            <b-input v-model="image_url" placeholder="No label" rounded type="url"></b-input>
+        <b-field  label="Image URL">
+          <b-upload v-model="image_url">
+        <a class="button is-primary is-fullwidth">
+          <b-icon icon="upload"></b-icon>
+          <span>{{ image_url.name || "Click to upload"}}</span>
+        </a>
+      </b-upload>
         </b-field>
 
         <button @click.prevent="newBanner" class="button is-dark">
@@ -25,17 +30,22 @@ export default {
   data () {
     return {
       categories: ['asd', 'asdf'],
-      category: []
+      category: [],
+      image_url: ''
     }
   },
   methods: {
     newBanner () {
-      const newData = {
-        name: this.namebanner,
-        image_url: this.image_url
-      }
-      console.log(newData)
-      server.post('/banner/add', newData, {
+      let bodyForm = new FormData()
+       bodyForm.append('image_url',this.image_url)
+        bodyForm.append('name',this.namebanner)
+
+      // const newData = {
+      //   name: this.namebanner,
+      //   image_url: this.image_url
+      // }
+      // console.log(newData)
+      server.post('/banner/add', bodyForm, {
         headers: {
           token: localStorage.token
         }

@@ -5,8 +5,13 @@
             <b-input v-model="nameproduct" placeholder="No label" rounded></b-input>
         </b-field>
 
-        <b-field label="Image URL">
-            <b-input v-model="image_url" placeholder="No label" rounded type="url"></b-input>
+        <b-field  label="Image URL">
+          <b-upload v-model="image_url">
+        <a class="button is-primary is-fullwidth">
+          <b-icon icon="upload"></b-icon>
+          <span>{{ image_url.name || "Click to upload"}}</span>
+        </a>
+      </b-upload>
         </b-field>
 
         <b-field label="Stock">
@@ -42,21 +47,29 @@ export default {
   data () {
     return {
       categories: ['asd', 'asdf'],
-      category: []
+      category: [],
+      image_url: ''
     }
   },
   methods: {
     newProduct () {
-      const newData = {
-        name: this.nameproduct,
-        image_url: this.image_url,
-        stock: this.stock,
-        price: this.price,
-        CategoryId: this.category
-      }
+      let bodyForm = new FormData()
+       bodyForm.append('image_url',this.image_url)
+        bodyForm.append('name',this.nameproduct)
+         bodyForm.append('stock',this.stock)
+          bodyForm.append('price',this.price)
+      bodyForm.append('CategoryId',this.category)
 
-      console.log(newData)
-      server.post('/products/add', newData, {
+      // const newData = {
+      //   name: this.nameproduct,
+      //   image_url: bodyForm,
+      //   stock: this.stock,
+      //   price: this.price,
+      //   CategoryId: this.category
+      // }
+
+      // console.log(newData)
+      server.post('/products/add', bodyForm, {
         headers: {
           token: localStorage.token
         }
