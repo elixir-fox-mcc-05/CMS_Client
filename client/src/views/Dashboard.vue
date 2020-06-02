@@ -3,7 +3,7 @@
     <div class="adminNavbar sticky">
       <div class="profile">
         <div class="image">
-          <div class="circleImage"></div>
+          <!-- <div class="circleImage"></div> -->
           <img
             :src="this.$store.state.userLogin.image_url"
             alt="profile-pict"
@@ -102,19 +102,21 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.image .circleImage {
+/* .image .circleImage {
   border: 5px solid #2096f3;
   width: 120px;
   height: 120px;
   align-self: center;
   border-radius: 50%;
-}
+} */
 .image img {
-  margin-top: -110px;
-  width: 100px;
-  height: 100px;
+  /* margin-top: 3vh; */
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
+  border: 5px solid #2096f3;
+  padding: 3px;
 }
 .name {
   margin-top: 15px;

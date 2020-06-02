@@ -54,9 +54,12 @@ export default {
     },
     userList() {
       return this.$store.state.userList;
+    },
+    userLogin() {
+      return this.$store.state.userLogin;
     }
   },
-   methods: {
+  methods: {
     showEditPage(id) {
       this.$router.push(`/dashboard/edit-user/${id}`);
     },
@@ -126,6 +129,7 @@ img {
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #2096f3;
+  padding: 2px;
 }
 .edit {
   margin-right: 20px;

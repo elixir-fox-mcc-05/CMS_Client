@@ -75,34 +75,42 @@ export default {
       this.$router.push("/register");
     },
     login() {
-      server({
-        method: "post",
-        url: "/login",
-        data: {
-          email: this.email,
-          password: this.password
-        }
-      })
-        .then(response => {
-          this.$store.commit("CHANGE_MYERROR", "");
-          this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("userName", response.data.data.name);
-          localStorage.setItem("userRole", response.data.data.role);
-          localStorage.setItem("userImage", response.data.data.image_url);
-          this.$store.commit("SET_LOGIN", true);
-          this.$store.commit("CHANGE_USERLOGIN", {
-            role: localStorage.getItem("userRole"),
-            image_url: localStorage.getItem("userImage"),
-            name: localStorage.getItem("userName")
-          });
-          this.$router.push("/dashboard/product");
-          (this.user.email = ""), (this.user.password = "");
+      if (this.email == "") {
+        this.$store.commit("CHANGE_MYERROR", "Email is required");
+      } else if (this.password == "") {
+        this.$store.commit("CHANGE_MYERROR", "Password is required");
+      } else {
+        server({
+          method: "post",
+          url: "/login",
+          data: {
+            email: this.email,
+            password: this.password
+          }
         })
-        .catch(err => {
-          this.$store.commit("CHANGE_MYNOTIF", "");
-          this.$store.commit("CHANGE_MYERROR", err.response.data.err);
-        });
+          .then((response) => {
+            this.$store.commit("CHANGE_MYERROR", "");
+            this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("userName", response.data.data.name);
+            localStorage.setItem("userRole", response.data.data.role);
+            localStorage.setItem("userImage", response.data.data.image_url);
+            this.$store.commit("SET_LOGIN", true);
+            this.$store.commit("CHANGE_USERLOGIN", {
+              role: localStorage.getItem("userRole"),
+              image_url: localStorage.getItem("userImage"),
+              name: localStorage.getItem("userName")
+            });
+            this.$router.push("/dashboard/product");
+            this.$store.dispatch("fetchProductList");
+            (this.user.email = ""), (this.user.password = "");
+          })
+          .catch((err) => {
+            this.$store.commit("CHANGE_MYNOTIF", "");
+            this.$store.commit("CHANGE_MYERROR", "wrong email/password");
+            console.log(err);
+          });
+      }
     },
     switchVisibility() {
       (this.passwordFieldType =

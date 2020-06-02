@@ -15,12 +15,12 @@ export default {
   created() {
     setTimeout(() => {
       this.$store.commit("CHANGE_MYNOTIF", "");
-    }, 5000);
+    }, 1000);
   },
   updated() {
     setTimeout(() => {
       this.$store.commit("CHANGE_MYNOTIF", "");
-    }, 5000);
+    }, 1000);
   }
 };
 </script>

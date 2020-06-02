@@ -18,7 +18,7 @@
             <th>Name</th>
             <th>Price</th>
             <th>Stock</th>
-            <th v-if="this.$store.state.userLogin.role !== 'Member'">Action</th>
+            <th v-if="userLogin.role !== 'Member'">Action</th>
           </tr>
         </thead>
         <tbody v-for="product in productList" :key="product.id">
@@ -30,7 +30,7 @@
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.stock }}</td>
-            <td>
+            <td v-if="userLogin.role !== 'Member'">
               <button
                 @click.prevent="showEditPage(product.id)"
                 class="edit"
@@ -62,6 +62,9 @@ export default {
     },
     productList() {
       return this.$store.state.productList;
+    },
+    userLogin() {
+      return this.$store.state.userLogin;
     }
   },
   methods: {
@@ -76,6 +79,11 @@ export default {
     if (!localStorage.token) {
       this.$store.commit("SET_LOGIN", false);
       this.$router.push("/");
+      this.$store.commit("CHANGE_USERLOGIN", {
+        role: localStorage.getItem("userRole"),
+        image_url: localStorage.getItem("userImage"),
+        name: localStorage.getItem("userName")
+      });
     } else {
       this.$store.dispatch("fetchProductList");
     }

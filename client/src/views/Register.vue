@@ -58,6 +58,7 @@ export default {
   },
   data() {
     return {
+      aa:"",
       name: "",
       email: "",
       password: "",
@@ -66,28 +67,42 @@ export default {
   },
   methods: {
     register() {
-      server({
-        method: "post",
-        url: "/register",
-        data: {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          image_url: this.image_url
-        }
-      })
-        .then(response => {
-          this.$store.commit("CHANGE_MYERROR", "");
-          this.$store.commit("CHANGE_MYNOTIF", response.data.msg);
-          (this.name = ""),
-            (this.email = ""),
-            (this.password = ""),
-            (this.image_url = "");
+      if (this.name == "") {
+        this.$store.commit("CHANGE_MYERROR", "Name is required");
+      } else if (this.email == "") {
+        this.$store.commit("CHANGE_MYERROR", "Email is required");
+      } else if (this.password == "") {
+        this.$store.commit("CHANGE_MYERROR", "Password is required");
+      } else if (this.image_url == "") {
+        this.$store.commit("CHANGE_MYERROR", "Image url is required");
+      } else {
+        server({
+          method: "post",
+          url: "/register",
+          data: {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            image_url: this.image_url
+          }
         })
-        .catch(err => {
-          this.$store.commit("CHANGE_MYNOTIF", "");
-          this.$store.commit("CHANGE_MYERROR", err.response.data.err);
-        });
+          .then(response => {
+            this.$store.commit("CHANGE_MYERROR", "");
+            this.$store.commit(
+              "CHANGE_MYNOTIF",
+              "Register succes, please go to login page"
+            );
+            this.aa = response;
+            (this.name = ""),
+              (this.email = ""),
+              (this.password = ""),
+              (this.image_url = "");
+          })
+          .catch(err => {
+            this.$store.commit("CHANGE_MYNOTIF", "");
+            this.$store.commit("CHANGE_MYERROR", err.response.data.err);
+          });
+      }
     },
     login() {
       this.$router.push("/");
