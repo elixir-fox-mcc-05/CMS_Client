@@ -1,6 +1,6 @@
 <template>
   <div>
-      <EditForm/>
+    <EditForm/>
   </div>
 </template>
 

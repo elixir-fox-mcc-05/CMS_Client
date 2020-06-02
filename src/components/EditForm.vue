@@ -21,7 +21,7 @@
             <label for="product-category">Category</label>
             <select id="product-category" class="form-control" v-model="productCategory">
               <option selected value="">Choose Category</option>
-              <option v-for="category in $store.state.categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+              <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
             </select>
           </div>
           <div class="form-group col-md-3">
@@ -29,8 +29,8 @@
             <input type="number" class="form-control" id="product-stock" v-model="productStock" placeholder="Stock">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block" v-if="!$store.state.isLoading"><span class="fas fa-pen-square"></span> Edit Product</button>
-        <div class="progress" style="height: 20px;" v-if="$store.state.isLoading">
+        <button type="submit" class="btn btn-primary btn-block" v-if="!isLoading"><span class="fas fa-pen-square"></span> Edit Product</button>
+        <div class="progress" style="height: 20px;" v-if="isLoading">
           <div
             class="progress-bar"
             role="progressbar"
@@ -114,6 +114,9 @@ export default {
             text: `${err.response.data.error}`
           })
         })
+        .finally(() => {
+          this.$store.commit('set_loading_status', false)
+        })
     },
     firebaseUpload () {
       this.$store.commit('set_loading_status', true)
@@ -129,6 +132,14 @@ export default {
         })
       }
       )
+    }
+  },
+  computed: {
+    isLoading () {
+      return this.$store.state.isLoading
+    },
+    categories () {
+      return this.$store.state.categories
     }
   },
   created () {

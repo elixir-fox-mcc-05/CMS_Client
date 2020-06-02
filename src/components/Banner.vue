@@ -31,6 +31,7 @@
 import { VueFlux, FluxCaption, FluxPagination, FluxPreloader, FluxControls } from 'vue-flux'
 import one from '../assets/1.png'
 import two from '../assets/2.png'
+import three from '../assets/3.png'
 
 export default {
   name: 'Banner',
@@ -42,7 +43,7 @@ export default {
       vfOptions: {
         autoplay: true
       },
-      vfImages: [one, two],
+      vfImages: [one, two, three],
       vfTransitions: ['kenburn', 'waterfall', 'blocks2', 'cube', 'book', 'wave', 'round2'],
       vfCaptions: [
         'Football Weekend Discount Special',
@@ -55,6 +56,6 @@ export default {
 
 <style>
   .carousel {
-    width: 50%;
+    width: 70%;
   }
 </style>

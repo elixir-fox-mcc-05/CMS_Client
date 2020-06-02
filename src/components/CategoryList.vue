@@ -1,10 +1,10 @@
 <template>
   <div class="category-container">
     <h1 class="mb-3">Category List</h1>
-    <Origami v-if="$store.state.isLoading" class="mb-3" :size="$store.state.loaderSize"></Origami>
+    <Origami v-if="isLoading" class="mb-3" :size="loaderSize"></Origami>
     <div class="category-table">
       <Vuetable
-        v-show="!$store.state.isLoading"
+        v-show="!isLoading"
         ref="vuetable"
         api-url="https://secret-tundra-12625.herokuapp.com/categories/"
         :fields="fields"
@@ -200,6 +200,12 @@ export default {
   computed: {
     httpHeaders () {
       return { headers: { access_token: localStorage.access_token } }
+    },
+    isLoading () {
+      return this.$store.state.isLoading
+    },
+    loaderSize () {
+      return this.$store.state.loaderSize
     }
   }
 }

@@ -16,10 +16,10 @@
                         <label for="password">Password</label>
                         <input type="password" v-model="loginPassword" class="password" id="password" placeholder="your password here">
                     </div>
-                    <button type="submit" class="btn-login" v-if="!$store.state.isLoading">SUBMIT</button>
+                    <button type="submit" class="btn-login" v-if="!isLoading">SUBMIT</button>
                 </form>
                 <div class="credit">
-                    <Circle2 class=" text-center mt-2" v-if="$store.state.isLoading"></Circle2>
+                    <Circle2 class=" text-center mt-2" v-if="isLoading"></Circle2>
                     <h6>Photo by Lucas Andrade from Pexels</h6>
                 </div>
             </div>
@@ -62,6 +62,11 @@ export default {
         .finally(() => {
           this.$store.commit('set_loading_status', false)
         })
+    }
+  },
+  computed: {
+    isLoading () {
+      return this.$store.state.isLoading
     }
   }
 }

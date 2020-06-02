@@ -11,17 +11,17 @@
       <div class="form-group col-md-4">
         <select id="product-category" class="form-control" v-model="productCategory">
               <option selected value="">Choose Category</option>
-              <option v-for="category in $store.state.categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+              <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
             </select>
       </div>
     </div>
-    <div class="small">
+    <Origami v-if="isLoading" class="mb-3" :size="loaderSize"></Origami>
+    <div class="small" v-if="!isLoading">
       <h6>*Click image to enlarge!</h6>
     </div>
-    <Origami v-if="$store.state.isLoading" class="mb-3" :size="$store.state.loaderSize"></Origami>
     <div class="product-table">
       <Vuetable
-        v-show="!$store.state.isLoading"
+        v-show="!isLoading"
         ref="vuetable"
         :api-url="apiAddress"
         :fields="fields"
@@ -61,13 +61,13 @@
       </Vuetable>
       <div class="d-flex justify-content-between bg-light p-2">
         <vuetable-pagination-info
-          v-show="!$store.state.isLoading"
+          v-show="!isLoading"
           ref="paginationInfo"
           :css="css.pagination"
           info-class="pull-left"
         ></vuetable-pagination-info>
         <VuetablePagination
-          v-show="!$store.state.isLoading"
+          v-show="!isLoading"
           ref="pagination"
           @vuetable-pagination:change-page="onChangePage"
           :css="css.pagination"
@@ -303,6 +303,15 @@ export default {
   computed: {
     httpHeaders () {
       return { headers: { access_token: localStorage.access_token } }
+    },
+    categories () {
+      return this.$store.state.categories
+    },
+    isLoading () {
+      return this.$store.state.isLoading
+    },
+    loaderSize () {
+      return this.$store.state.loaderSize
     }
   },
   watch: {
