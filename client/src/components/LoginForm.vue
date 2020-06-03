@@ -3,8 +3,8 @@
       <div class="row">
           <div class="col-lg-9 col-lg-7 col-lg-5 mx-auto text-center">
           <br />
-          <h2>Product Mangagement</h2>
-          <h2>System</h2>
+          <h2>INDONESIA CRAFT SHOP</h2>
+          <h2>Product Mangagement System</h2>
           <div class="card card-signin my-5">
               <div class="card-body">
               <h5 class="card-title text-center font-weight-bold h3">LOGIN</h5>

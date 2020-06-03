@@ -23,13 +23,13 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><strong>Price (IDR)</strong></label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" v-model="addPrice" required>
+                        <input type="number" class="form-control" v-model="addPrice" min="0" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><strong>Stock</strong></label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" v-model="addStock" required>
+                        <input type="number" class="form-control" v-model="addStock" min="0" required>
                     </div>
                 </div>
                 <div class="form-group row">

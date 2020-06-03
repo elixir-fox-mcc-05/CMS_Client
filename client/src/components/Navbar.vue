@@ -1,6 +1,9 @@
 <template>
     <nav class="navbar navbar-info bg-info justify-content-between border-bottom border-dark">
-        <h5 class="">Products Management System</h5>
+        <div>
+          <h5 class="my-0"><strong>Products Management System</strong></h5>
+          <a class="my-0"><strong>Indonesia Craft Shop</strong></a>
+        </div>
         <button class="btn btn-dark" type="button" @click.prevent="logout">LOGOUT</button>
     </nav>
 </template>
