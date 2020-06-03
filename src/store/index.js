@@ -9,7 +9,8 @@ const store = new Vuex.Store({
     isLogin: false,
     productsList: [],
     currentNotif: '',
-    currentErr: ''
+    currentErr: '',
+    orders: []
   },
   mutations: {
     changeLoginStatus (state) {
@@ -27,6 +28,9 @@ const store = new Vuex.Store({
     },
     changeCurrentErr (state, payload) {
       state.currentErr = payload
+    },
+    setOrder (state, payload) {
+      state.orders = payload
     }
   },
   actions: {
@@ -40,6 +44,21 @@ const store = new Vuex.Store({
       })
         .then(response => {
           context.commit('setProductsList', response.data.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    fetchAllOrder (context) {
+      server({
+        method: 'get',
+        url: '/user/order',
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(response => {
+          context.commit('setOrder', response.data.data)
         })
         .catch(err => {
           console.log(err)

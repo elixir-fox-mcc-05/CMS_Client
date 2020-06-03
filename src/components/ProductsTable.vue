@@ -75,7 +75,13 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('fetchProductsList')
+    if (!localStorage.token) {
+      this.$store.commit('changeLoginStatus')
+      this.$router.push({ name: 'LandingPage' })
+    } else {
+      this.$store.dispatch('fetchProductsList')
+      this.$store.dispatch('fetchAllOrder')
+    }
   },
   mounted () {
     const modal = document.querySelectorAll('.modal')

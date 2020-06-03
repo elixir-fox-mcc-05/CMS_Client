@@ -7,6 +7,11 @@ import ProductsTable from '../components/ProductsTable.vue'
 import AddProduct from '../components/AddProduct.vue'
 import ProductDetail from '../components/ProductDetail.vue'
 import EditProduct from '../components/EditProduct.vue'
+import Order from '../views/Order.vue'
+import Customer from '../views/Customer.vue'
+import CurrentOrder from '../components/CurrentOrder.vue'
+import OrderHistory from '../components/OrderHistory.vue'
+import OrderDetail from '../components/OrderDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -46,12 +51,29 @@ const routes = [
   {
     path: '/customer',
     name: 'Customer',
-    component: LandingPage
+    component: Customer
   },
   {
     path: '/order',
     name: 'Order',
-    component: LandingPage
+    component: Order,
+    children: [
+      {
+        path: '',
+        name: 'CurrentOrder',
+        component: CurrentOrder
+      },
+      {
+        path: 'detail/:id',
+        name: 'OrderDetail',
+        component: OrderDetail
+      },
+      {
+        path: 'history',
+        name: 'OrderHistory',
+        component: OrderHistory
+      }
+    ]
   },
   {
     path: '/',

@@ -107,6 +107,15 @@ export default {
         })
     }
   },
+  created () {
+    if (!localStorage.token) {
+      this.$store.commit('changeLoginStatus')
+      this.$router.push({ name: 'LandingPage' })
+    } else {
+      this.$store.dispatch('fetchProductsList')
+      this.$store.dispatch('fetchAllOrder')
+    }
+  },
   mounted () {
     const selectForm = document.querySelectorAll('#newProductCategory')
     M.FormSelect.init(selectForm)

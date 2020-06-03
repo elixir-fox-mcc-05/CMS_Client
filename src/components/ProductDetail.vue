@@ -91,7 +91,14 @@ export default {
     }
   },
   created () {
-    this.getProductById()
+    if (!localStorage.token) {
+      this.$store.commit('changeLoginStatus')
+      this.$router.push({ name: 'LandingPage' })
+    } else {
+      this.getProductById()
+      this.$store.dispatch('fetchProductsList')
+      this.$store.dispatch('fetchAllOrder')
+    }
   },
   mounted () {
     const modal = document.querySelectorAll('.modal')
