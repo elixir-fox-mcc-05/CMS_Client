@@ -1,6 +1,6 @@
 # CMS_Client
 
-# URL : https://safe-spire-19802.herokuapp.com/
+# URL : https://bukalipik-41679.web.app/
 
 ## Project setup
 ```
