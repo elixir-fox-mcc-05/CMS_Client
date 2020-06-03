@@ -47,7 +47,8 @@ export default {
       vfTransitions: ['kenburn', 'waterfall', 'blocks2', 'cube', 'book', 'wave', 'round2'],
       vfCaptions: [
         'Football Weekend Discount Special',
-        'GOBER\'S PRESENT: 2021 RUN-ATHON'
+        'GOBER\'S PRESENT: 2021 RUN-ATHON',
+        'Be a Weekend Warrior with Gober\'s'
       ]
     }
   }
