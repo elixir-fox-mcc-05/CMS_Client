@@ -1,32 +1,29 @@
 <template>
-  <div id="app" >
-    <div>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark" v-if="isLogin">
-      <a class="navbar-brand" href="#">Sneakers</a>
-      <div class="btn btn-dark ml-auto" id="log-out" v-on:click.prevent="logout" >Logout</div>
-      </nav>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-content>
+      <Navbar v-if="isLogin" />
+    <router-view />
+    </v-content>
+  </v-app>
 </template>
 
 <script>
+import Navbar from '@/components/navbar.vue'
+
 export default {
   name: 'App',
-  methods: {
-    logout () {
-      localStorage.clear()
-      this.$router.push({ name: 'LandingPage' })
-      this.$store.commit('set_login', false)
-    }
+  components: {
+    Navbar
   },
+  data: () => ({
+    //
+  }),
   computed: {
     isLogin () {
       return this.$store.state.isLogin
     }
+  },
+  created () {
   }
 }
 </script>
-
-<style>
-</style>

@@ -1,5 +1,8 @@
 # cmsclient
-
+###hostingURL
+```
+https://admin-client-afa0d.web.app
+```
 ## Project setup
 ```
 npm install

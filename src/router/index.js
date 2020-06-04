@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LandingPage from '../views/LandingPage.vue'
 import mainPage from '../views/mainPage.vue'
+import Register from '../views/Register.vue'
+import AddProduct from '../views/AddProduct.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +17,16 @@ const routes = [
     path: '/mainPage',
     name: 'MainPage',
     component: mainPage
+  },
+  {
+    path: '/Register',
+    name: 'Register',
+    component: Register
+  },
+  {
+    path: '/AddProduct',
+    name: 'AddProduct',
+    component: AddProduct
   }
 ]
 
