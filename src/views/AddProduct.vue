@@ -99,6 +99,11 @@ export default {
             this.message = ''
           }, 2000)
           this.message = 'Successfully adding product'
+          this.name = ''
+          this.price = null
+          this.imageUrl = ''
+          this.stock = null
+          this.$store.dispatch('fetchProducts')
         })
         .catch(err => {
           setTimeout(() => {

@@ -90,7 +90,7 @@ export default {
   data: () => ({
     drawer: false,
     items: [
-      { icon: 'mdi-view-dashboard-variant-outline', text: 'Home', router: '/' },
+      { icon: 'mdi-view-dashboard-variant-outline', text: 'Home', router: '/mainPage' },
       { icon: 'mdi-briefcase-upload', text: 'Add Product', router: '/AddProduct' }
     ]
   }),
