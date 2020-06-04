@@ -2,6 +2,8 @@
 ### HOSTING URL = https://e-commerceclient.web.app
 ### email: "yodji@gmail.com" password: "testtest"
 
+### FEATURE CHART CATEGORY AND PRODUCT NOT DONE YET
+
 ## Project setup
 ```
 npm install
