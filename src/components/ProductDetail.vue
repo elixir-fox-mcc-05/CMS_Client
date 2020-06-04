@@ -11,7 +11,7 @@
         <h5>Category</h5>
         <p>{{ product.category}}</p>
         <h5>Price</h5>
-        <p>{{ product.price }}</p>
+        <p>{{ priceConverter(product.price) }}</p>
         <h5>Stock</h5>
         <p v-if="product.stock == 0">Empty</p>
         <p v-else>{{ product.stock }}</p>
@@ -19,13 +19,13 @@
       <div class="center">
         <div class="row">
           <div class="col m4">
-            <router-link :to="'/product/show_all'"><button class="btn"><i class="material-icons left">arrow_back</i>Back</button></router-link>
+            <router-link :to="'/product/show_all'"><button class="btn blue darken-3"><i class="material-icons left">arrow_back</i>Back</button></router-link>
           </div>
           <div class="col m4">
-            <router-link :to="`/product/${product.id}/edit`"><button class="btn"><i class="material-icons left">edit</i>Edit Product</button></router-link>
+            <router-link :to="`/product/${product.id}/edit`"><button class="btn blue darken-3"><i class="material-icons left">edit</i>Edit Product</button></router-link>
           </div>
           <div class="col m4">
-            <button class="btn modal-trigger" :href="`#modalDeleteFromDetail${product.id}`"><i class="material-icons left">delete</i>Delete Product</button>
+            <button class="btn modal-trigger blue darken-3" :href="`#modalDeleteFromDetail${product.id}`"><i class="material-icons left">delete</i>Delete Product</button>
           </div>
         </div>
       </div>
@@ -46,6 +46,7 @@
 <script>
 import server from '../api/index'
 import M from 'materialize-css/dist/js/materialize.min.js'
+import priceConverter from '../helpers/priceConverter'
 
 export default {
   name: 'ProductDetail',
@@ -55,6 +56,7 @@ export default {
     }
   },
   methods: {
+    priceConverter: priceConverter,
     getProductById () {
       server({
         method: 'get',
@@ -114,5 +116,8 @@ export default {
   }
   img {
     width: 300px
+  }
+  h4, h5 {
+    font-weight: bolder;
   }
 </style>>

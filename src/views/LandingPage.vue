@@ -6,15 +6,23 @@
           <h4 class="center blue-text text-darken-2">Login</h4>
           <NotifSection></NotifSection>
           <ErrorSection></ErrorSection>
-          <div class="input-field">
-            <input id="email" v-model="user.email" type="email" class="validate" required>
-            <label for="email">Email</label>
+          <div class="row">
+            <div class="input-field col s12 m4 push-m4">
+              <input id="email" v-model="user.email" type="email" class="validate" required>
+              <label for="email">Email</label>
+            </div>
           </div>
-          <div class="input-field">
-            <input id="password" v-model="user.password" type="password" class="validate" required>
-            <label for="password">Password</label>
+          <div class="row">
+            <div class="input-field col s12 m4 push-m4">
+              <input id="password" v-model="user.password" type="password" class="validate" required>
+              <label for="password">Password</label>
+            </div>
           </div>
-          <button type="submit" class="btn blue darken-3" @click.prevent="loginUser">Login</button>
+          <div class="row">
+            <div class="col s12 m2 push-m5">
+              <button type="submit" class="btn blue darken-3" @click.prevent="loginUser">Login</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

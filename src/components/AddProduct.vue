@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="center">
-        <button class="btn" @click.prevent="addNewProduct"><i class="material-icons left">add_box</i>Add Product</button>
+        <button class="btn blue darken-3" @click.prevent="addNewProduct"><i class="material-icons left">add_box</i>Add Product</button>
       </div>
     </form>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="center-align">CurrentOrder</h3>
+    <h3 class="center-align blue-text">Current Order</h3>
     <NotifSection></NotifSection>
     <ErrorSection></ErrorSection>
     <div v-if="currentOrders.length !== 0" class="">
@@ -29,9 +29,9 @@
             <td class="boldStatus center-align">{{ order.status.toUpperCase() }}</td>
             <td class="center-align">{{ dateConverter(order.updatedAt) }}</td>
             <td class="center">
-              <button class="btn btn-small" v-if="order.status == 'Paid'" @click.prevent="changeStatus(order.id,'On Process')">On Process</button>
-              <button class="btn btn-small" v-else-if="order.status == 'On Process'" @click.prevent="changeStatus(order.id,'Shipping')">Shipping</button>
-              <button class="btn btn-small" v-else-if="order.status == 'Shipping'" @click.prevent="changeStatus(order.id,'Finish')">Finish</button>
+              <button class="btn btn-small blue lighten-2" v-if="order.status == 'Paid'" @click.prevent="changeStatus(order.id,'On Process')">On Process</button>
+              <button class="btn btn-small blue darken-1" v-else-if="order.status == 'On Process'" @click.prevent="changeStatus(order.id,'Shipping')">Shipping</button>
+              <button class="btn btn-small blue darken-3" v-else-if="order.status == 'Shipping'" @click.prevent="changeStatus(order.id,'Finish')">Finish</button>
             </td>
           </tr>
         </tbody>

@@ -3,29 +3,33 @@
     <table class="highlight">
       <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Stock</th>
-            <th>Price (Rp)</th>
-            <th>Action</th>
+            <th class="center-align">ID</th>
+            <th class="center-align">Name</th>
+            <th class="center-align">Image</th>
+            <th class="center-align">Category</th>
+            <th class="center-align">Stock</th>
+            <th class="center-align">Price</th>
+            <th class="center-align">Action</th>
         </tr>
       </thead>
 
       <tbody v-for="product in productsList" :key="product.id">
         <tr>
-          <td>{{ product.id }}</td>
-          <td>
+          <td class="center-align">{{ product.id }}</td>
+          <td class="center-align">
             <router-link :to="`/product/${product.id}`">
             {{ product.name }}
             </router-link>
           </td>
-          <td>{{ product.category }}</td>
-          <td>{{ product.stock }}</td>
-          <td>{{ product.price }}</td>
-          <td>
-            <router-link :to="`/product/${product.id}/edit`"><button class="btn btn-small"><i class="material-icons">edit</i></button></router-link> |
-            <button class="btn btn-small modal-trigger" :href="`#modalDelete${product.id}`"><i class="material-icons">delete</i></button>
+          <td class="center">
+            <img :src="product.image_url" alt="">
+          </td>
+          <td class="center-align">{{ product.category }}</td>
+          <td class="center-align">{{ product.stock }}</td>
+          <td class="center-align">{{ priceConverter(product.price) }}</td>
+          <td class="center">
+            <router-link :to="`/product/${product.id}/edit`"><button class="btn btn-small blue darken-3"><i class="material-icons">edit</i></button></router-link> |
+            <button class="btn btn-small blue darken-3 modal-trigger" :href="`#modalDelete${product.id}`"><i class="material-icons">delete</i></button>
           </td>
         </tr>
         <div class="modal" :id="`modalDelete${product.id}`">
@@ -45,6 +49,7 @@
 <script>
 import server from '../api/index'
 import M from 'materialize-css/dist/js/materialize.min.js'
+import priceConverter from '../helpers/priceConverter'
 
 export default {
   name: 'ProductsTable',
@@ -54,6 +59,7 @@ export default {
     }
   },
   methods: {
+    priceConverter: priceConverter,
     deleteProduct (id) {
       server({
         method: 'delete',
@@ -94,5 +100,8 @@ export default {
   #productsTable {
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+  img {
+    height: 100px
   }
 </style>

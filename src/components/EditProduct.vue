@@ -69,10 +69,10 @@
     <div class="center">
       <div class="row">
         <div class="col m6">
-          <button class="btn" @click.prevent="editProductById">Edit Product</button>
+          <button class="btn blue darken-3" @click.prevent="editProductById">Edit Product</button>
         </div>
         <div class="col m6">
-          <router-link :to="'/product/show_all'"><button class="btn">Cancel</button></router-link>
+          <router-link :to="'/product/show_all'"><button class="btn blue darken-3">Cancel</button></router-link>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="center-align">Order History</h3>
+    <h3 class="center-align blue-text">Order History</h3>
     <div v-if="finishOrders.length !== 0" class="">
       <table class="highlight">
         <thead>

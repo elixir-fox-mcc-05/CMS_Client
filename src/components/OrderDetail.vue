@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <h4 class="center">Detail Order ID:{{order.id}}</h4>
+    <h4 class="center blue-text">Detail Order ID:{{order.id}}</h4>
     <div class="row">
-      <div class="col s12 m6">
+      <div class="col s12 m6 blue-text text-darken-3">
         <h5>Product</h5>
         <p>{{ order.Product.name }}</p>
         <h5>Quantity</h5>
@@ -14,8 +14,8 @@
         <h5>Order Date</h5>
         <p>{{ dateConverter(order.createdAt) }}</p>
       </div>
-      <div class="col s12 m6">
-        <h5>Customer Detail</h5>
+      <div class="col s12 m6 blue-text text-darken-3">
+        <h5 class="center">Customer Info</h5>
         <h6>Name</h6>
         <p>{{ order.Cart.Customer.name }}</p>
         <h6>Email</h6>
@@ -69,7 +69,7 @@ export default {
   h4, h5, h6{
     font-weight: bolder;
   }
-  h5, h6 {
-    color: green;
+  p {
+    color: black;
   }
 </style>

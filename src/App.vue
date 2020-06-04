@@ -5,7 +5,7 @@
         <nav class="blue darken-3">
           <div class="container">
             <div class="nav-wrapper">
-              <router-link to="/">Digi-Store</router-link>
+              <router-link to="/"><a id="webTitle">Digi-Store</a></router-link>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
               <ul class="right hide-on-med-and-down" v-if="isLogin">
                 <li><router-link to="/dashboard">Dashboard</router-link></li>
@@ -61,5 +61,9 @@ export default {
 <style>
 body {
   font-family: 'Muli', sans-serif;
+}
+#webTitle {
+  font-size: 30px;
+  font-weight: bolder;
 }
 </style>
