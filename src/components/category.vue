@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="items"
+    :items="Categories"
     sort-by="name"
     class="elevation-1"
   >
@@ -137,22 +137,13 @@ export default {
       if (this.editedIndex > -1) {
         this.$store.dispatch('editCategory', payload)
           .then(({ data }) => {
-            return this.$store.dispatch('fetchCategories', localStorage.token)
-          })
-          .then(({ data }) => {
-            this.items = data.Category
+            this.$store.dispatch('fetchCategories', localStorage.token)
           })
           .catch(err => {
             this.message = err.response.data.msg
           })
       } else {
         this.$store.dispatch('addCategory', payload)
-          .then(({ data }) => {
-            this.items.push(data.Category)
-          })
-          .catch(err => {
-            this.message = err.response.data.msg
-          })
       }
       this.close()
     }
@@ -160,6 +151,9 @@ export default {
   computed: {
     formTitle () {
       return this.editedIndex === -1 ? 'Add Category' : 'Edit Category'
+    },
+    Categories () {
+      return this.$store.state.categories
     }
   },
 
@@ -171,12 +165,6 @@ export default {
   created () {
     if (localStorage.token) {
       this.$store.dispatch('fetchCategories', localStorage.token)
-        .then(({ data }) => {
-          this.items = data.Category
-        })
-        .catch(err => {
-          console.log(err.response.data.msg)
-        })
     }
   }
 }

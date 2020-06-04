@@ -105,8 +105,6 @@ export default {
       },
       itemsPerPage: 4,
       selected: [],
-      items: [],
-      categories: [],
       headers: [
         {
           text: 'Name',
@@ -206,22 +204,18 @@ export default {
       if (this.editedIndex > -1) {
         this.$store.dispatch('editProduct', payload)
           .then(({ data }) => {
-            return this.$store.dispatch('fetchProducts', localStorage.token)
-          })
-          .then(({ data }) => {
-            this.items = data.Product
+            this.$store.dispatch('fetchProducts', localStorage.token)
           })
           .catch(err => {
-            this.message = err.response.data.msg
-            console.log(this.message)
+            this.$store.commit('SET_MESSAGE', err.response.data.msg)
           })
       } else {
         this.$store.dispatch('addProduct', payload)
           .then(({ data }) => {
-            this.items.push(data.Product)
+            this.$store.dispatch('fetchCategories', localStorage.token)
           })
           .catch(err => {
-            this.message = err.response.data.msg
+            this.$store.commit('SET_MESSAGE', err.response.data.msg)
           })
       }
       this.close()
@@ -230,6 +224,12 @@ export default {
   computed: {
     formTitle () {
       return this.editedIndex === -1 ? 'Add Products' : 'Edit Product'
+    },
+    categories () {
+      return this.$store.state.categories
+    },
+    items () {
+      return this.$store.state.products
     }
   },
 
@@ -241,20 +241,7 @@ export default {
   created () {
     if (localStorage.token) {
       this.$store.dispatch('fetchProducts', localStorage.token)
-        .then(({ data }) => {
-          this.items = data.Product
-        })
-        .catch(err => {
-          this.message = err.response.data.msg
-        })
-
       this.$store.dispatch('fetchCategories', localStorage.token)
-        .then(({ data }) => {
-          this.categories = data.Category
-        })
-        .catch(err => {
-          this.message = err.response.data.msg
-        })
     }
   }
 }

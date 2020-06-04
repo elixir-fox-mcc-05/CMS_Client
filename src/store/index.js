@@ -30,7 +30,7 @@ export default new Vuex.Store({
       state.categories.push(payload)
     },
     ADD_PRODUCT (state, payload) {
-      state.categories.push(payload)
+      state.products.push(payload)
     },
     SET_MESSAGE (state, payload) {
       state.message = payload
@@ -38,22 +38,34 @@ export default new Vuex.Store({
   },
   actions: {
     fetchProducts (context, payload) {
-      return axios({
+      axios({
         method: 'get',
         url: baseUrl + 'product',
         headers: {
           token: payload
         }
       })
+        .then(({ data }) => {
+          context.commit('SET_PRODUCTS', data.Product)
+        })
+        .catch(err => {
+          context.commit('SET_MESSAGE', err.response.data.msg)
+        })
     },
     fetchCategories (context, payload) {
-      return axios({
+      axios({
         method: 'get',
         url: baseUrl + 'category',
         headers: {
           token: payload
         }
       })
+        .then(({ data }) => {
+          context.commit('SET_CATEGORIES', data.Category)
+        })
+        .catch(err => {
+          context.commit('SET_MESSAGE', err.response.data.msg)
+        })
     },
     login (context, payload) {
       return axios({
@@ -109,7 +121,7 @@ export default new Vuex.Store({
       })
     },
     addCategory (context, payload) {
-      return axios({
+      axios({
         method: 'POST',
         url: baseUrl + 'category',
         headers: {
@@ -117,6 +129,12 @@ export default new Vuex.Store({
         },
         data: { name: payload.name }
       })
+        .then(({ data }) => {
+          context.commit('ADD_CATEGORIES', data.Category)
+        })
+        .catch(err => {
+          context.commit('SET_MESSAGE', err.response.data.msg)
+        })
     },
     addProduct (context, payload) {
       return axios({
