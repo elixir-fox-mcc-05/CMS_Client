@@ -106,7 +106,7 @@ export default {
     updateProduct () {
       axios({
         method: 'put',
-        url: `http://localhost:3000/product/${this.id}`,
+        url: `https://calm-beyond-37965.herokuapp.com/product/${this.id}`,
         headers: {
           access_token: localStorage.access_token
         },
@@ -127,7 +127,7 @@ export default {
     deleteProduct () {
       axios({
         method: 'delete',
-        url: `http://localhost:3000/product/${this.id}`,
+        url: `https://calm-beyond-37965.herokuapp.com/product/${this.id}`,
         headers: {
           access_token: localStorage.access_token
         }

@@ -66,7 +66,7 @@ export default {
     addProduct () {
       axios({
         method: 'post',
-        url: 'http://localhost:3000/product',
+        url: 'https://calm-beyond-37965.herokuapp.com/product',
         headers: {
           access_token: localStorage.access_token
         },
@@ -79,7 +79,10 @@ export default {
       })
         .then(data => {
           this.$store.dispatch('fetchProduct')
-        //   fetchProduct
+          this.name = ''
+          this.image_url = ''
+          this.price = null
+          this.stock = null
         })
         .catch(err => {
           console.log(err)
