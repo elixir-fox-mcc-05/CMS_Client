@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 Vue.use(Vuex)
-const baseUrl = 'http://localhost:3000/'
+const baseUrl = 'https://shielded-bastion-44955.herokuapp.com/'
 
 export default new Vuex.Store({
   state: {
@@ -90,13 +90,19 @@ export default new Vuex.Store({
         headers: {
           token: payload.token
         },
-        data: payload.data
+        data: {
+          name: payload.name,
+          price: payload.price,
+          image_url: payload.image_url,
+          stock: payload.stock,
+          CategoryId: payload.CategoryId
+        }
       })
     },
     deleteProduct (context, payload) {
       return axios({
         method: 'delete',
-        url: baseUrl + `category/${payload.id}`,
+        url: baseUrl + `product/${payload.id}`,
         headers: {
           token: payload.token
         }

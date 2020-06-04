@@ -1,4 +1,6 @@
 # CMS_Client
+### HOSTING URL = https://e-commerceclient.web.app
+### email: "yodji@gmail.com" password: "testtest"
 
 ## Project setup
 ```

@@ -166,7 +166,6 @@ export default {
     editItem (item) {
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      this.editItem.id = item.id
       this.dialog = true
     },
 
@@ -202,7 +201,7 @@ export default {
         stock: this.editedItem.stock,
         image_url: this.editedItem.image_url,
         CategoryId: this.editedItem.CategoryId,
-        id: this.editItem.id
+        id: this.editedItem.id
       }
       if (this.editedIndex > -1) {
         this.$store.dispatch('editProduct', payload)
@@ -214,6 +213,7 @@ export default {
           })
           .catch(err => {
             this.message = err.response.data.msg
+            console.log(this.message)
           })
       } else {
         this.$store.dispatch('addProduct', payload)
