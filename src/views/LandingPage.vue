@@ -1,7 +1,7 @@
 <template>
-    <div class="LandingPage">
-        <Login />
-    </div>
+  <div>
+    <Login/>
+  </div>
 </template>
 
 <script>
@@ -13,8 +13,8 @@ export default {
     Login
   },
   created () {
-    if (localStorage.token) {
-      this.$router.push('Home')
+    if (localStorage.getItem('token')) {
+      this.$router.push('/MainPage')
     }
   }
 }
