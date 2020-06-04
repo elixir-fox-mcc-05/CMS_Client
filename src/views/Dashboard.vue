@@ -3,12 +3,14 @@
     <div class="container-fluid">
         <div class="row">
           <div class="col-12 mx-auto px-2 mx-2 row" style="background-color:#FFE47C;">
+            <!-- sidebar here -->
             <div class="sideBar">
-                <img src="..\assets\img\hop&lop_logo_1.png" style="max-width:100%;">
+                <img src="..\assets\img\hop-&-lop-logo-1.png" style="max-width:100%;">
                 <hr/>
                 <h6> Content Management System</h6>
                 <button type="button" class="btn btn-danger" @click="logout()" style="width:100%;">Logout</button>
             </div>
+            <!-- all product display -->
             <div class="px-2" style="width:80%; margin-left:20vw;display:flex; flex-direction:column; align-items:stretch;">
                 <div style="width:100%; display:flex; justify-content:space-between; padding:10px;">
                   <h1><b>Current Inventory</b></h1>
@@ -111,37 +113,37 @@ export default {
 <style scoped>
 
 h3{
-    color:#ffa801;
+  color:#ffa801;
 }
 
 .sideBar{
-    width:20%;
-    background-color:#FFFAE7;
-    height: 100%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-    padding:20px;
+  width:20%;
+  background-color:#FFFAE7;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+  padding:20px;
 }
 
 .report-box{
-    width:23%;
-    display: flex;
-    padding: 10px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
+  width:23%;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 }
 
 .verticalLine{
-    width:2px;
-    height:auto;
-    background-color:#ffc048;
-    border-radius: 5px;
+  width:2px;
+  height:auto;
+  background-color:#ffc048;
+  border-radius: 5px;
 }
 
 .header-content{

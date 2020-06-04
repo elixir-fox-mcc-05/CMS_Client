@@ -9,7 +9,7 @@
           <p class="taskContent" style="width:30%;"><b>{{product.name}}</b></p>
           <p class="taskContent">{{product.category}}</p>
           <p class="taskContent">{{product.stock}}</p>
-          <p class="taskContent">{{product.price}}</p>
+          <p class="taskContent">Rp.{{priceInIDRCurrency(product.price)}}</p>
         </div>
         <div class="row" style="max-width:30%;display:flex;align-items:center">
             <router-link :to="{ name: 'editProduct', params: { id: product.id } }" style="margin:10px;">
@@ -30,6 +30,8 @@ export default {
   props: {
     product: Object
   },
+  computed: {
+  },
   methods: {
     deleteProduct (id) {
       axios({
@@ -40,12 +42,15 @@ export default {
         }
       })
         .then(result => {
-          console.log(result)
           this.$store.dispatch('fetchAllProducts')
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    priceInIDRCurrency (price) {
+      const val = (price / 1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     }
   }
 }

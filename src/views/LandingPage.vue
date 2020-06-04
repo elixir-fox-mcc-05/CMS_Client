@@ -3,7 +3,7 @@
       <div class="container">
         <div class="row">
             <div class="col-6 mx-auto p-4 justify-content-center" style="background-color:rgb(255, 228, 124); color:white; border-radius:8px;">
-                <img src="..\assets\img\hop&lop_logo_1.png" style="max-width:50%;">
+                <img src="..\assets\img\hop-&-lop-logo-1.png" style="max-width:50%;">
                 <hr/>
                 <LoginForm />
             </div>

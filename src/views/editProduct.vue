@@ -41,6 +41,7 @@ export default {
       axios({
         method: 'PUT',
         url: `https://peaceful-peak-29407.herokuapp.com/products/${selectedId}`,
+        // url: `http://localhost:3000/products/${selectedId}`,
         headers: {
           access_token: localStorage.access_token
         },
@@ -67,6 +68,7 @@ export default {
       axios({
         method: 'GET',
         url: `https://peaceful-peak-29407.herokuapp.com/products/${selectedId}`,
+        // url: `http://localhost:3000/products/${selectedId}`,
         headers: {
           access_token: localStorage.access_token
         }
