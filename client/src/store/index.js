@@ -66,12 +66,7 @@ const store = new Vuex.Store({
       })
     },
     searchProduct ({ commit }, payload) {
-      const token = payload.token
-      return server.get(`/products/${payload.productId}`, {
-        headers: {
-          token
-        }
-      })
+      return server.get(`/products/${payload.productId}`)
     },
     deleteProduct ({ commit }, payload) {
       const token = payload.token

@@ -122,8 +122,7 @@ export default {
     } else {
       this.SET_LOGIN(true)
       this.searchProduct({
-        productId: this.productId,
-        token: localStorage.token
+        productId: this.productId
       })
         .then(({ data }) => {
           this.editName = data.product.name
