@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h3><font-awesome-icon icon="cubes" /> Registered Users (total: {{ totalUsers }})</h3>
+      <h3><font-awesome-icon icon="users" /> Registered Users (total: {{ totalUsers }})</h3>
       <b-row>
         <b-col lg="3" class="my-1">
           <b-form-group
